@@ -1,10 +1,11 @@
 //display configs
-var iconSize = 96; //image sizes
-//nav configs
+var iconSize = 96; //! Application Icon sizes. Icones are square.
+
+//nav state
 var currentDir = "";
-var prevDir = "";
+var menuHistory = []; //! Menu nav history
 var baseDir = "bin/";
-//container for display
+//container for display (html div)
 var matrixDisplay;
 //socket used for polling and such
 var socket;
@@ -20,6 +21,15 @@ var clearScreen = function(){
 var setBaseStyles = function(elem){
 	$(elem).addClass("base");
 }
+/**
+	Creates a new icon on the Matrix Display
+	@param container HTML element to hold the new icon
+	@param src image url for the icon
+	@param w icon width
+	@param h icon height
+	@param tgt parameter used by clickfn
+	@parameter clickfn a function that is invoked when the icon is clicked
+*/
 var addIcon = function(container, src, w, h, tgt, clickfn){
 	var newDiv = $(document.createElement("div"));
 	var img = $(document.createElement("img"));
@@ -32,9 +42,14 @@ var addIcon = function(container, src, w, h, tgt, clickfn){
 	setBaseStyles(newDiv);
 	return newDiv;
 }
+/**
+	Turns an application's JSON description into an HTML element and adds event handlers.
+	@param container The HTML element (usually div) that will contain the application described by info
+	@param info The JSON encoded information from the application's manifest, plus some additional information 
+	added by the server.
+*/
 var processApp = function (container, info){
 	var app = info.Application;
-
 	var imgUrl = baseDir + app.iconName;
 	var clickfn;
 	var tgt;	
@@ -42,7 +57,7 @@ var processApp = function (container, info){
 		tgt = currentDir + app.contents;		
 		clickfn = function(e){
 			console.log("Loading dir: " +tgt);
-			buildMenu(tgt);
+			gotoWithHistory(tgt);
 		};
 	}else{
 		tgt = app.manifestPath;
@@ -59,25 +74,37 @@ var processApp = function (container, info){
 	}
 
 }
+/**
+	Draws the top portion of the display (TI logo, title, exit/back button)
+*/
 var drawHeader = function(){
-
-	var header = document.createElement("div"); 
+	var header = document.createElement("div");
+	//TI logo (loads main menu when clicked)
 	addIcon(header, "header/tex.png", iconSize, iconSize, "", function(){
 		buildMenu("");
 	});
+	//Header
 	var titleDiv = document.createElement("div");
 	var title = "Matrix Application Launcher";
 	$(titleDiv).append(title);
 	setBaseStyles(titleDiv);
 	$(header).append(titleDiv);
+	//Exit/back button
 	var exit = addIcon(header, "header/exit-icon.png", iconSize, iconSize, "", function(){
-		buildMenu(prevDir);
+		if(menuHistory.length >= 1){
+			buildMenu(menuHistory.pop());
+		}
 	});
 	$(exit).css("float", "right");
 	$(header).css("display", "block");
 	$(header).css("clear", "both");
+	//add it to the main div
 	matrixDisplay.append(header);
 }
+/**
+	Processes the JSON encoded list of applications for a given subdirectory
+	@param data the list of application manifests
+*/
 var processMenu = function(data){
 	drawHeader();
 	var itemDiv = document.createElement("div");
@@ -88,11 +115,22 @@ var processMenu = function(data){
 	$(itemDiv).css("clear", "both");
 	matrixDisplay.append(itemDiv);
 }
+/**
+	Loads the submenu and adds a history entry
+	@param dir submenu to load
+*/
+var gotoWithHistory = function(dir){
+	menuHistory.push(currentDir);
+	buildMenu(dir);
+}
+/**
+	Fetches the application list from the server for the given submenu and renders it.
+	@param dir the submenu level ("" is the main menu)
+*/
 var buildMenu = function(dir){
 	clearScreen();
-	prevDir = currentDir;
 	currentDir = dir;	
-	var url = "applist/" + dir;
+	var url = "applist/" + dir; //! url to request applist from 
 
 	if(menuCache.hasOwnProperty(dir)){
 		processMenu(menuCache[dir]);
@@ -105,6 +143,10 @@ var buildMenu = function(dir){
 		});
 	}
 }
+/**
+	Handles output from application launch and execution. Messages are JSON encoded according to the specs in /lib/apps.js.
+	@param msg JSON encoded message
+*/
 var handleMessage = function(msg){
 	if(msg == "Error"){
 		buildMenu(currentDir);
@@ -131,7 +173,6 @@ var handleMessage = function(msg){
 				$(matrixDisplay).append(outputDiv );
 			}
 			$(outputDiv).append("<pre>" + obj.Message.content + "</pre>");
-			//$(outputDiv).append(obj.Message.content.replace(/\\n/gi, "<br />"));
 		break;
 		case "appComplete":
 			var home = addIcon(outputDiv, "header/tex.png", iconSize, iconSize, "", function(){
@@ -142,10 +183,12 @@ var handleMessage = function(msg){
 		break;	
 	} 	
 }
+/**
+	Launches an application on the server. Stdout is streamed back.
+	@param app the location of the application manifest to run.
+*/
 
 var launchApp = function(app){
-	//this should deal with launching / executing an app and
-	//dealing with the output... 
 	var msg = {
 		"Message" : {
 			"type" : "appLaunch",
@@ -155,7 +198,9 @@ var launchApp = function(app){
 	socket.send(JSON.stringify(msg));
 	
 }
-
+/**
+	Sets up event handlers and creates the initial display
+*/
 var init = function(){
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
