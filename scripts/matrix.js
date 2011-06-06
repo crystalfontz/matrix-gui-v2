@@ -60,8 +60,6 @@ var processApp = function (container, info){
 
 }
 var drawHeader = function(){
-	var x = 10;
-	var hSpacing = 25; 
 
 	var header = document.createElement("div"); 
 	addIcon(header, "header/tex.png", iconSize, iconSize, "", function(){
