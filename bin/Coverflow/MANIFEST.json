@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Coverflow",
+		"iconName" : "Coverflow/3d3-icon.png",
+		"appName" : "runOGLES2Coverflow",
+		"appParameters" : "-qaf=1000",
+		"submenu" : "3D"
+	}
+}

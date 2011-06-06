@@ -1,0 +1,28 @@
+/*
+	Matrix Styling
+	@author Thomas Potthast
+*/
+*{
+	color: #FFFFFF;
+}
+body{
+	background-color: #000000;
+	font-family: Arial, Verdana, sans-serif;
+}
+.base{
+	float: left;
+	color: #FFFFFF;
+	padding: 10px 0px 0px 10px;
+	text-align: center;
+	
+}
+.appTitle{
+	color: #FFFFFF;
+	text-align: center;
+	font-size: 12px;
+}
+.homeBtn{
+	position: fixed;
+	top: 40px;
+	right: 30px;
+}

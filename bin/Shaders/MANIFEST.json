@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Shaders",
+		"iconName" : "Shaders/3d4-icon.png",
+		"appName" : "runOGLES2Shaders",
+		"appParameters" : "-qaf=1000",
+		"submenu" : "3D"
+	}
+}
