@@ -8,7 +8,7 @@ var baseDir = "bin/";
 //container for display (html div)
 var matrixDisplay;
 //socket used for polling and such
-var socket;
+var socket = false;
 //div used for text output
 var outputContainer;
 //cache for menu
@@ -20,6 +20,18 @@ var clearScreen = function(){
 }
 var setBaseStyles = function(elem){
 	$(elem).addClass("base");
+}
+var log = function(message){
+	var clientSide = false;
+	if(clientSide){
+		console.log(messege);
+	}else{
+		var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + message}};
+		if(socket){
+			socket.send(JSON.stringify(jsonMessage));
+		} 
+	}
+	
 }
 /**
 	Creates a new icon on the Matrix Display
@@ -56,7 +68,7 @@ var processApp = function (container, info){
 	if(app.appName == "Submenu"){
 		tgt = currentDir + app.contents;		
 		clickfn = function(e){
-			console.log("Loading dir: " +tgt);
+			log("Loading dir: " +tgt);
 			gotoWithHistory(tgt);
 		};
 	}else{
@@ -134,9 +146,9 @@ var buildMenu = function(dir){
 
 	if(menuCache.hasOwnProperty(dir)){
 		processMenu(menuCache[dir]);
-		console.log("using cached menu");
+		log("using cached menu");
 	}else{
-		console.log("fetching new menu");
+		log("fetching new menu");
 		$.getJSON(url, function(data) {
 			menuCache[dir] = data;
 			processMenu(data);
@@ -152,7 +164,7 @@ var handleMessage = function(msg){
 		buildMenu(currentDir);
 		return;
 	}
-	console.log(msg);
+	log(msg);
 	var obj = JSON.parse(msg);
 	if(!obj.hasOwnProperty("Message")){
 		//Bad JSON
@@ -164,7 +176,7 @@ var handleMessage = function(msg){
 	}
 	switch(obj.Message.type){
 		case "appInit": 
-			console.log(obj.Message);
+			log(obj.Message);
 		break;
 		case "appOutput":
 			if(outputDiv == false){
