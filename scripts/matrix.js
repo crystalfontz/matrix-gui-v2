@@ -29,6 +29,8 @@ var log = function(message){
 		var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + message}};
 		if(socket){
 			socket.send(JSON.stringify(jsonMessage));
+		}else{
+			alert(message);
 		} 
 	}
 	
