@@ -4,6 +4,6 @@
 		"iconName" : "linpack/arm-icon.png",
 		"appDesc" : "",
 		"appName" : "path_to_exec",
-		"submenu" : "cryptos"
+		"submenu" : "arm"
 	}
 }

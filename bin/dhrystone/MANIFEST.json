@@ -4,6 +4,6 @@
 		"iconName" : "dhrystone/arm-icon.png",
 		"appDesc" : "/usr/share/matrix/html/desc_dhrystone.html",
 		"appName" : "path_to_exec",
-		"submenu" : "cryptos"
+		"submenu" : "arm/"
 	}
 }
