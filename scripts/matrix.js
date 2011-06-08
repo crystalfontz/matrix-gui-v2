@@ -217,6 +217,14 @@ var launchApp = function(app){
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
+	try{
+		socket = new io.Socket(window.location.hostname);
+		socket.connect();
+		socket.on('message', handleMessage);
+		log(socket);
+	}catch(e){
+		log("socket creation failed");
+	}
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
 	$(matrixDisplay).css("height", 900);
@@ -228,10 +236,6 @@ var init = function(){
 	}catch(e){
 		log("click setup failed");
 	}
-	socket = new io.Socket(window.location.hostname);
-	socket.connect();
-	socket.on('message', handleMessage);
-	log(socket);
 }
 
 window.onload = init;
