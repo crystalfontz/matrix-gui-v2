@@ -8,7 +8,7 @@ var baseDir = "bin/";
 //container for display (html div)
 var matrixDisplay;
 //socket used for polling and such
-var socket = false;
+var socket;
 //div used for text output
 var outputContainer;
 //cache for menu
@@ -30,7 +30,7 @@ var log = function(message){
 		if(socket){
 			socket.send(JSON.stringify(jsonMessage));
 		}else{
-			alert(message);
+			alert("Socket Transfer Failed\n Socket:\n "+ socket + "\nOriginal Message:\n" +message);
 		} 
 	}
 	
