@@ -74,6 +74,7 @@ var processApp = function (container, info){
 	}else{
 		tgt = app.manifestPath;
 		clickfn = function(e){
+			log("app icon clicked");
 			launchApp(tgt);
 		}
 	}
