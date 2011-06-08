@@ -27,6 +27,9 @@ var log = function(message){
 		console.log(messege);
 	}else{
 		var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + message}};
+		if(!socket){
+			createSocket();
+		}
 		if(socket){
 			socket.send(JSON.stringify(jsonMessage));
 		}else{
@@ -210,18 +213,24 @@ var launchApp = function(app){
 			"path" : app
 		}
 	}
+	if(!socket) createSocket();
 	socket.send(JSON.stringify(msg));
 	
+}
+var createSocket = function(){
+		log("Creating socket to " + window.location.hostname);
+                socket = new io.Socket(window.location.hostname);
+		log("socket created, connecting");
+                socket.connect();
+                socket.on('message', handleMessage);
+                log(socket);
 }
 /**
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
 	try{
-		socket = new io.Socket(window.location.hostname);
-		socket.connect();
-		socket.on('message', handleMessage);
-		log(socket);
+		createSocket();
 	}catch(e){
 		log("socket creation failed");
 	}
