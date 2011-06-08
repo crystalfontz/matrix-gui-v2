@@ -223,10 +223,15 @@ var init = function(){
 	$('body').css('overflow', 'hidden')
 	$("body").append(matrixDisplay);
 	buildMenu("");
-	$(document.body).clickNScroll();
+	try{
+		$(document.body).clickNScroll();
+	}catch(e){
+		log("click setup failed");
+	}
 	socket = new io.Socket(window.location.hostname);
 	socket.connect();
 	socket.on('message', handleMessage);
+	log(socket);
 }
 
 window.onload = init;
