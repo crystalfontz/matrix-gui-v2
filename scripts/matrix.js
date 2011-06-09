@@ -110,7 +110,7 @@ var drawHeader = function(){
 
 	if(menuHistory.length >= 1){
 	//Back button
-		var back = addIcon(header, "header/exit-icon.png", iconSize, iconSize, "", function(){
+		var back = addIcon(header, "header/multi-icon.png", iconSize, iconSize, "", function(){
 			if(menuHistory.length >= 1){
 				buildMenu(menuHistory.pop());
 			}
