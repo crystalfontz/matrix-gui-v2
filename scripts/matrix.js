@@ -93,7 +93,7 @@ var processApp = function (container, info){
 
 }
 /**
-	Draws the top portion of the display (TI logo, title, exit/back button)
+	Draws the top portion of the display (TI logo, title, back button)
 */
 var drawHeader = function(){
 	var header = document.createElement("div");
@@ -107,13 +107,16 @@ var drawHeader = function(){
 	$(titleDiv).append(title);
 	setBaseStyles(titleDiv);
 	$(header).append(titleDiv);
-	//Exit/back button
-	var exit = addIcon(header, "header/exit-icon.png", iconSize, iconSize, "", function(){
-		if(menuHistory.length >= 1){
-			buildMenu(menuHistory.pop());
-		}
-	});
-	$(exit).css("float", "right");
+
+	if(menuHistory.length >= 1){
+	//Back button
+		var back = addIcon(header, "header/exit-icon.png", iconSize, iconSize, "", function(){
+			if(menuHistory.length >= 1){
+				buildMenu(menuHistory.pop());
+			}
+		});
+	}
+	$(back).css("float", "right");
 	$(header).css("display", "block");
 	$(header).css("clear", "both");
 	//add it to the main div
