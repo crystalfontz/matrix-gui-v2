@@ -1,7 +1,7 @@
 {
 	"Application" : {
-		"title" : "LS test",
-		"iconName" : "ls/arm-icon.png",
+		"title" : "LS Demo",
+		"iconName" : "ls/tux-icon.png",
 		"appDesc" : "",
 		"appName" : "ls",
 		"appParameters" : "-lR"
