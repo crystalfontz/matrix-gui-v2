@@ -4,6 +4,7 @@
 */
 *{
 	color: #FFFFFF;
+	margin: 0;
 }
 body{
 	background-color: #000000;
@@ -15,7 +16,7 @@ body{
 .base{
 	float: left;
 	color: #FFFFFF;
-	padding: 5px 25px 0px 25px;
+	padding: 10px 25px 0px 25px;
 	text-align: center;
 }
 .appTitle{
