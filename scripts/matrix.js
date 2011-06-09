@@ -96,7 +96,7 @@ var processApp = function (container, info){
 	Draws the top portion of the display (TI logo, title, back button)
 */
 var drawHeader = function(){
-	var headerIconSize = 48;
+	var headerIconSize = 32;
 	var header = document.createElement("div");
 	//TI logo (loads main menu when clicked)
 	addIcon(header, "header/tex.png", headerIconSize, headerIconSize, "", function(){
