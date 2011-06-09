@@ -15,7 +15,7 @@ body{
 .base{
 	float: left;
 	color: #FFFFFF;
-	padding: 5px 25px 5px 25px;
+	padding: 5px 25px 0px 25px;
 	text-align: center;
 }
 .appTitle{
