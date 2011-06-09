@@ -198,7 +198,7 @@ var handleMessage = function(msg){
 			$(outputDiv).append("<pre>" + obj.Message.content + "</pre>");
 		break;
 		case "appComplete":
-			var home = addIcon(outputDiv, "header/tex.png", iconSize, iconSize, "", function(){
+			var home = addIcon(outputDiv, "header/multi-icon.png", iconSize, iconSize, "", function(){
 				buildMenu("");
 				$('html, body').animate({scrollTop:0}, 'medium');
 	});
