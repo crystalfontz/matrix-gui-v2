@@ -218,9 +218,7 @@ var launchApp = function(app){
 	
 }
 var createSocket = function(){
-		log("Creating socket to " + window.location.hostname);
                 socket = new io.Socket(window.location.hostname);
-		log("socket created, connecting");
                 socket.connect();
                 socket.on('message', handleMessage);
                 log(socket);
