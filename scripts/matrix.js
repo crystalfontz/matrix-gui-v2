@@ -96,9 +96,10 @@ var processApp = function (container, info){
 	Draws the top portion of the display (TI logo, title, back button)
 */
 var drawHeader = function(){
+	var headerIconSize = 48;
 	var header = document.createElement("div");
 	//TI logo (loads main menu when clicked)
-	addIcon(header, "header/tex.png", iconSize, iconSize, "", function(){
+	addIcon(header, "header/tex.png", headerIconSize, headerIconSize, "", function(){
 		buildMenu("");
 	});
 	//Header
@@ -106,11 +107,12 @@ var drawHeader = function(){
 	var title = "Matrix Application Launcher";
 	$(titleDiv).append(title);
 	setBaseStyles(titleDiv);
+	$(titleDiv).addClass("title");
 	$(header).append(titleDiv);
 
 	if(menuHistory.length >= 1){
 	//Back button
-		var back = addIcon(header, "header/multi-icon.png", iconSize, iconSize, "", function(){
+		var back = addIcon(header, "header/multi-icon.png", headerIconSize, headerIconSize, "", function(){
 			if(menuHistory.length >= 1){
 				buildMenu(menuHistory.pop());
 			}
