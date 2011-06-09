@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "Set 1 Ghz",
+		"iconName" : "power_1000/power-icon.png",
+		"appName" : "setopp1",
+		"submenu" : "power"
+	}
+}
