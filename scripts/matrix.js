@@ -13,7 +13,10 @@ var socket;
 var outputContainer;
 //cache for menu
 var menuCache = [];
-
+//Animated scroll to top
+var scrollTop = function(){
+	$('html, body').animate({scrollTop:0}, 'medium');
+}
 var clearScreen = function(){
 	$(matrixDisplay).empty();
 	outputDiv = false;
@@ -137,6 +140,7 @@ var processMenu = function(data){
 	$(itemDiv).css("display", "block");
 	$(itemDiv).css("clear", "both");
 	matrixDisplay.append(itemDiv);
+	scrollTop();
 }
 /**
 	Loads the submenu and adds a history entry
@@ -145,6 +149,7 @@ var processMenu = function(data){
 var gotoWithHistory = function(dir){
 	menuHistory.push(currentDir);
 	buildMenu(dir);
+	scrollTop();
 }
 /**
 	Fetches the application list from the server for the given submenu and renders it.
