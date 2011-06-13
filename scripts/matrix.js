@@ -113,7 +113,6 @@ var processApp = function (container, info){
 		$(appDiv).append(appTitle);	
 	}
 	$(appDiv).addClass("appContainer");
-
 }
 /**
 	Draws the top portion of the display (TI logo, title, back button)
