@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "System Info",
+		"iconName" : "sysinfo/info-icon.png",
+		"appName" : "bin/sysinfo/sysSettings",
+		"submenu" : "settings"
+	}
+}

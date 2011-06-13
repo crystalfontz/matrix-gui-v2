@@ -13,12 +13,18 @@ body{
 }
 .title{
 	font-size: 24px;
+	width: auto !important;
+	clear: none;
+	padding-left: 20px;
 }
 .base{
 	float: left;
 	color: #FFFFFF;
-	padding: 20px 32px 0px 32px;
 	text-align: center;
+	padding-top: 20px;
+}
+.appContainer{
+	width: 160px;
 }
 .appTitle{
 	padding-top: 0px;
@@ -32,3 +38,21 @@ body{
 	top: 40px;
 	right: 30px;
 }
+.runDiv{
+	width:100%;
+}
+.outputDiv{
+	clear: both;
+}
+.outputDiv h1{
+	font-size: 20px;
+	font-weight: bold;
+	color: #0000FF;
+}
+.outputDiv h2{
+	font-size: 18px;
+	font-weight: bold;
+}
+.outputDiv p{
+	padding-top: 10px;
+}	

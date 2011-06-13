@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "Coming Soon",
+		"iconName" : "coming_soon/coming-icon.png",
+		"appName" : "",
+		"submenu" : "comingsoon"
+	}
+}

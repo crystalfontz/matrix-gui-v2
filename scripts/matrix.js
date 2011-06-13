@@ -1,33 +1,52 @@
-//display configs
 var iconSize = 96; //! Application Icon sizes. Icones are square.
-
-//nav state
-var currentDir = "";
+var currentDir = ""; //! Current submenu
 var menuHistory = []; //! Menu nav history
-var baseDir = "bin/";
-//container for display (html div)
-var matrixDisplay;
-//socket used for polling and such
-var socket;
-//div used for text output
-var outputContainer;
-//cache for menu
-var menuCache = [];
-//Animated scroll to top
-var scrollTop = function(){
+var baseDir = "bin/"; //! filesystem root app dir
+var matrixDisplay;//! container for display (html div)
+var socket; //!socket used for polling and such
+var outputContainer;//!div used for text output
+var menuCache = [];//! cache for menu
+var showAppDescriptions = true;	//! Whether or not to show app descriptions
+var currentApp = ""; //! location of the current app's manifest
+
+//! Animated scroll to top
+var scrollToTop = function(){
 	$('html, body').animate({scrollTop:0}, 'medium');
 }
+//! adds a floating main menu icon
+/**
+	Used by the app launcher after completion and as a cancel button on the app description page
+*/
+var addHomeBtn = function(){
+	var home = addIcon(outputDiv, "images/multi-icon.png", iconSize, iconSize, "", function(){
+		buildMenu("");
+		scrollToTop();
+	});
+	$(home).addClass("homeBtn");	
+}
+//! removes all elements
 var clearScreen = function(){
 	$(matrixDisplay).empty();
 	outputDiv = false;
 }
+//! creates output div used for text output and app descriptions
+var createOutputDiv = function(){
+	if(outputDiv == false){
+		clearScreen();
+		drawHeader();
+		outputDiv = document.createElement("div");
+		$(outputDiv).addClass("outputDiv");
+		$(matrixDisplay).append(outputDiv );
+	}
+}
+//! adds the main css styles to the elem
 var setBaseStyles = function(elem){
 	$(elem).addClass("base");
 }
 var log = function(message){
 	var clientSide = false;
 	if(clientSide){
-		console.log(messege);
+		console.log(message);
 	}else{
 		var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + message}};
 		if(!socket){
@@ -83,7 +102,7 @@ var processApp = function (container, info){
 		tgt = app.manifestPath;
 		clickfn = function(e){
 			log("app icon clicked");
-			launchApp(tgt);
+			appClicked(tgt);
 		}
 	}
 	var appDiv = addIcon(container, imgUrl, iconSize, iconSize, tgt, clickfn); 
@@ -93,6 +112,7 @@ var processApp = function (container, info){
 		$(appTitle).addClass("appTitle");	
 		$(appDiv).append(appTitle);	
 	}
+	$(appDiv).addClass("appContainer");
 
 }
 /**
@@ -102,10 +122,10 @@ var drawHeader = function(){
 	var headerIconSize = 32;
 	var header = document.createElement("div");
 	//TI logo (loads main menu when clicked)
-	addIcon(header, "header/tex.png", headerIconSize, headerIconSize, "", function(){
+	addIcon(header, "images/header/tex.png", headerIconSize, headerIconSize, "", function(){
 		buildMenu("");
 	});
-	//Header
+	//Title
 	var titleDiv = document.createElement("div");
 	var title = "Matrix Application Launcher";
 	$(titleDiv).append(title);
@@ -115,7 +135,7 @@ var drawHeader = function(){
 
 	if(menuHistory.length >= 1){
 	//Back button
-		var back = addIcon(header, "header/multi-icon.png", headerIconSize, headerIconSize, "", function(){
+		var back = addIcon(header, "images/multi-icon.png", headerIconSize, headerIconSize, "", function(){
 			if(menuHistory.length >= 1){
 				buildMenu(menuHistory.pop());
 			}
@@ -140,7 +160,7 @@ var processMenu = function(data){
 	$(itemDiv).css("display", "block");
 	$(itemDiv).css("clear", "both");
 	matrixDisplay.append(itemDiv);
-	scrollTop();
+	scrollToTop();
 }
 /**
 	Loads the submenu and adds a history entry
@@ -149,7 +169,7 @@ var processMenu = function(data){
 var gotoWithHistory = function(dir){
 	menuHistory.push(currentDir);
 	buildMenu(dir);
-	scrollTop();
+	scrollToTop();
 }
 /**
 	Fetches the application list from the server for the given submenu and renders it.
@@ -172,7 +192,7 @@ var buildMenu = function(dir){
 	}
 }
 /**
-	Handles output from application launch and execution. Messages are JSON encoded according to the specs in /lib/apps.js.
+	Handles output from application launch and execution. Messages are JSON encoded according to the specs in /lib/messageSchema.txt.
 	@param msg JSON encoded message
 */
 var handleMessage = function(msg){
@@ -195,19 +215,15 @@ var handleMessage = function(msg){
 			log(obj.Message);
 		break;
 		case "appOutput":
-			if(outputDiv == false){
-				clearScreen();
-				outputDiv = document.createElement("div");
-				$(matrixDisplay).append(outputDiv );
-			}
+			createOutputDiv();
 			$(outputDiv).append("<pre>" + obj.Message.content + "</pre>");
 		break;
 		case "appComplete":
-			var home = addIcon(outputDiv, "header/multi-icon.png", iconSize, iconSize, "", function(){
-				buildMenu("");
-				$('html, body').animate({scrollTop:0}, 'medium');
-	});
-			$(home).addClass("homeBtn");	
+			addHomeBtn();
+		break;
+		case "appDescription":
+			log(obj.Message.content);
+			showAppDescription(obj.Message.content);
 		break;	
 	} 	
 }
@@ -215,7 +231,6 @@ var handleMessage = function(msg){
 	Launches an application on the server. Stdout is streamed back.
 	@param app the location of the application manifest to run.
 */
-
 var launchApp = function(app){
 	var msg = {
 		"Message" : {
@@ -225,7 +240,34 @@ var launchApp = function(app){
 	}
 	if(!socket) createSocket();
 	socket.send(JSON.stringify(msg));
-	
+	currentApp = "";
+	clearScreen();
+	buildMenu(currentDir);
+}
+var showAppDescription = function(desc){
+	createOutputDiv();
+	$(outputDiv).append(desc);
+	var launcher = addIcon(outputDiv, "images/run-icon.png", iconSize, iconSize, "", function(){launchApp(currentApp);});
+	$(launcher).addClass("runDiv");
+}
+var requestAppDescription = function(app){
+	var msg = {
+		"Message" : {
+			"type" : "appDescriptionRequest",
+			"content" : app
+		}
+	}
+	if(!socket) createSocket();
+	socket.send(JSON.stringify(msg));
+}
+var appClicked = function(app){
+	log(app);
+	currentApp = app;
+	if(!showAppDescriptions){
+		launchApp(app);
+	}else{
+		requestAppDescription(app);
+	}
 }
 var createSocket = function(){
                 socket = new io.Socket(window.location.hostname);

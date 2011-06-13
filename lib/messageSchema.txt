@@ -1,0 +1,44 @@
+---Client Messages---	
+{
+	Message :{
+		type : appLaunch,
+		path : /path/to/manifest/ 
+	}
+}
+{
+	Message :{
+		type : log,
+		content : content to output
+	}
+}
+{
+	Message:{
+		type: appDescriptionRequest,
+		content : path/to/app/manifest 
+	}
+}	
+---Server Messages---
+{
+	Message :{
+		type : appInit,
+		content : success | failure
+	}
+}
+{
+	Message :{
+		type : appOutput,
+		content : outputline 
+	}
+}
+{
+	Message :{
+		type : appComplete,
+		code: exit code
+	}
+}
+{
+	Message:{
+		type: appDescription,
+		content: contents of the file pointed to by appDescription in the app's manifest
+	}
+}
