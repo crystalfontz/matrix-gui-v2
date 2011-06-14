@@ -256,7 +256,10 @@ var requestAppDescription = function(app){
 			"content" : app
 		}
 	}
-	if(!socket) createSocket();
+	if(!socket){
+		alert("bad socket. Attempting to create");
+		createSocket();
+	}
 	socket.send(JSON.stringify(msg));
 }
 var appClicked = function(app){
@@ -269,13 +272,10 @@ var appClicked = function(app){
 	}
 }
 var createSocket = function(){
-		alert("creating socket");
                 socket = new io.Socket(window.location.hostname, {"transports" : ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], "port" : 8080});
-		alert("socket created to " + window.location.hostname);
                 socket.connect();
-		alert("socket connected");
                 socket.on('message', handleMessage);
-                log(socket);
+                alert(socket);
 }
 /**
 	Sets up event handlers and creates the initial display
