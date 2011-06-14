@@ -53,7 +53,8 @@ var log = function(msg, level, logMode ){
 		-server
 		-none
 	level:
-		-1 debug info
+		-0 info
+		-1 debug
 		-2 normal
 		-3 important
 	*/
@@ -227,7 +228,7 @@ var handleMessage = function(msg){
 		buildMenu(currentDir);
 		return;
 	}
-	log(msg);
+	log(msg, 0);
 	var obj = JSON.parse(msg);
 	if(!obj.hasOwnProperty("Message")){
 		//Bad JSON
@@ -285,10 +286,10 @@ var requestAppDescription = function(app){
 		}
 	}
 	if(!socket.connected){
-		createSocket();
+		createSocket(); 
 	}
-	log("Socket connected: " + socket.connected);
-	log("Created message: " + JSON.stringify(msg));
+	log("Socket connected: " + socket.connected, 1);
+	log("Created message: " + JSON.stringify(msg), 1);
 	socket.send(JSON.stringify(msg));
 	log("description request sent");
 }
