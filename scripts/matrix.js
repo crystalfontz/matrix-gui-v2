@@ -284,7 +284,7 @@ var requestAppDescription = function(app){
 			"content" : app
 		}
 	}
-	if(!socket){
+	if(!socket.connected){
 		createSocket();
 	}
 	log("Socket connected: " + socket.connected);
@@ -304,9 +304,13 @@ var appClicked = function(app){
 	}
 }
 var createSocket = function(){
+	if(!socket.hasOwnProperty("connected") || socket.connected == false){
                 socket = new io.Socket(window.location.hostname, {"transports" : ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], "port" : 8080});
+		socket.on("connect", function(){ log("connected"); } );
                 socket.connect();
+		log("socket connection status: " + socket.connected);
                 socket.on('message', handleMessage);
+	}
 }
 /**
 	Sets up event handlers and creates the initial display
