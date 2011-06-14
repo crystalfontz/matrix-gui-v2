@@ -275,7 +275,7 @@ var requestAppDescription = function(app){
 		createSocket();
 	}
 	socket.send(JSON.stringify(msg));
-}.
+}
 var appClicked = function(app){
 	log(app);
 	currentApp = app;
