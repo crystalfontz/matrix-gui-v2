@@ -8,7 +8,7 @@ var outputContainer;//!div used for text output
 var menuCache = [];//! cache for menu
 var showAppDescriptions = true;	//! Whether or not to show app descriptions
 var currentApp = ""; //! location of the current app's manifest
-
+var logDiv;
 //! Animated scroll to top
 var scrollToTop = function(){
 	$('html, body').animate({scrollTop:0}, 'medium');
@@ -46,12 +46,13 @@ var setBaseStyles = function(elem){
 var log = function(msg, logMode){
 	/*
 	log options:
+	-client_div
 	-client_console
 	-client_alert
 	-server
 	-none
 	*/
-	logMode = (typeof(logMode) != 'undefined') ? logMode : "client_alert";
+	logMode = (typeof(logMode) != 'undefined') ? logMode : "client_div";
 	switch (logMode){
 		case "none":
 			return;
@@ -62,6 +63,9 @@ var log = function(msg, logMode){
 		case "client_alert":
 			alert(msg);
 		break
+		case "client_div":
+			$(logDiv).prepend("<pre>"+ msg + "</pre>");
+		break;
 		case "server":
 			var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + msg}};
 			if(!socket){
@@ -296,14 +300,16 @@ var createSocket = function(){
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
-	log("making socket", "client_alert");
+	log("making socket", "client_div");
 	createSocket();
-	log("socket made", "client_alert");
+	log("socket made", "client_div");
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
+	logDiv = $(document.createElement("div"));
 	$(matrixDisplay).css("height", 900);
 	$('body').css('overflow', 'hidden')
 	$("body").append(matrixDisplay);
+	$("body").append(logDiv);
 	buildMenu("");
 	try{
 		$(document.body).clickNScroll();
