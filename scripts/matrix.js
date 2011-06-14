@@ -43,16 +43,25 @@ var createOutputDiv = function(){
 var setBaseStyles = function(elem){
 	$(elem).addClass("base");
 }
-var log = function(msg, logMode){
+var log = function(msg, level, logMode ){
 	/*
 	log options:
-	-client_div
-	-client_console
-	-client_alert
-	-server
-	-none
+	logMode:
+		-client_div
+		-client_console
+		-client_alert
+		-server
+		-none
+	level:
+		-1 debug info
+		-2 normal
+		-3 important
 	*/
+	level = (typeof(level) != 'undefined') ? level : 1;
 	logMode = (typeof(logMode) != 'undefined') ? logMode : "client_div";
+
+	var minDisplayLevel = 1;
+	if (level < minDisplayLevel) return;
 	switch (logMode){
 		case "none":
 			return;
@@ -278,6 +287,7 @@ var requestAppDescription = function(app){
 	if(!socket){
 		createSocket();
 	}
+	log("Socket connected: " + socket.connected);
 	log("Created message: " + JSON.stringify(msg));
 	socket.send(JSON.stringify(msg));
 	log("description request sent");
@@ -302,9 +312,9 @@ var createSocket = function(){
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
-	log("making socket", "client_div");
+	log("making socket");
 	createSocket();
-	log("socket made", "client_div");
+	log("socket made");
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
 	logDiv = $(document.createElement("div"));
