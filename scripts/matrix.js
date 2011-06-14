@@ -304,7 +304,7 @@ var appClicked = function(app){
 	}
 }
 var createSocket = function(){
-	if(!socket.hasOwnProperty("connected") || socket.connected == false){
+	if(typeof(socket) == 'undefined' || socket.connected == false){
                 socket = new io.Socket(window.location.hostname, {"transports" : ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], "port" : 8080});
 		socket.on("connect", function(){ log("connected"); } );
                 socket.connect();
