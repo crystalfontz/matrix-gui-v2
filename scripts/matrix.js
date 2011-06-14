@@ -44,6 +44,7 @@ var setBaseStyles = function(elem){
 	$(elem).addClass("base");
 }
 var log = function(message){
+	return;
 	var clientSide = false;
 	if(clientSide){
 		console.log(message);
@@ -257,13 +258,11 @@ var requestAppDescription = function(app){
 		}
 	}
 	if(!socket){
-		alert("bad socket. Attempting to create");
 		createSocket();
 	}
 	socket.send(JSON.stringify(msg));
 }
 var appClicked = function(app){
-	log(app);
 	currentApp = app;
 	if(!showAppDescriptions){
 		launchApp(app);
