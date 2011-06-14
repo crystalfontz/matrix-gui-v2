@@ -278,7 +278,9 @@ var requestAppDescription = function(app){
 	if(!socket){
 		createSocket();
 	}
+	log("Created message: " + JSON.stringify(msg));
 	socket.send(JSON.stringify(msg));
+	log("description request sent");
 }
 var appClicked = function(app){
 	log(app);
@@ -306,7 +308,7 @@ var init = function(){
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
 	logDiv = $(document.createElement("div"));
-	$(matrixDisplay).css("height", 900);
+//	$(matrixDisplay).css("height", 900);
 	$('body').css('overflow', 'hidden')
 	$("body").append(matrixDisplay);
 	$("body").append(logDiv);
