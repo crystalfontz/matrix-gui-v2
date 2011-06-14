@@ -269,8 +269,11 @@ var appClicked = function(app){
 	}
 }
 var createSocket = function(){
-                socket = new io.Socket(window.location.hostname);
+		alert("creating socket");
+                socket = new io.Socket(window.location.hostname, {"transports" : ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], "port" : 8080});
+		alert("socket created to " + window.location.hostname);
                 socket.connect();
+		alert("socket connected");
                 socket.on('message', handleMessage);
                 log(socket);
 }
@@ -278,11 +281,7 @@ var createSocket = function(){
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
-	try{
-		createSocket();
-	}catch(e){
-		log("socket creation failed");
-	}
+	createSocket();
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
 	$(matrixDisplay).css("height", 900);
