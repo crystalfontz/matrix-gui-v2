@@ -43,23 +43,37 @@ var createOutputDiv = function(){
 var setBaseStyles = function(elem){
 	$(elem).addClass("base");
 }
-var log = function(message){
-	return;
-	var clientSide = false;
-	if(clientSide){
-		console.log(message);
-	}else{
-		var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + message}};
-		if(!socket){
-//			createSocket();
-		}
-		if(socket){
-			socket.send(JSON.stringify(jsonMessage));
-		}else{
-			alert("Socket Transfer Failed\n Socket:\n "+ socket + "\nOriginal Message:\n" +message);
-		} 
+var log = function(msg, logMode){
+	/*
+	log options:
+	-client_console
+	-client_alert
+	-server
+	-none
+	*/
+	logMode = (typeof(logMode) != 'undefined') ? logMode : "client_alert";
+	switch (logMode){
+		case "none":
+			return;
+		break;
+		case "client_console":
+			console.log(msg);
+		break;
+		case "client_alert":
+			alert(msg);
+		break
+		case "server":
+			var jsonMessage = { "Message" : { "type" : "log", "content" : "Client: " + msg}};
+			if(!socket){
+				createSocket();
+			}
+			if(socket){
+				socket.send(JSON.stringify(jsonMessage));
+			}else{
+				alert("Socket Transfer Failed\n Socket:\n "+ socket + "\nOriginal Message:\n" +msg);
+			} 
+		break;
 	}
-	
 }
 /**
 	Creates a new icon on the Matrix Display
@@ -261,12 +275,15 @@ var requestAppDescription = function(app){
 		createSocket();
 	}
 	socket.send(JSON.stringify(msg));
-}
+}.
 var appClicked = function(app){
+	log(app);
 	currentApp = app;
 	if(!showAppDescriptions){
+		log("launching");
 		launchApp(app);
 	}else{
+		log("getting desc");
 		requestAppDescription(app);
 	}
 }
@@ -274,7 +291,6 @@ var createSocket = function(){
                 socket = new io.Socket(window.location.hostname, {"transports" : ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], "port" : 8080});
                 socket.connect();
                 socket.on('message', handleMessage);
-                alert(socket);
 }
 /**
 	Sets up event handlers and creates the initial display
