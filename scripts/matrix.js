@@ -296,7 +296,9 @@ var createSocket = function(){
 	Sets up event handlers and creates the initial display
 */
 var init = function(){
+	log("making socket", "client_alert");
 	createSocket();
+	log("socket made", "client_alert");
 	outputDiv = false;
 	matrixDisplay = $(document.createElement("div"));
 	$(matrixDisplay).css("height", 900);
