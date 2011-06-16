@@ -11,11 +11,36 @@ body{
 	background-color: #000000;
 	font-family: Arial, Verdana, sans-serif;
 }
+a{
+	text-decoration: none;
+	border: none;
+}
+a img{
+	border: none;
+}
+.header{
+	clear: both;
+}
+.mainMenuBtn{
+	float: right;
+	width: 32px;
+	height: 32px;
+	padding-right: 15px;
+}
+.menuContainer{
+	clear: both;
+}
+.tex{
+	float:left;
+	width: 32px;
+	height: 32px;
+}
 .title{
 	font-size: 24px;
 	width: auto !important;
 	clear: none;
 	padding-left: 20px;
+	float: left;
 }
 .base{
 	float: left;
@@ -25,6 +50,10 @@ body{
 }
 .appContainer{
 	width: 160px;
+}
+.app_icon{
+	width: 96px;
+	height: 96px;
 }
 .appTitle{
 	padding-top: 0px;

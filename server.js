@@ -11,7 +11,6 @@ var sys = require("sys"),
 
 var server = http.createServer(function(request, response) {  
 	var uri = url.parse(request.url).pathname;  
-
 	if(applist.isAppListRequest(uri)) {  
 		applist.generateAppList(uri, response);  
 	}else {  
