@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"iconName" : "power/power-icon.png",
+		"appName" : "Submenu",
+		"title" : "Power",
+		"contents" : "power"		
+	}
+}

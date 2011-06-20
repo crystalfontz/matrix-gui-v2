@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Elastic Nodes",
+		"iconName" : "elasticnodes/qt-icon.png",
+		"appName" : "/usr/bin/qtopia/examples/graphicsview/elasticnodes/elasticnodes",
+		"appText" : "Disable",
+		"submenu" : "Qt4"
+	}
+}

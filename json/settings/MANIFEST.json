@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"iconName" : "settings/settings-icon.png",
+		"appName" : "Submenu",
+		"title" : "Settings",
+		"contents" : "settings/"		
+	}
+}

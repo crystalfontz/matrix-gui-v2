@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Vase",
+		"iconName" : "Vase/3d2-icon.png",
+		"appName" : "runOGLESVase",
+		"appParameters" : "-qaf=1000",
+		"submenu" : "3D"
+	}
+}

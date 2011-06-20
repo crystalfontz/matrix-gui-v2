@@ -1,0 +1,9 @@
+{
+	"Application" : {
+			"title" : "Browser",
+			"iconName" : "browser/web-icon.png",
+			"appName" : "/usr/share/matrix/bin/browser/browser",
+			"appParameters" : "http://ti.com",
+			"appText" : "Disable"
+	}
+}

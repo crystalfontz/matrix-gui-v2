@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=LS Test
+GenericName=Demo App
+Icon=/home/thomas/Documents/matrix-gui-v2/apps/ls/tux-icon.png
+Exec=ls -tlR
+Type=Application 

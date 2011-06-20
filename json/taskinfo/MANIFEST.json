@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "Task Info",
+		"iconName" : "taskinfo/info-icon.png",
+		"appName" : "bin/taskinfo/taskInfo",
+		"submenu" : "settings"
+	}
+}

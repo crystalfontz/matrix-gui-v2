@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Chameleon",
+		"iconName" : "Chameleon/3d1-icon.png",
+		"appName" : "runOGLESChameleonMan",
+		"appParameters" : "-qaf=1000",
+		"submenu" : "3D"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"Application" : {
+		"title" : "Animated Tiles",
+		"iconName" : "animatedtiles/qt-icon.png",
+		"appName" : "/usr/bin/qtopia/examples/animation/animatedtiles/animatedtiles",
+		"appText" : "Disable",
+		"submenu" : "Qt4"
+	}
+}

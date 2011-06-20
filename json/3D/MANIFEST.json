@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "3D",
+		"iconName" : "3D/3d-icon.png",
+		"appName" : "Submenu",
+		"contents" : "3D/"
+	}
+}

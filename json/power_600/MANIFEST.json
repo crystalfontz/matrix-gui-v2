@@ -1,0 +1,8 @@
+{
+	"Application" : {
+		"title" : "Set 600Mhz",
+		"iconName" : "power_600/power-icon.png",
+		"appName" : "setopp3",
+		"submenu" : "power"
+	}
+}
