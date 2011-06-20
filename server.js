@@ -22,12 +22,16 @@ var server = http.createServer(function(request, response) {
 		loader.loadIcon(uri, response);
 	}else if(mUtils.isCacheClearRequest(uri)){
 		mUtils.clearCache(response);
+	}else if(mUtils.isAppLaunchRequest(uri)){
+		appLauncher.launchApp(uri, response);
+	}else if (mUtils.isAppOutputRequest(uri)){
+		pageBuilder.createAppOutputPage(uri, response);
 	}else{  
 		loader.load_static_file(uri, response);  
 	}  
 });
 server.listen(8080);  
-  
+ /* 
 var socket = io.listen(server);
 socket.on('connection', function(client){
 	client.on('connection', function(){
@@ -40,6 +44,6 @@ socket.on('connection', function(client){
 
 	});
 });
-
+*/
 sys.puts("Server running at http://localhost:8080/");  
 
