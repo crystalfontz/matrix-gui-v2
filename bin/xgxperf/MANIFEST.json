@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "Xgx Perf",
-		"iconName" : "xgxperf/xgxperf-icon.png",
-		"appName" : "",
-		"appDescription" : "bin/xgxperf/description.html"
-	}
-}

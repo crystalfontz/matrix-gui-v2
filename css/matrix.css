@@ -69,9 +69,12 @@ a img{
 }
 .runDiv{
 	width:100%;
+	text-align: center;
+	padding-top: 10px;
 }
 .outputDiv{
 	clear: both;
+	padding-top: 10px;
 }
 .outputDiv h1{
 	font-size: 20px;

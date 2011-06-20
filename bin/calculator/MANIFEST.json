@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "Calculator",
-		"iconName" : "calculator/2d-icon.png",
-		"appName" : "/usr/bin/qtopia/examples/widgets/calculator/calculator",
-		"submenu" : "settings"
-	}
-}

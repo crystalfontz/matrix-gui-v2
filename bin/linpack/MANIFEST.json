@@ -1,9 +1,0 @@
-{
-	"Application" : {
-		"title" : "Linpack",
-		"iconName" : "linpack/arm-icon.png",
-		"appDesc" : "",
-		"appName" : "path_to_exec",
-		"submenu" : "arm"
-	}
-}

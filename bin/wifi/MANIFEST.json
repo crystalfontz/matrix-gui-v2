@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"iconName" : "wifi/wireless-icon.png",
-		"appName" : "Submenu",
-		"title" : "Wi-Fi",
-		"contents" : "wifi/"		
-	}
-}

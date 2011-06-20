@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "System Shutdown",
-		"iconName" : "shutdown/power-icon.png",
-		"appName" : "bin/shutdown/runSystemShutdown",
-		"submenu" : "settings"
-	}
-}

@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"iconName" : "cryptos/encrypt-icon.png",
-		"appName" : "Submenu",
-		"title" : "Cryptos",
-		"contents" : "cryptos/"		
-	}
-}

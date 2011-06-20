@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "Desc on / off",
-		"iconName" : "toggledesc/settings-icon.png",
-		"appName" : "bin/toggledesc/toggledesc.sh",
-		"submenu" : "settings"
-	}
-}
