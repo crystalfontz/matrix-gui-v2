@@ -20,6 +20,7 @@ a img{
 }
 .header{
 	clear: both;
+	padding-top: 20px;
 }
 .mainMenuBtn{
 	float: right;
@@ -64,7 +65,7 @@ a img{
 }
 .homeBtn{
 	position: fixed;
-	top: 40px;
+	top: 20px;
 	right: 30px;
 }
 .runDiv{
