@@ -1,9 +1,0 @@
-{
-	"Application" : {
-		"title" : "Moving Blocks",
-		"iconName" : "moveblocks/qt-icon.png",
-		"appName" : "/usr/bin/qtopia/examples/animation/moveblocks/moveblocks",
-		"appText" : "Disable",
-		"submenu" : "Qt4"
-	}
-}

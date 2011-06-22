@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"iconName" : "multimedia/multimedia-icon.png",
-		"appName" : "Submenu",
-		"title" : "Multimedia",
-		"contents" : "comingsoon/"		
-	}
-}

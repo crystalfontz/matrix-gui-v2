@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Coverflow
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/3d3-icon.png
+Type=Application
+Exec=runOGLES2Coverflow -qaf=1000
+Categories=3d

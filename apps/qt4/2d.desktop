@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=2D Acceleration
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/2d-icon.png
+Exec=/usr/local/bin/2D_accel/runbxdemo
+Type=Application
+Categories=Qt4
+X-MATRIX-Description=/usr/shared/matrix-gui-v2/descriptions/2Dacceleration/2DAcceleration/desc_2d.html

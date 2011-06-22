@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "Memory",
-		"iconName" : "meminfo/memsettings-icon.png",
-		"appName" : "bin/meminfo/memInfo",
-		"submenu" : "settings"
-	}
-}

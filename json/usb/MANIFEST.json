@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"iconName" : "usb/usb-icon.png",
-		"appName" : "Submenu",
-		"title" : "USB",
-		"contents" : "comingsoon"		
-	}
-}

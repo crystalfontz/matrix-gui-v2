@@ -1,8 +1,0 @@
-{
-	"Application" : {
-		"title" : "Qt4",
-		"iconName" : "qt4/qt-icon.png",
-		"appName" : "Submenu",
-		"contents" : "Qt4/"
-	}
-}

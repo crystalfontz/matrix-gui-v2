@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Browser
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/web-icon.png
+Exec=./apps/browser/browser
+Type=Application

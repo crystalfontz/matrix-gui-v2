@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Qt4
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
+Type=Directory
+X-MATRIX-CategoryTarget=qt4

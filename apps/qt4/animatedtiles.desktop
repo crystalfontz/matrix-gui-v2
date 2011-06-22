@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Animated Tiles
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
+Exec=/usr/bin/qtopia/examples/animation/animatedtiles/animatedtiles
+Type=Application
+Categories=Qt4

@@ -1,9 +1,0 @@
-{
-	"Application" : {
-		"title" : "WPA",
-		"iconName" : "wpa/wireless-icon.png",
-		"appName" : "bin/wpa/wpatest.sh",
-		"appParameters" : "wpa_gui-e -geometry 480x240+0+0",
-		"submenu" : "wifi"
-	}
-}

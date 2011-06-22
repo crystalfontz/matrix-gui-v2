@@ -1,9 +1,0 @@
-{
-	"Application" : {
-		"title" : "LS Demo",
-		"iconName" : "ls/tux-icon.png",
-		"appDesc" : "",
-		"appName" : "ls",
-		"appParameters" : "-lR"
-	}
-}

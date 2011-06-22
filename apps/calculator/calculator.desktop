@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Calculator
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/2d-icon.png
+Exec=/usr/bin/qtopia/examples/widgets/calculator/calculator
+Type=Application
+Categories=settings

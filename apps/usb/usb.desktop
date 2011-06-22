@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=USB
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/usb-icon.png
+Type=Directory
+X-MATRIX-CategoryTarget=comingsoon

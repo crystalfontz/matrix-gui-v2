@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Linpack
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
+Type=Application
+Exec=echo 'Where is this executable?'
+Categories=arm
