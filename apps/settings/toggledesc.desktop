@@ -2,7 +2,7 @@
 [Desktop Entry]
 Name=Desc On/Off
 GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/settigns-icon.png
+Icon=/usr/share/matrix-gui-v2/icons/settings-icon.png
 Type=Application
 Exec=/usr/share/matrix-gui-v2/bin/toggleDesc.sh
 Categories=settings

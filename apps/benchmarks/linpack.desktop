@@ -1,8 +1,8 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=dhrystone
+Name=Linpack
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
 Type=Application
-Exec=echo 'this exec is somewhere...'
+Exec=runLinpack
 Categories=arm

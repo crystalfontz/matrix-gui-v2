@@ -50,7 +50,9 @@ a img{
 	padding-top: 20px;
 }
 .appContainer{
-	width: 160px;
+	width: 155px;
+	height: 140px;
+	padding-top: 5px !important;
 }
 .app_icon{
 	width: 96px;

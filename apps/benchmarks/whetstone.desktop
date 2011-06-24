@@ -1,8 +1,8 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=Linpack
+Name=Whetstone
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
 Type=Application
-Exec=echo 'Where is this executable?'
+Exec=runWhetstone
 Categories=arm
