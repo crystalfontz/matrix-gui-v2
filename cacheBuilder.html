@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Matrix Gui</title>
+		<link rel="stylesheet" type="text/css" href="/css/matrix.css" ></link>	
+		<script type="text/javascript" language="javascript" src="/scripts/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script>
+		<script type="text/javascript" language="javascript">
+			var appListPrefix = "/menu/";
+			var ajaxCallback = function(data, textStatus, jqXHR){
+				processMenu(data);
+			}
+			var processMenu = function(data){
+				//drop head, javascript, and css
+				data = data.replace(/<(head|script|link)(.|\n|\r)*(head|script|^\/)>[\r|\n]*/gi, "");
+				//drop html and body start tag
+				data = data.replace(/<(html|body)[.!>]*>[\r|\n]*/g, "");
+				//drop html and body end tag
+				data = data.replace(/<(\/html|\/body)[.!>]*>/g, "");
+				//drop doctype
+				data = data.replace('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">', "");
+				//console.log(data);
+				var newDiv = document.createElement("div");
+				var idNum = Math.floor(Math.random() * 10000) + 1;
+				$(newDiv).append("<div id=\""+idNum+"\">"+data+"</div>");
+				$("#cache").append(newDiv);
+				var selector = "#"+idNum;
+				$(selector + " .header, .outputDiv, .runDiv").remove();
+				$(selector+" a").each(function(idx, elem){
+					if($(elem).attr("href").indexOf("launch/") == -1){
+						$.ajax($(elem).attr("href"), {
+							"cache" : "true",
+							"success" : ajaxCallback
+						});
+					}
+				});
+				$("#cache").append($(selector+" div.base"));
+				$(selector).remove();
+			}
+			window.onload = function(){
+				$.ajax(appListPrefix, {
+					"cache" : "true",
+					"success" : ajaxCallback
+				});
+				$(document.body).clickNScroll(); 
+			};
+		</script>
+	</head>
+	<body>
+		<div><div class="header"><img src="/images/header/tex.png" class="tex" id="txlogo" alt="Texas Instruments"><div class="title">Matrix Cache Builder</div><a href="/menu/"><img alt="Main Menu" id="mainMenuBtn" class="mainMenuBtn" src="/images/multi-icon.png"></a></div>
+		<div class="menuContainer">
+			<div id="cache">
+			</div>
+		</div>
+	</body>
+</html>
+

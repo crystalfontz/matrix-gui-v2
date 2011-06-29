@@ -1,7 +1,8 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=Qt4
+Name=Deform
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
-Type=Directory
-X-MATRIX-CategoryTarget=qt4
+Exec=/usr/bin/qtopia/demos/deform/deform -small-screen
+Type=Application
+Categories=Qt4

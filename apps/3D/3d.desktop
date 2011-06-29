@@ -5,3 +5,4 @@ GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/3d-icon.png
 Type=Directory
 X-MATRIX-CategoryTarget=3d
+X-MATRIX-DisplayPriority=2

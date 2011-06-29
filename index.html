@@ -9,14 +9,6 @@
 		<script type="text/javascript" language="javascript">
 			window.onload = function(){
 				$(document.body).clickNScroll();
-				$("#txlogo").click(function(e){
-					$.ajax("/clearcache/", 
-					{
-						success: function(data, textStatus, jqXHR){
-							window.location.reload();
-						}
-					});
-				});
 			};
 		</script>
 	</head>
