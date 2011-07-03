@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Matrix Gui</title>
+		<link rel="stylesheet" type="text/css" href="/css/matrix.css" ></link>		
+		<script type="text/javascript" language="javascript" src="/scripts/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script>
+		<script type="text/javascript" language="javascript">
+			var apps = [];
+			var cache = [];
+			var cleanAppPage = function(data){
+				//HACK. This needs to be better implemented
+				var start = data.indexOf('outputDiv') + "outputDiv".length + 2;
+				var end = data.indexOf('/body') - 1;
+				return data.substring(start, end);
+			}
+			var isInSubmenu = function(app, submenuCats){
+				if(submenuCats == "" && !app.hasOwnProperty("categories")){
+					return true;
+				}else if(!app.hasOwnProperty("categories")){
+					return false;
+				}	
+				var appCats = app.categories.toLowerCase().split(";");
+				var sCats = submenuCats.toLowerCase().split(";");
+				for(var i in sCats){
+					for(var j in appCats){
+						if(sCats[i] == appCats[j]){
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+			var addApp = function (app){
+				var container = document.createElement("div");
+				var icon = document.createElement("img");
+				icon.src = "/icons" + app.iconName;
+				$(icon).addClass("app_icon");
+				$(icon).attr("alt", "[ " + app.title + " ]"); 
+				var t = document.createElement("p");
+				$(t).text(app.title);				
+				$(container).addClass("base");
+				$(container).addClass("appContainer");
+				if(app.appName == "Submenu"){
+					$(container).click( function(){
+							buildMenu(app.contents)
+						});
+				}else{
+						$(container).click( function(){
+							showAppDescription(app);
+						});
+				}
+					$(container).append(icon);
+					$(container).append(t);
+/*
+				}else{
+					var link = document.createElement("a");
+					link.href = "/app/" + app.path64;
+					$(link).append(icon);
+					$(link).append(t);
+					$(container).append(link);					
+				}
+*/
+				$("#apps").append(container);
+			}
+			var showAppDescription = function(app){
+				var cacheIndex = "app_" + app.path64;
+				$("#apps").empty();
+				if(cache.hasOwnProperty(cacheIndex)){
+					$("#apps").append(cache[cacheIndex]);
+					return;
+				}
+				$.ajax("/app/" + app.path64,{ 
+				"success" : function(data){
+						var cleaned = cleanAppPage(data);
+						$("#apps").append(cleaned);
+						cache[cacheIndex] = cleaned;			
+					}
+				});
+				$("#mainMenuBtn").css("display", "block");
+			}
+			var buildMenu = function(submenu){
+				$("#apps").empty();
+				if(cache.hasOwnProperty("menu_" + submenu)){
+					for(var i in cache["menu_" + submenu]){
+						addApp(cache["menu_" + submenu][i]);
+					}
+					return;
+				}
+				cache["menu_" + submenu] = [];
+				for(var i in apps){
+					var app = apps[i].Application;
+					if(isInSubmenu(app, submenu)){
+						addApp(app);
+						cache["menu_" + submenu].push(app);
+					}
+				}
+				if(submenu == ""){
+					$("#mainMenuBtn").css("display", "none");
+				}else{
+					$("#mainMenuBtn").css("display", "block");
+				}
+			}
+			window.onload = function(){
+				$(document.body).clickNScroll();
+				$.getJSON("/cache/apps.json", function( data ){
+						apps = data;
+						buildMenu("");
+					});
+				$("#mainMenuBtn").click(function(){buildMenu("");});	
+			}
+		</script>
+	</head>
+	<body>
+		<div id="matrixContainer">
+			<div class="header">
+				<a href="/clearcache/">
+					<img alt="Texas Instruments" id="txlogo" class="tex" src="/images/header/tex.png">
+				</a>
+				<div class="title">Matrix Application Launcher</div>
+				<img alt="Main Menu" id="mainMenuBtn" class="mainMenuBtn" src="/images/multi-icon.png">
+			</div>
+			<div id="apps" class="menuContainer">
+			</div>		
+		</div>
+	</body>
+</html>
+
