@@ -13,8 +13,10 @@ var sys = require("sys"),
 var server = http.createServer(function(request, response) {  
 	var uri = url.parse(request.url).pathname;
 	console.log("new request for uri: " + uri);  
-	if(mUtils.isAppListRequest(uri)) {  
-		applist.generateAppList(uri, response);
+	if(mUtils.isAppListRequest(uri)) { 
+		applist.generateAppList(uri, response, false);
+	}else if(mUtils.isAppMenuRequest(uri)){
+		applist.generateAppList(uri, response, true);
 	}else if(mUtils.isAppDescriptionRequest(uri)){
 		pageBuilder.createAppPage(uri, response); 
 	}else if(mUtils.isAppIconRequest(uri)){
@@ -25,6 +27,9 @@ var server = http.createServer(function(request, response) {
 		appLauncher.launchApp(uri, response);
 	}else if (mUtils.isAppOutputRequest(uri)){
 		pageBuilder.createAppOutputPage(uri, response);
+	}else if(mUtils.isAppStatusRequest(uri)){
+		console.log("getting app status");
+		appLauncher.status(uri, response);	
 	}else{  
 		loader.load_static_file(uri, response);  
 	}  

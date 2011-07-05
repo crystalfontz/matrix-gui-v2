@@ -6,9 +6,21 @@
 		<link rel="stylesheet" type="text/css" href="/css/matrix.css" ></link>		
 		<script type="text/javascript" language="javascript" src="/scripts/jquery-1.6.1.min.js"></script>
 		<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script>
+		<script type="text/javascript" language="javascript" src="/scripts/dragscrollable.js"></script>
 		<script type="text/javascript" language="javascript">
 			var apps = [];
 			var cache = [];
+			var getUrlParam = function ( name ) {
+				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+				var regexS = "[\\?&]"+name+"=([^&#]*)";
+				var regex = new RegExp( regexS );
+				var results = regex.exec( window.location.href );
+				if( results == null ) {
+					return "";
+				}else{
+				    return results[1];
+				}
+			}
 			var cleanAppPage = function(data){
 				//HACK. This needs to be better implemented
 				var start = data.indexOf('outputDiv') + "outputDiv".length + 2;
@@ -32,6 +44,37 @@
 				}
 				return false;
 			}
+			var updateAppStatus = function (id){
+				var path = "/appstatus/" + id;
+				console.log("fetching update");
+				$.getJSON(path, function(data){
+					if(data.output != ""){
+						$("#apps").empty();
+						var container = document.createElement("div");
+						$(container).addClass("outputDiv");
+						var p = document.createElement("pre");
+						$(p).text(data.output);
+						$(container).append(p);
+						$("#apps").append(container);
+						var bookend = document.createElement("div");
+						$(bookend).attr("id", "bookend");
+						$("#apps").append(bookend);
+						var tgt = $(bookend);
+						$('html,body').animate({scrollTop: tgt.offset().top}, 500);
+					}
+					if(data.running != false){
+						setTimeout('updateAppStatus("'+id+'");', 500)
+					}
+				});
+			}
+			var launchApp = function(app){
+				$.getJSON("/launch/" + app.path64, function(data, status){
+					console.log(data);
+					if(status == "success"){
+						setTimeout('updateAppStatus("'+data.id+'");', 500);
+					}
+				});
+			}
 			var addApp = function (app){
 				var container = document.createElement("div");
 				var icon = document.createElement("img");
@@ -47,34 +90,43 @@
 							buildMenu(app.contents)
 						});
 				}else{
-						$(container).click( function(){
-							showAppDescription(app);
-						});
+					$(container).click( function(){
+						showAppDescription(app);
+					});
 				}
-					$(container).append(icon);
-					$(container).append(t);
-/*
-				}else{
-					var link = document.createElement("a");
-					link.href = "/app/" + app.path64;
-					$(link).append(icon);
-					$(link).append(t);
-					$(container).append(link);					
-				}
-*/
+				$(container).append(icon);
+				$(container).append(t);
 				$("#apps").append(container);
+			}
+			var addRunBtn = function(app){
+				$("#apps .runDiv").remove();
+				if(app.hasOwnProperty("appName") && app.appName != ""){
+					var runDiv = document.createElement("div");
+					$(runDiv).addClass("runDiv");
+					var runImg = document.createElement("img");
+					$(runImg).attr("src", "/images/run-icon.png");
+					$(runImg).addClass("runImg");
+					$(runImg).attr("alt", "Run app");
+					$(runDiv).append(runImg);
+					$(runDiv).click(function(){
+						launchApp(app);
+					});
+					$("#apps").append(runDiv);
+				}
 			}
 			var showAppDescription = function(app){
 				var cacheIndex = "app_" + app.path64;
 				$("#apps").empty();
 				if(cache.hasOwnProperty(cacheIndex)){
 					$("#apps").append(cache[cacheIndex]);
+					addRunBtn(app);
 					return;
 				}
 				$.ajax("/app/" + app.path64,{ 
 				"success" : function(data){
-						var cleaned = cleanAppPage(data);
+						var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
 						$("#apps").append(cleaned);
+						addRunBtn(app);
 						cache[cacheIndex] = cleaned;			
 					}
 				});
@@ -104,11 +156,18 @@
 			}
 			window.onload = function(){
 				$(document.body).clickNScroll();
-				$.getJSON("/cache/apps.json", function( data ){
+			//	$("#matrixContainer").css("width", $(window).width());
+			//	$("#matrixContainer").css("height", $(window).height());
+			//	$("#matrixContainer").dragscrollable({dragSelector : "matrixContainer" });
+				$.getJSON("/applist/", function( data ){
 						apps = data;
-						buildMenu("");
+						var menu = getUrlParam("menu");
+						buildMenu(menu);
 					});
-				$("#mainMenuBtn").click(function(){buildMenu("");});	
+				$("#mainMenuBtn").click(function(){
+					buildMenu("");
+					$("#mainMenuBtn").css("display", "none");
+				});	
 			}
 		</script>
 	</head>
@@ -122,7 +181,8 @@
 				<img alt="Main Menu" id="mainMenuBtn" class="mainMenuBtn" src="/images/multi-icon.png">
 			</div>
 			<div id="apps" class="menuContainer">
-			</div>		
+				Your browser does not support javascript. Please click <a href="/menu/">here</a> for the html only menu. 
+			</div>	
 		</div>
 	</body>
 </html>

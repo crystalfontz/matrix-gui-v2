@@ -1,7 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=ARM
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
-Type=Directory
-X-MATRIX-CategoryTarget=arm
