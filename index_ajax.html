@@ -74,6 +74,7 @@
 						setTimeout('updateAppStatus("'+data.id+'");', 500);
 					}
 				});
+				$("#mainMenuBtn").css("display", "block");
 			}
 			var addApp = function (app){
 				var container = document.createElement("div");
@@ -120,16 +121,16 @@
 				if(cache.hasOwnProperty(cacheIndex)){
 					$("#apps").append(cache[cacheIndex]);
 					addRunBtn(app);
-					return;
+				}else{
+					$.ajax("/app/" + app.path64,{ 
+					"success" : function(data){
+							var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
+							$("#apps").append(cleaned);
+							addRunBtn(app);
+							cache[cacheIndex] = cleaned;			
+						}
+					});
 				}
-				$.ajax("/app/" + app.path64,{ 
-				"success" : function(data){
-						var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
-						$("#apps").append(cleaned);
-						addRunBtn(app);
-						cache[cacheIndex] = cleaned;			
-					}
-				});
 				$("#mainMenuBtn").css("display", "block");
 			}
 			var buildMenu = function(submenu){
@@ -138,14 +139,14 @@
 					for(var i in cache["menu_" + submenu]){
 						addApp(cache["menu_" + submenu][i]);
 					}
-					return;
-				}
-				cache["menu_" + submenu] = [];
-				for(var i in apps){
-					var app = apps[i].Application;
-					if(isInSubmenu(app, submenu)){
-						addApp(app);
-						cache["menu_" + submenu].push(app);
+				}else{
+					cache["menu_" + submenu] = [];
+					for(var i in apps){
+						var app = apps[i].Application;
+						if(isInSubmenu(app, submenu)){
+							addApp(app);
+							cache["menu_" + submenu].push(app);
+						}
 					}
 				}
 				if(submenu == ""){
