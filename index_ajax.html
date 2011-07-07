@@ -5,11 +5,18 @@
 		<title>Matrix Gui</title>
 		<link rel="stylesheet" type="text/css" href="/css/matrix.css" ></link>		
 		<script type="text/javascript" language="javascript" src="/scripts/jquery-1.6.1.min.js"></script>
-		<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script>
-		<script type="text/javascript" language="javascript" src="/scripts/dragscrollable.js"></script>
+	<!--	<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script> -->
+		<script type="text/javascript" language="javascript" src="/scripts/jquery.swipe.js"></script>
 		<script type="text/javascript" language="javascript">
 			var apps = [];
 			var cache = [];
+			var appsPerPage = 10;
+			var currentPage = false;
+			var currentAppNum = 0;
+			var lastSwipeTime = 0;
+			var swipeInterval = 500;
+			var nPages = 0;
+			var showingPage = 0;
 			var getUrlParam = function ( name ) {
 				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 				var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -20,6 +27,9 @@
 				}else{
 				    return results[1];
 				}
+			}
+			var getViewportHeight = function(){
+				return $(window).height() -$("#navHeader").height();
 			}
 			var cleanAppPage = function(data){
 				//HACK. This needs to be better implemented
@@ -46,21 +56,23 @@
 			}
 			var updateAppStatus = function (id){
 				var path = "/appstatus/" + id;
-				console.log("fetching update");
 				$.getJSON(path, function(data){
 					if(data.output != ""){
 						$("#apps").empty();
 						var container = document.createElement("div");
 						$(container).addClass("outputDiv");
+						$(container).attr("id", "outputDiv");
 						var p = document.createElement("pre");
-						$(p).text(data.output);
+						$(p).html(data.output);
 						$(container).append(p);
+						//$(container).text(escapeHtml(data.output));
 						$("#apps").append(container);
 						var bookend = document.createElement("div");
 						$(bookend).attr("id", "bookend");
 						$("#apps").append(bookend);
 						var tgt = $(bookend);
 						$('html,body').animate({scrollTop: tgt.offset().top}, 500);
+						addOutputSwipe();
 					}
 					if(data.running != false){
 						setTimeout('updateAppStatus("'+id+'");', 500)
@@ -69,12 +81,40 @@
 			}
 			var launchApp = function(app){
 				$.getJSON("/launch/" + app.path64, function(data, status){
-					console.log(data);
 					if(status == "success"){
 						setTimeout('updateAppStatus("'+data.id+'");', 500);
 					}
 				});
 				$("#mainMenuBtn").css("display", "block");
+			}
+			var updatePages = function(){
+				$(".page").css("display", "none");
+				$("#page_"+ showingPage).css("display", "block");
+			}
+			var nextPage = function(){
+				if(showingPage < nPages -1){
+					showingPage ++;
+					updatePages();
+				}
+			}
+			var prevPage = function(){
+				if(showingPage > 0){
+					showingPage --;
+					updatePages();
+				}
+			}
+			var addPage = function(){
+				currentPage = document.createElement("div");
+				$(currentPage).addClass("page");
+				$(currentPage).addClass("single");
+				$(currentPage).attr("id", "page_" + nPages);
+				$(currentPage).css("height", getViewportHeight());
+				if(nPages != 0){
+					$(currentPage).css("display", "none");
+				}
+				$("#menu").append(currentPage);
+				currentAppNum = 0;
+				nPages++;
 			}
 			var addApp = function (app){
 				var container = document.createElement("div");
@@ -97,7 +137,11 @@
 				}
 				$(container).append(icon);
 				$(container).append(t);
-				$("#apps").append(container);
+				if(currentPage == false || currentAppNum >= appsPerPage){
+					addPage();
+				}
+				$(currentPage).append(container);
+				currentAppNum++;
 			}
 			var addRunBtn = function(app){
 				$("#apps .runDiv").remove();
@@ -133,8 +177,50 @@
 				}
 				$("#mainMenuBtn").css("display", "block");
 			}
+			var addMenuSwipe = function(){
+				$("#menu").swipe(function(dx, dy) {
+					if(Math.abs(dx) > 5 || Math.abs(dy) > 5){
+						var now = (new Date()).getTime();
+						if( now - lastSwipeTime > swipeInterval){
+							var d = (Math.abs(dx) > Math.abs(dy) ) ? dx : dy;
+							if(d > 0){
+								prevPage();
+							}else{
+								nextPage();
+							} 
+							lastSwipeTime = now;
+						}
+					}				
+				}); 	
+			}
+			var addOutputSwipe = function(){
+				$("#outputDiv").swipe(function(dx, dy) {
+					if(Math.abs(dy) > 5){
+						var now = (new Date()).getTime();
+						if( now - lastSwipeTime > swipeInterval){
+							var newScrollTop = $('html,body').scrollTop();
+							if(dy > 0){
+								newScrollTop -= getViewportHeight() * .85;
+							}else{
+								newScrollTop += getViewportHeight() * .85;
+							}
+							if(newScrollTop > $(bookend).offset().top){
+								newScrollTop = $(bookend).offset().top;
+							}
+							$('html,body').animate({scrollTop: newScrollTop}, 200); 
+							lastSwipeTime = now;
+						}
+					}				
+				}); 	
+			}
 			var buildMenu = function(submenu){
 				$("#apps").empty();
+				nPages = 0;
+				showingPage = 0;
+				currentPage = false;
+				var menuDiv = document.createElement("div");
+				$(menuDiv).attr("id", "menu");
+				$("#apps").append(menuDiv);
 				if(cache.hasOwnProperty("menu_" + submenu)){
 					for(var i in cache["menu_" + submenu]){
 						addApp(cache["menu_" + submenu][i]);
@@ -154,12 +240,11 @@
 				}else{
 					$("#mainMenuBtn").css("display", "block");
 				}
+				addMenuSwipe();
 			}
 			window.onload = function(){
-				$(document.body).clickNScroll();
-			//	$("#matrixContainer").css("width", $(window).width());
-			//	$("#matrixContainer").css("height", $(window).height());
-			//	$("#matrixContainer").dragscrollable({dragSelector : "matrixContainer" });
+			/*	$(document.body).clickNScroll(); */
+				appsPerPage = Math.floor($(window).width() / 155) * Math.floor(getViewportHeight()/ 140);
 				$.getJSON("/applist/", function( data ){
 						apps = data;
 						var menu = getUrlParam("menu");
@@ -168,13 +253,14 @@
 				$("#mainMenuBtn").click(function(){
 					buildMenu("");
 					$("#mainMenuBtn").css("display", "none");
-				});	
+				});
+				
 			}
 		</script>
 	</head>
 	<body>
 		<div id="matrixContainer">
-			<div class="header">
+			<div class="header" id="navHeader">
 				<a href="/clearcache/">
 					<img alt="Texas Instruments" id="txlogo" class="tex" src="/images/header/tex.png">
 				</a>
