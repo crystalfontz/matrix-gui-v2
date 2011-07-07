@@ -3,5 +3,5 @@
 Name=Browser
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/web-icon.png
-Exec=./apps/browser/browser
+Exec=browser http://www.ti.com
 Type=Application

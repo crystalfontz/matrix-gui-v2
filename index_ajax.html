@@ -5,7 +5,6 @@
 		<title>Matrix Gui</title>
 		<link rel="stylesheet" type="text/css" href="/css/matrix.css" ></link>		
 		<script type="text/javascript" language="javascript" src="/scripts/jquery-1.6.1.min.js"></script>
-	<!--	<script type="text/javascript" language="javascript" src="/scripts/jquery.clicknscroll.v1.0.cc_simple.js"></script> -->
 		<script type="text/javascript" language="javascript" src="/scripts/jquery.swipe.js"></script>
 		<script type="text/javascript" language="javascript">
 			var apps = [];
@@ -17,6 +16,7 @@
 			var swipeInterval = 500;
 			var nPages = 0;
 			var showingPage = 0;
+			var scrollLoc = 0;
 			var getUrlParam = function ( name ) {
 				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 				var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -57,13 +57,17 @@
 			var updateAppStatus = function (id){
 				var path = "/appstatus/" + id;
 				$.getJSON(path, function(data){
-					if(data.output != ""){
+					
 						$("#apps").empty();
 						var container = document.createElement("div");
 						$(container).addClass("outputDiv");
 						$(container).attr("id", "outputDiv");
 						var p = document.createElement("pre");
-						$(p).html(data.output);
+						if(data.output != ""){
+							$(p).html(data.output);
+						}else{
+							$(p).html("Application started, waiting for output.");
+						}
 						$(container).append(p);
 						//$(container).text(escapeHtml(data.output));
 						$("#apps").append(container);
@@ -73,7 +77,6 @@
 						var tgt = $(bookend);
 						$('html,body').animate({scrollTop: tgt.offset().top}, 500);
 						addOutputSwipe();
-					}
 					if(data.running != false){
 						setTimeout('updateAppStatus("'+id+'");', 500)
 					}
@@ -83,6 +86,8 @@
 				$.getJSON("/launch/" + app.path64, function(data, status){
 					if(status == "success"){
 						setTimeout('updateAppStatus("'+data.id+'");', 500);
+					}else{
+						buildMenu("");
 					}
 				});
 				$("#mainMenuBtn").css("display", "block");
@@ -178,6 +183,7 @@
 				$("#mainMenuBtn").css("display", "block");
 			}
 			var addMenuSwipe = function(){
+				scrollLoc = $('html,body').scrollTop();
 				$("#menu").swipe(function(dx, dy) {
 					if(Math.abs(dx) > 5 || Math.abs(dy) > 5){
 						var now = (new Date()).getTime();
@@ -193,21 +199,33 @@
 					}				
 				}); 	
 			}
+			var scroll = function(up){
+				var maxScroll = $("#bookend").offset().top;
+				if(up){
+					scrollLoc -= getViewportHeight() * .85;
+				}else{
+					scrollLoc += getViewportHeight() * .85;
+				}
+			//	console.log("new scroll: " + scrollLoc + " max: " + maxScroll);
+				if(scrollLoc > maxScroll) {
+					scrollLoc = maxScroll;
+				}else if(scrollLoc < 0){
+					scrollLoc = 0;
+				}
+				$('html,body').animate({scrollTop: scrollLoc}, 200); 	
+			}
 			var addOutputSwipe = function(){
 				$("#outputDiv").swipe(function(dx, dy) {
-					if(Math.abs(dy) > 5){
+					if(Math.abs(dy) > 4){
 						var now = (new Date()).getTime();
-						if( now - lastSwipeTime > swipeInterval){
-							var newScrollTop = $('html,body').scrollTop();
+						if( now - lastSwipeTime > 2 * swipeInterval){
 							if(dy > 0){
-								newScrollTop -= getViewportHeight() * .85;
+							//	console.log("Scrolling up; dy = " + dy);
+								scroll(true);
 							}else{
-								newScrollTop += getViewportHeight() * .85;
+							//	console.log("Scrolling down; dy = " + dy);
+								scroll(false);
 							}
-							if(newScrollTop > $(bookend).offset().top){
-								newScrollTop = $(bookend).offset().top;
-							}
-							$('html,body').animate({scrollTop: newScrollTop}, 200); 
 							lastSwipeTime = now;
 						}
 					}				
@@ -240,10 +258,10 @@
 				}else{
 					$("#mainMenuBtn").css("display", "block");
 				}
+				$('html,body').animate({scrollTop: 0}, 100);
 				addMenuSwipe();
 			}
 			window.onload = function(){
-			/*	$(document.body).clickNScroll(); */
 				appsPerPage = Math.floor($(window).width() / 155) * Math.floor(getViewportHeight()/ 140);
 				$.getJSON("/applist/", function( data ){
 						apps = data;
@@ -261,14 +279,13 @@
 	<body>
 		<div id="matrixContainer">
 			<div class="header" id="navHeader">
-				<a href="/clearcache/">
-					<img alt="Texas Instruments" id="txlogo" class="tex" src="/images/header/tex.png">
-				</a>
+				<img alt="Texas Instruments" id="txlogo" class="tex" src="/images/header/tex.png">
 				<div class="title">Matrix Application Launcher</div>
 				<img alt="Main Menu" id="mainMenuBtn" class="mainMenuBtn" src="/images/multi-icon.png">
 			</div>
 			<div id="apps" class="menuContainer">
-				Your browser does not support javascript. Please click <a href="/menu/">here</a> for the html only menu. 
+				<h2>Loading Menu</h2>
+				If this does not go away, your browser does not support javascript. Please click <a href="/menu/" style="font-weight:bold;">here</a> for the html only menu. 
 			</div>	
 		</div>
 	</body>

@@ -16,6 +16,7 @@ var server = http.createServer(function(request, response) {
 	if(mUtils.isAppListRequest(uri)) { 
 		applist.generateAppList(uri, response, false);
 	}else if(mUtils.isAppMenuRequest(uri)){
+		console.log("building menu");
 		applist.generateAppList(uri, response, true);
 	}else if(mUtils.isAppDescriptionRequest(uri)){
 		pageBuilder.createAppPage(uri, response); 
@@ -28,7 +29,6 @@ var server = http.createServer(function(request, response) {
 	}else if (mUtils.isAppOutputRequest(uri)){
 		pageBuilder.createAppOutputPage(uri, response);
 	}else if(mUtils.isAppStatusRequest(uri)){
-		console.log("getting app status");
 		appLauncher.status(uri, response);	
 	}else{  
 		loader.load_static_file(uri, response);  
