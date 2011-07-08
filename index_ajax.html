@@ -13,7 +13,7 @@
 			var currentPage = false;
 			var currentAppNum = 0;
 			var lastSwipeTime = 0;
-			var swipeInterval = 500;
+			var swipeInterval = 400;
 			var nPages = 0;
 			var showingPage = 0;
 			var scrollLoc = 0;
@@ -77,6 +77,7 @@
 						var tgt = $(bookend);
 						$('html,body').animate({scrollTop: tgt.offset().top}, 500);
 						addOutputSwipe();
+						$("#mainMenuBtn").css("display", "block");
 					if(data.running != false){
 						setTimeout('updateAppStatus("'+id+'");', 500)
 					}
@@ -199,13 +200,16 @@
 					}				
 				}); 	
 			}
-			var scroll = function(up){
+			var scroll = function(dy){
 				var maxScroll = $("#bookend").offset().top;
+			/*	
 				if(up){
 					scrollLoc -= getViewportHeight() * .85;
 				}else{
 					scrollLoc += getViewportHeight() * .85;
 				}
+			*/
+				scrollLoc -= (dy / 4) * getViewportHeight();	
 			//	console.log("new scroll: " + scrollLoc + " max: " + maxScroll);
 				if(scrollLoc > maxScroll) {
 					scrollLoc = maxScroll;
@@ -219,17 +223,43 @@
 					if(Math.abs(dy) > 4){
 						var now = (new Date()).getTime();
 						if( now - lastSwipeTime > 2 * swipeInterval){
-							if(dy > 0){
-							//	console.log("Scrolling up; dy = " + dy);
+						/*	if(dy > 0){
 								scroll(true);
 							}else{
-							//	console.log("Scrolling down; dy = " + dy);
 								scroll(false);
 							}
+						*/
+							scroll(dy);
 							lastSwipeTime = now;
 						}
 					}				
 				}); 	
+			}
+			var appCompare = function(a, b){
+				var aHas = a.Application.hasOwnProperty("sortPriority");
+				var bHas = b.Application.hasOwnProperty("sortPriority");
+				if(aHas && !bHas){
+					return -1;
+				}
+				if(bHas && !aHas){
+					return 1;
+				}
+				if(aHas && bHas){
+					var r = a.Application.sortPriority - b.Application.sortPriority;
+					r /= Math.abs(r); //allows for < 1 difference in priority, while maintaining convention of -1/0/+1 for comparison
+					if(r != 0){
+						return r;
+					}
+				}
+				var tA = a.Application.title.toLowerCase();
+				var tB = b.Application.title.toLowerCase();
+				if(tA == tB){
+					return 0;
+				}
+				if(tA > tB){
+					return 1;
+				}
+				return -1;
 			}
 			var buildMenu = function(submenu){
 				$("#apps").empty();
@@ -265,6 +295,7 @@
 				appsPerPage = Math.floor($(window).width() / 155) * Math.floor(getViewportHeight()/ 140);
 				$.getJSON("/applist/", function( data ){
 						apps = data;
+						apps.sort(appCompare);
 						var menu = getUrlParam("menu");
 						buildMenu(menu);
 					});

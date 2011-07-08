@@ -4,5 +4,5 @@ Name=Shaders
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/3d4-icon.png
 Type=Application
-Exec=runOGLES2Shaders -qaf=1000"
+Exec=runOGLES2Shaders -qaf=1000
 Categories=3d

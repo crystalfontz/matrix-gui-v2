@@ -1,8 +1,8 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=Shaders
+Name=Vase
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/3d2-icon.png
 Type=Application
-Exec=runOGLES2vase -qaf=1000"
+Exec=runOGLESVase -qaf=1000
 Categories=3d

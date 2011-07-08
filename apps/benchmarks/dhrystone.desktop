@@ -1,6 +1,6 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=dhrystone
+Name=Dhrystone
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
 Type=Application
