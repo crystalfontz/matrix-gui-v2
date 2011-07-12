@@ -13,10 +13,13 @@
 			var currentPage = false;
 			var currentAppNum = 0;
 			var lastSwipeTime = 0;
-			var swipeInterval = 400;
+			var swipeInterval = 800;
 			var nPages = 0;
 			var showingPage = 0;
 			var scrollLoc = 0;
+			var allowPageSwipe = true;
+			var smallScreen = false;
+			var appsLoaded = 0;
 			var getUrlParam = function ( name ) {
 				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 				var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -133,11 +136,11 @@
 				$(container).addClass("base");
 				$(container).addClass("appContainer");
 				if(app.appName == "Submenu"){
-					$(container).click( function(){
+					$(icon).click( function(){
 							buildMenu(app.contents)
 						});
 				}else{
-					$(container).click( function(){
+					$(icon).click( function(){
 						showAppDescription(app);
 					});
 				}
@@ -160,6 +163,8 @@
 					$(runImg).attr("alt", "Run app");
 					$(runDiv).append(runImg);
 					$(runDiv).click(function(){
+						$(runDiv).empty();
+						$(runDiv).text("Launching Application");
 						launchApp(app);
 					});
 					$("#apps").append(runDiv);
@@ -186,17 +191,21 @@
 			var addMenuSwipe = function(){
 				scrollLoc = $('html,body').scrollTop();
 				$("#menu").swipe(function(dx, dy) {
-					if(Math.abs(dx) > 5 || Math.abs(dy) > 5){
-						var now = (new Date()).getTime();
-						if( now - lastSwipeTime > swipeInterval){
-							var d = (Math.abs(dx) > Math.abs(dy) ) ? dx : dy;
-							if(d > 0){
-								prevPage();
-							}else{
-								nextPage();
-							} 
-							lastSwipeTime = now;
-						}
+					if(!allowPageSwipe){
+						return;
+					}
+					if(Math.abs(dx) > 4 || Math.abs(dy) > 4){
+						allowPageSwipe = false;
+						var d = (Math.abs(dx) > Math.abs(dy) ) ? dx : dy;
+						if(d > 0){
+							prevPage();	
+						}else{
+							nextPage();	
+						} 
+						setTimeout(function(){
+							allowPageSwipe=true;
+							}, swipeInterval
+						);
 					}				
 				}); 	
 			}
@@ -222,7 +231,7 @@
 				$("#outputDiv").swipe(function(dx, dy) {
 					if(Math.abs(dy) > 4){
 						var now = (new Date()).getTime();
-						if( now - lastSwipeTime > 2 * swipeInterval){
+						if( now - lastSwipeTime >  swipeInterval){
 						/*	if(dy > 0){
 								scroll(true);
 							}else{
@@ -291,8 +300,54 @@
 				$('html,body').animate({scrollTop: 0}, 100);
 				addMenuSwipe();
 			}
-			window.onload = function(){
-				appsPerPage = Math.floor($(window).width() / 155) * Math.floor(getViewportHeight()/ 140);
+			var setupCss = function(){
+				var viewportHeight = $(window).height();
+				if(viewportHeight < 400){
+					var cssrule = "<style type='text/css'>";
+					cssrule += ".app_icon{ width: 64px !important; height:64px !important}";
+					cssrule += ".appContainer{ width: 115px !important; height: 108px !important}";
+					cssrule += ".appTitle{font-size: 12px !important;}";
+					cssrule += "</style>";
+					$(cssrule).appendTo("head");
+					smallScreen = true;
+					return;	
+				}
+				smallScreen = false;				
+			}
+			var buildCache = function(){
+				$("#txlogo").click(function(){return false;});
+				appsLoaded = 0;
+				$(apps).each(function(k, v){
+					var app = v.Application;
+					var cacheIndex = "app_" + app.path64;
+					$.ajax("/app/" + app.path64,{ 
+					"success" : function(data){
+							var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
+							cache[cacheIndex] = cleaned;
+							appsLoaded ++;
+							var n = apps.length;
+							$("#apps").empty();
+							$("#apps").text(appsLoaded + " Applications cached of " + n);
+							if(appsLoaded >= n){
+								$("#apps").text("All applications loaded. Initializing menu.");
+								setTimeout(function(){buildMenu(""); }, 3000);	
+							}			
+						}
+					});
+				});
+			}
+			window.onload = function(){				
+				setupCss();
+				var w = 155;
+				var h = 140;
+				if(smallScreen){
+					w = 115;
+					h = 108;
+				}
+				var winWidth = $(window).width();
+				var winHeight = getViewportHeight();
+				appsPerPage = Math.floor(winWidth / w) * Math.floor(winHeight / h);
+			
 				$.getJSON("/applist/", function( data ){
 						apps = data;
 						apps.sort(appCompare);
@@ -303,6 +358,7 @@
 					buildMenu("");
 					$("#mainMenuBtn").css("display", "none");
 				});
+				$("#txlogo").click(buildCache);
 				
 			}
 		</script>

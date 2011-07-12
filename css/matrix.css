@@ -6,10 +6,13 @@
 	color: #FFFFFF;
 	margin: 0;
 	padding:0;
+	-moz-user-select: none;
+	unselectable: "on";
 }
 body{
 	background-color: #000000;
 	font-family: Arial, Verdana, sans-serif;
+	overflow: hidden;
 }
 a{
 	text-decoration: none;

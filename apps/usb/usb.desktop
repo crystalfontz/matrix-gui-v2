@@ -4,4 +4,4 @@ Name=USB
 GenericName=Demo App
 Icon=/usr/share/matrix-gui-v2/icons/usb-icon.png
 Type=Directory
-X-MATRIX-CategoryTarget=comingsoon
+X-MATRIX-CategoryTarget=usb
