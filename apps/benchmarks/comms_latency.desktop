@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Communication Latency
+GenericName=Benchmark
+Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
+Type=Application
+Exec=runLmComLatency
+Categories=arm

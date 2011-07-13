@@ -20,6 +20,24 @@
 			var allowPageSwipe = true;
 			var smallScreen = false;
 			var appsLoaded = 0;
+			var disableSelect = function( target )
+			{
+				if(typeof target == "string"){
+					target = document.getElementById(target);
+				}
+				//IE
+				if (typeof target.onselectstart!="undefined"){
+					target.onselectstart=function(){return false};
+				//Firefox
+				}else if (typeof target.style.MozUserSelect!="undefined"){
+					target.style.MozUserSelect="none";
+				//Other
+				}else{
+					target.onmousedown=function(){return false}
+					target.style.cursor = "default";
+				}
+			}
+
 			var getUrlParam = function ( name ) {
 				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 				var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -132,7 +150,8 @@
 				$(icon).addClass("app_icon");
 				$(icon).attr("alt", "[ " + app.title + " ]"); 
 				var t = document.createElement("p");
-				$(t).text(app.title);				
+				$(t).text(app.title);
+				disableSelect(t);				
 				$(container).addClass("base");
 				$(container).addClass("appContainer");
 				if(app.appName == "Submenu"){
@@ -167,6 +186,7 @@
 						$(runDiv).text("Launching Application");
 						launchApp(app);
 					});
+					disableSelect(runDiv);
 					$("#apps").append(runDiv);
 				}
 			}
@@ -211,15 +231,7 @@
 			}
 			var scroll = function(dy){
 				var maxScroll = $("#bookend").offset().top;
-			/*	
-				if(up){
-					scrollLoc -= getViewportHeight() * .85;
-				}else{
-					scrollLoc += getViewportHeight() * .85;
-				}
-			*/
-				scrollLoc -= (dy / 4) * getViewportHeight();	
-			//	console.log("new scroll: " + scrollLoc + " max: " + maxScroll);
+				scrollLoc -= (dy / 5) * getViewportHeight();	
 				if(scrollLoc > maxScroll) {
 					scrollLoc = maxScroll;
 				}else if(scrollLoc < 0){
@@ -232,12 +244,6 @@
 					if(Math.abs(dy) > 4){
 						var now = (new Date()).getTime();
 						if( now - lastSwipeTime >  swipeInterval){
-						/*	if(dy > 0){
-								scroll(true);
-							}else{
-								scroll(false);
-							}
-						*/
 							scroll(dy);
 							lastSwipeTime = now;
 						}
@@ -312,6 +318,7 @@
 					smallScreen = true;
 					return;	
 				}
+
 				smallScreen = false;				
 			}
 			var buildCache = function(){
@@ -320,12 +327,12 @@
 				$(apps).each(function(k, v){
 					var app = v.Application;
 					var cacheIndex = "app_" + app.path64;
+					var n = apps.length;
 					$.ajax("/app/" + app.path64,{ 
 					"success" : function(data){
 							var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
 							cache[cacheIndex] = cleaned;
 							appsLoaded ++;
-							var n = apps.length;
 							$("#apps").empty();
 							$("#apps").text(appsLoaded + " Applications cached of " + n);
 							if(appsLoaded >= n){
@@ -359,7 +366,7 @@
 					$("#mainMenuBtn").css("display", "none");
 				});
 				$("#txlogo").click(buildCache);
-				
+				disableSelect("navHeader");				
 			}
 		</script>
 	</head>
@@ -371,7 +378,7 @@
 				<img alt="Main Menu" id="mainMenuBtn" class="mainMenuBtn" src="/images/multi-icon.png">
 			</div>
 			<div id="apps" class="menuContainer">
-				<h2>Loading Menu</h2>
+				<h3>Loading Menu</h3>
 				If this does not go away, your browser does not support javascript. Please click <a href="/menu/" style="font-weight:bold;">here</a> for the html only menu. 
 			</div>	
 		</div>

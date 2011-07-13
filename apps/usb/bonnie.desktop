@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Bonnie++
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/usb-icon.png
+Type=Application
+Exec=runUsbBonnie foo
+Categories=usb

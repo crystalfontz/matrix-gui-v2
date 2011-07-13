@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=MPEG-4 Decode
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/decode-icon.png
+Type=Application
+Exec=runMpeg4Dec
+Categories=multimedia

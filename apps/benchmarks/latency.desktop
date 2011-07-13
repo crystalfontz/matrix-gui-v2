@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Memory Latency
+GenericName=Benchmark
+Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
+Type=Application
+Exec=lat_mem_rd 1M
+Categories=arm

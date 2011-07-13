@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=DVI To LCD
+GenericName=Demo App
+Icon=/usr/share/matrix-gui-v2/icons/settings-icon.png
+Type=Application
+Exec=dvi2lcd
+Categories=settings
