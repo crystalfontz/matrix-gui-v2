@@ -1,3 +1,1 @@
-cache/*
-locks/*
-appOutput/*
+*.swp

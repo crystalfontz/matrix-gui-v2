@@ -1,0 +1,1 @@
+Locks are used by applications that should not have multiple instances. For example, benchmarks may specify a benchmarks lock to ensure accurrate numbers.

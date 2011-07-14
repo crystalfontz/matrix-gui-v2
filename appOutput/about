@@ -1,0 +1,1 @@
+This folder contains the console output (stdout and stderr) of applications when run. They are then polled by the frontend.

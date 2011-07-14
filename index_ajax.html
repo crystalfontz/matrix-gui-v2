@@ -199,10 +199,14 @@
 				}else{
 					$.ajax("/app/" + app.path64,{ 
 					"success" : function(data){
-							var cleaned = '<div class="outputDiv">'+cleanAppPage(data) + '</div>';
+							var cleaned = '<div class="outputDiv" id="outputDiv">'+cleanAppPage(data) + '</div>';
 							$("#apps").append(cleaned);
 							addRunBtn(app);
-							cache[cacheIndex] = cleaned;			
+							cache[cacheIndex] = cleaned;
+							var bookend = document.createElement("div");
+							$(bookend).attr("id", "bookend");
+							$("#apps").append(bookend);
+							addOutputSwipe();			
 						}
 					});
 				}
