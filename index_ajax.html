@@ -54,6 +54,7 @@
 			}
 			var cleanAppPage = function(data){
 				//HACK. This needs to be better implemented
+				//It's almost completely worked around by requesting the cache up front.
 				var start = data.indexOf('outputDiv') + "outputDiv".length + 2;
 				var end = data.indexOf('/body') - 1;
 				return data.substring(start, end);
@@ -90,7 +91,6 @@
 							$(p).html("Application started, waiting for output.");
 						}
 						$(container).append(p);
-						//$(container).text(escapeHtml(data.output));
 						$("#apps").append(container);
 						var bookend = document.createElement("div");
 						$(bookend).attr("id", "bookend");
@@ -98,15 +98,18 @@
 						var tgt = $(bookend);
 						$('html,body').animate({scrollTop: tgt.offset().top}, 500);
 						addOutputSwipe();
-						$("#mainMenuBtn").css("display", "block");
+						$("#mainMenuBtn").css("display", "none");
 					if(data.running != false){
 						setTimeout('updateAppStatus("'+id+'");', 500)
+					}else{
+						$("#mainMenuBtn").css("display", "block");
 					}
 				});
 			}
 			var launchApp = function(app){
 				$.getJSON("/launch/" + app.path64, function(data, status){
 					if(status == "success"){
+						$("#mainMenuBtn").css("display", "none");
 						setTimeout('updateAppStatus("'+data.id+'");', 500);
 					}else{
 						buildMenu("");
@@ -151,6 +154,7 @@
 				$(icon).attr("alt", "[ " + app.title + " ]"); 
 				var t = document.createElement("p");
 				$(t).text(app.title);
+				$(t).addClass("appTitle");
 				disableSelect(t);				
 				$(container).addClass("base");
 				$(container).addClass("appContainer");
@@ -192,6 +196,7 @@
 			}
 			var showAppDescription = function(app){
 				var cacheIndex = "app_" + app.path64;
+				console.log(cacheIndex);
 				$("#apps").empty();
 				if(cache.hasOwnProperty(cacheIndex)){
 					$("#apps").append(cache[cacheIndex]);
@@ -218,10 +223,9 @@
 					if(!allowPageSwipe){
 						return;
 					}
-					if(Math.abs(dx) > 4 || Math.abs(dy) > 4){
+					if(Math.abs(dx) > 4){
 						allowPageSwipe = false;
-						var d = (Math.abs(dx) > Math.abs(dy) ) ? dx : dy;
-						if(d > 0){
+						if(dx > 0){
 							prevPage();	
 						}else{
 							nextPage();	
@@ -311,8 +315,7 @@
 				addMenuSwipe();
 			}
 			var setupCss = function(){
-				var viewportHeight = $(window).height();
-				if(viewportHeight < 400){
+				if($(window).height() < 400 || $(window).width() < 400){
 					var cssrule = "<style type='text/css'>";
 					cssrule += ".app_icon{ width: 64px !important; height:64px !important}";
 					cssrule += ".appContainer{ width: 115px !important; height: 108px !important}";
@@ -370,7 +373,12 @@
 					$("#mainMenuBtn").css("display", "none");
 				});
 				$("#txlogo").click(buildCache);
-				disableSelect("navHeader");				
+				disableSelect("navHeader");
+				$.getJSON("/appdescriptions/", function(data){
+					for(var i in data){
+						cache[i] = data[i];
+					}	
+				});				
 			}
 		</script>
 	</head>
