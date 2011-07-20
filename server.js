@@ -11,6 +11,7 @@ var sys = require("sys"),
     pageBuilder = require("./lib/pageBuilder.js"),
     configs = require("./lib/configs.js");;
 
+mUtils.checkDirs();
 
 var server = http.createServer(function(request, response) {  
 	var uri = url.parse(request.url).pathname;
