@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Moving Blocks
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
-Type=Application
-Exec=/usr/bin/qtopia/examples/animation/moveblocks/moveblocks
-Categories=qt4

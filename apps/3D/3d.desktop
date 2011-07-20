@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=3D
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/3d-icon.png
-Type=Directory
-X-MATRIX-CategoryTarget=3d
-X-MATRIX-DisplayPriority=2

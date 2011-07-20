@@ -1,7 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Power
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/power-icon.png
-Type=Directory
-X-MATRIX-CategoryTarget=power

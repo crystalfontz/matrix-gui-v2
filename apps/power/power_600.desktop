@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Set 600Mhz
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/power-icon.png
-Type=Application
-Exec=setopp3
-Categories=power

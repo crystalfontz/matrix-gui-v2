@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=LS depth Test
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/tux-icon.png
-Exec=ls -tlR
-Type=Application
-Categories=potato;pie 

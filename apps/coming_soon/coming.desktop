@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Coming Soon
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/coming-icon.png
-Type=Application
-Comment=Coming Soon!
-Categories=comingsoon

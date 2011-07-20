@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Secure Server
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/encrypt-icon.png
-Type=Application
-Exec=/usr/share/matrix-gui-v2/bin/openssl_start_server.sh
-Categories=cryptos

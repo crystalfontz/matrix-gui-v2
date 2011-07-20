@@ -1,7 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Xgxperf
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/xgxperf-icon.png
-Type=Application
-X-MATRIX-Description=/usr/share/matrix-gui-v2/descriptions/xgxperf/description.html

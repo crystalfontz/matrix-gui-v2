@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Task Info
-GenericName=Demo App
-Icon=/usr/share/matrix-gui-v2/icons/info-icon.png
-Type=Application
-Exec=/usr/share/matrix-gui-v2/bin/taskInfo
-Categories=settings
