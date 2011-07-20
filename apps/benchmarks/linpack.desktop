@@ -6,3 +6,4 @@ Icon=/usr/share/matrix-gui-v2/icons/arm-icon.png
 Type=Application
 Exec=runLinpack
 Categories=arm
+X-MATRIX-Lock=benchmarks

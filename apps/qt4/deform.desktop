@@ -6,3 +6,4 @@ Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
 Exec=/usr/bin/qtopia/demos/deform/deform -small-screen
 Type=Application
 Categories=Qt4
+X-MATRIX-Lock=qt

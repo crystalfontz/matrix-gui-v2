@@ -6,3 +6,4 @@ Icon=/usr/share/matrix-gui-v2/icons/qt-icon.png
 Type=Application
 Exec=/usr/bin/qtopia/examples/graphicsview/elasticnodes/elasticnodes
 Categories=Qt4
+X-MATRIX-Lock=qt

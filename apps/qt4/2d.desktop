@@ -7,3 +7,4 @@ Exec=/usr/local/bin/2D_accel/runbxdemo
 Type=Application
 Categories=Qt4
 X-MATRIX-Description=/usr/shared/matrix-gui-v2/descriptions/2Dacceleration/desc_2d.html
+X-MATRIX-Lock=qt
