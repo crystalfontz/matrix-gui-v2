@@ -61,7 +61,7 @@ a img{
 }
 .appContainer{
 	width: 155px;
-	height: 140px;
+	height: 138px;
 	padding-top: 5px !important;
 }
 .app_icon{
@@ -100,6 +100,36 @@ a img{
 }
 .outputDiv p{
 	padding-top: 10px;
+}
+.dots{
+	position: absolute;	
+	bottom: 0px;
+	left: 49%;
+}
+.dot{
+	font-family: Serif;
+	color: #FFFFFF;
+	font-weight:normal;
+	float:left;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-size: 35px;
+}
+.sideArrow{
+	position:absolute;
+}
+.sideArrow img{
+	width: 15px;
+	height: 15px;
+}
+.leftArrow{
+	left: 0px;
+}
+.rightArrow{
+	right: 0px;
+}
+.currentDot{
+	font-weight: bolder;
 }
 .runImg{
 	width: 96px;

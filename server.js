@@ -15,8 +15,8 @@ mUtils.checkDirs();
 
 var server = http.createServer(function(request, response) {  
 	var uri = url.parse(request.url).pathname;
-//	console.log("new request for uri: " + uri);  
-	if(mUtils.isAppListRequest(uri)) { 
+	console.log("new request for uri: " + uri);  
+	if(mUtils.isAppListRequest(uri)) {
 		applist.generateAppList("*", response, mUtils.writeJSON);
 	}else if(mUtils.isAppMenuRequest(uri)){
 		var submenu = uri.substring(configs.appMenuPrefix.length);

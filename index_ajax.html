@@ -108,18 +108,33 @@
 			}
 			var launchApp = function(app){
 				$.getJSON("/launch/" + app.path64, function(data, status){
-					if(status == "success"){
+					if(!data.hasOwnProperty("failure"){
 						$("#mainMenuBtn").css("display", "none");
 						setTimeout('updateAppStatus("'+data.id+'");', 500);
 					}else{
-						buildMenu("");
+						$("#runDiv").text(data.failure);
 					}
 				});
 				$("#mainMenuBtn").css("display", "block");
 			}
+			var updateArrows = function(){
+				//$(".currentDot").removeClass("currentDot");
+				//$("#dot_"+showingPage).addClass("currentDot");
+				if(showingPage == 0){
+					$("#leftArrow").css("display", "none");
+				}else{
+					$("#leftArrow").css("display", "block");
+				}
+				if(showingPage == nPages -1){
+					$("#rightArrow").css("display", "none");
+				}else{
+					$("#rightArrow").css("display", "block");
+				}
+			}
 			var updatePages = function(){
 				$(".page").css("display", "none");
 				$("#page_"+ showingPage).css("display", "block");
+				updateArrows();
 			}
 			var nextPage = function(){
 				if(showingPage < nPages -1){
@@ -180,6 +195,7 @@
 				if(app.hasOwnProperty("appName") && app.appName != ""){
 					var runDiv = document.createElement("div");
 					$(runDiv).addClass("runDiv");
+					$(runDiv).attr("id", "runDiv");
 					var runImg = document.createElement("img");
 					$(runImg).attr("src", "/images/run-icon.png");
 					$(runImg).addClass("runImg");
@@ -194,24 +210,26 @@
 					$("#apps").append(runDiv);
 				}
 			}
+			var addDescriptionExtras = function(app){
+				addRunBtn(app);
+				var bookend = document.createElement("div");
+				$(bookend).attr("id", "bookend");
+				$("#apps").append(bookend);
+				addOutputSwipe();
+			}
 			var showAppDescription = function(app){
 				var cacheIndex = "app_" + app.path64;
-				console.log(cacheIndex);
 				$("#apps").empty();
 				if(cache.hasOwnProperty(cacheIndex)){
 					$("#apps").append(cache[cacheIndex]);
-					addRunBtn(app);
+					addDescriptionExtras(app);
 				}else{
 					$.ajax("/app/" + app.path64,{ 
 					"success" : function(data){
 							var cleaned = '<div class="outputDiv" id="outputDiv">'+cleanAppPage(data) + '</div>';
 							$("#apps").append(cleaned);
-							addRunBtn(app);
 							cache[cacheIndex] = cleaned;
-							var bookend = document.createElement("div");
-							$(bookend).attr("id", "bookend");
-							$("#apps").append(bookend);
-							addOutputSwipe();			
+							addDescriptionExtras(app);		
 						}
 					});
 				}
@@ -234,6 +252,11 @@
 							allowPageSwipe=true;
 							}, swipeInterval
 						);
+					}
+					if(Math.abs(dy) > 3.5){
+						if(dy < 0){
+							buildMenu("");
+						}
 					}				
 				}); 	
 			}
@@ -283,6 +306,46 @@
 					return 1;
 				}
 				return -1;
+			} 
+			var createSideArrDiv = function(id){
+				var el = document.createElement("div");
+				$(el).addClass("sideArrow");
+				if(typeof(id) != 'undefined' && id != ""){
+					$(el).attr("id", id);
+				}
+				return el;
+			}
+			var addArrow = function(el, src, id){
+				var i = document.createElement("img");
+				$(i).attr("src", src);
+				if(typeof(id) != 'undefined' && id != ""){
+					$(i).attr("id", id);
+				}
+				$(el).append(i);
+			}
+			var addArrows = function(){
+			/*	
+				var dots = document.createElement("div");
+				$(dots).addClass("dots");
+				for(var i = 0; i < nPages; i++){
+					$(dots).append('<div class="dot" id="dot_'+i+'">.</div>');
+				}
+				$("#apps").append(dots);
+				var w = $(window).width();
+				$(dots).css("left", (w - $(dots).width()) / 2);
+			*/
+				var rightArrow = createSideArrDiv("rightArrow");
+				var leftArrow = createSideArrDiv("leftArrow");
+				addArrow(rightArrow, "/images/right_arrow.png");
+				addArrow(leftArrow, "/images/left_arrow.png");
+				$(rightArrow).addClass("rightArrow");
+				$(rightArrow).click(nextPage);
+				$(leftArrow).click(prevPage);
+				$(leftArrow).addClass("leftArrow");
+				$("#apps").append(rightArrow);
+				$("#apps").append(leftArrow);
+				$(".sideArrow").css("top", ($(window).height() - $(".sideArrow").height()) / 2);
+				updateArrows();				
 			}
 			var buildMenu = function(submenu){
 				$("#apps").empty();
@@ -311,14 +374,15 @@
 				}else{
 					$("#mainMenuBtn").css("display", "block");
 				}
+				addArrows();
 				$('html,body').animate({scrollTop: 0}, 100);
 				addMenuSwipe();
 			}
 			var setupCss = function(){
 				if($(window).height() < 400 || $(window).width() < 400){
 					var cssrule = "<style type='text/css'>";
-					cssrule += ".app_icon{ width: 64px !important; height:64px !important}";
-					cssrule += ".appContainer{ width: 115px !important; height: 108px !important}";
+					cssrule += ".app_icon{ width: 64px !important; height:62px !important}";
+					cssrule += ".appContainer{ width: 115px !important; height: 106px !important}";
 					cssrule += ".appTitle{font-size: 12px !important;}";
 					cssrule += "</style>";
 					$(cssrule).appendTo("head");
@@ -353,10 +417,10 @@
 			window.onload = function(){				
 				setupCss();
 				var w = 155;
-				var h = 140;
+				var h = 138;
 				if(smallScreen){
 					w = 115;
-					h = 108;
+					h = 106;
 				}
 				var winWidth = $(window).width();
 				var winHeight = getViewportHeight();
@@ -376,7 +440,7 @@
 				disableSelect("navHeader");
 				$.getJSON("/appdescriptions/", function(data){
 					for(var i in data){
-						cache[i] = data[i];
+						cache[i] = '<div class="outputDiv" id="outputDiv">'+data[i]+"</div>";
 					}	
 				});				
 			}
