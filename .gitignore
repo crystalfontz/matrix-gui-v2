@@ -2,4 +2,6 @@
 cache/
 appOutput/
 locks/
-
+apps/
+doDocumentation.sh
+documentation/
