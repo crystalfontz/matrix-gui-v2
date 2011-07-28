@@ -661,6 +661,12 @@ var initMenu = function(){
 			}
 	});
 }
+/**
+* Build App description page cache. It requests the master list from the server, and will 
+* retry once if it recieves an empty response. Data is then put into the cache and stored
+* until the user requests a description page. 
+* @see cache
+*/
 var initDescriptionCache = function(retry){
 	$.getJSON("/appdescriptions/", function(data){
 		if(!$.isEmptyObject(data)){
@@ -680,6 +686,7 @@ var initDescriptionCache = function(retry){
 * @name window.onload
 * @function	
 * @see initMenu
+* @see initDescriptionCache
 * @see appsPerPage
 * @see setupCss
 * @see cache
