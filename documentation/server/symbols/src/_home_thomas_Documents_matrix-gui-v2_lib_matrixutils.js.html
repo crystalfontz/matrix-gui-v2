@@ -1,0 +1,470 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span> * Utility functions for Matrix GUI
+<span class='line'>  3</span> * @author Thomas Potthast &lt;tpotthast@ti.com> 
+<span class='line'>  4</span> * @fileOverview
+<span class='line'>  5</span> */</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">/**
+<span class='line'>  7</span> * Application execution and output capture 
+<span class='line'>  8</span> * @name mUtils
+<span class='line'>  9</span> * @class 
+<span class='line'> 10</span> */</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">configs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">"./configs.js"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">fs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">"fs"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">path</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">"path"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="COMM">/**
+<span class='line'> 15</span> * Chacks to see if the required matrix folders exist. If not, it creates them.
+<span class='line'> 16</span> * @see configs.exports.cacheDir
+<span class='line'> 17</span> * @see configs.exports.appOutputDir
+<span class='line'> 18</span> * @see configs.exports.appLockDir
+<span class='line'> 19</span> * @memberOf mUtils
+<span class='line'> 20</span> */</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="NAME">exports.checkDirs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dirs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="NAME">dirs.push</span><span class="PUNC">(</span><span class="NAME">configs.cacheDir</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="NAME">dirs.push</span><span class="PUNC">(</span><span class="NAME">configs.appOutputDir</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="NAME">dirs.push</span><span class="PUNC">(</span><span class="NAME">configs.appLockDir</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">	</span><span class="NAME">dirs.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">dir</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">		</span><span class="NAME">path.exists</span><span class="PUNC">(</span><span class="NAME">dir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">exists</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">exists</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Creating"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">dir</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">				</span><span class="NAME">fs.mkdir</span><span class="PUNC">(</span><span class="NAME">dir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"0777"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="COMM">//app list generation</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="COMM">/**
+<span class='line'> 37</span> * Parses properly formatted data according to the freedesktop.org spec into the 
+<span class='line'> 38</span> * internal JSON representation used by Matrix. 
+<span class='line'> 39</span> * @param data String data to parse
+<span class='line'> 40</span> * @param fpath Path to manifest file
+<span class='line'> 41</span> * @see http://standards.freedesktop.org/desktop-entry-spec/latest/
+<span class='line'> 42</span> * @memberOf mUtils
+<span class='line'> 43</span> */</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="NAME">exports.parseManifestData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fpath</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">fpath</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">fpath</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">app</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">			</span><span class="STRN">"Application"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">				</span><span class="STRN">"manifestPath"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">fpath</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lines</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data.toString</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">'\n'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="NAME">lines.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">line</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">line.indexOf</span><span class="PUNC">(</span><span class="STRN">"="</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">line.substring</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">line.substring</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">		</span><span class="KEYW">switch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">key.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"type"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">				</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">value.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">"directory"</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">					</span><span class="NAME">app.Application.appName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Submenu"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT"> 
+<span class='line'> 64</span> 			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"name"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.title</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'> 67</span> 			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"icon"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.iconName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"exec"</span><span class="PUNC">:</span><span class="WHIT"> 
+<span class='line'> 72</span> 				</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ignored</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="WHIT"> </span><span class="STRN">"%f"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%F"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%U"</span><span class="WHIT"> </span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%u"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%d"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%D"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%n"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%N"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%c"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%v"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"%m"</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">				</span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">ignored</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">					</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.replace</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">ignored</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">				</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.replace</span><span class="PUNC">(</span><span class="STRN">"%k"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fpath</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.appName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"categories"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.categories</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"x-matrix-categorytarget"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.contents</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"x-matrix-lock"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.lock</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"x-matrix-description"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.appDescription</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"x-matrix-displaypriority"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.sortPriority</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">			</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="STRN">"comment"</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">				</span><span class="NAME">app.Application.comment</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">			</span><span class="KEYW">default</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">			</span><span class="COMM">/*      console.log("Unused key/value pair.");
+<span class='line'> 99</span> 				console.log("key: " + key);
+<span class='line'>100</span> 				console.log("value: " + value); */</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">			</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT"> 
+<span class='line'>103</span> 	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">app.Application.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">"appName"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">		</span><span class="NAME">app.Application.appName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app.Application.appName.replace</span><span class="PUNC">(</span><span class="STRN">"%i"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"--icon "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">app.Application.iconName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">	</span><span class="NAME">app.Application.path64</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Buffer</span><span class="PUNC">(</span><span class="NAME">app.Application.manifestPath</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toString</span><span class="PUNC">(</span><span class="STRN">"base64"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">app</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>109</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="COMM">/**
+<span class='line'>111</span> * Determines if an application belongs in the submenu with the specified category.
+<span class='line'>112</span> * Category "*" returns true for all apps, and an empty string will be true if the 
+<span class='line'>113</span> * application has no categories.  
+<span class='line'>114</span> * @param app Application to check
+<span class='line'>115</span> * @param submenuCats Categories (semicolon separated) of apps to accept. 
+<span class='line'>116</span> * @memberOf mUtils
+<span class='line'>117</span> */</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="NAME">exports.isInSubmenu</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">app</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">submenuCats</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">submenuCats.indexOf</span><span class="PUNC">(</span><span class="STRN">"*"</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">submenuCats</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">""</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">app.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">"categories"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">app.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">"categories"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">	
+<span class='line'>127</span> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">appCats</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app.categories.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">";"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">sCats</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">submenuCats.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">";"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">sCats</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">		</span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">j</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">appCats</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">sCats</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">appCats</span><span class="PUNC">[</span><span class="NAME">j</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">				</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="COMM">/**
+<span class='line'>139</span> * App Sorting helper. Compares apps first by sortPriority, and then alphabetically.
+<span class='line'>140</span> * Apps with a lower sortPriority will appear before ones with higher or no sortPriority.
+<span class='line'>141</span> * @param app1 first app to check 
+<span class='line'>142</span> * @param app2 sceond app to check
+<span class='line'>143</span> * @memberOf mUtils
+<span class='line'>144</span> */</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="NAME">exports.compareApps</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">app1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">app2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">has1</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app1.Application.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">"sortPriority"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">has2</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app2.Application.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">"sortPriority"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">has1</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="WHIT"> </span><span class="NAME">has2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">has2</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">has1</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">has1</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="WHIT"> </span><span class="NAME">has2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">n</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">app2.Application.title</span><span class="PUNC">&lt;</span><span class="NAME">app1.Application.title</span><span class="PUNC">)</span><span class="PUNC">-</span><span class="PUNC">(</span><span class="NAME">app1.Application.title</span><span class="PUNC">&lt;</span><span class="NAME">app2.Application.title</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">n</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>157</span> 	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p1</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app1.Application.sortPriority</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p2</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">app2.Application.sortPriority</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>160</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">p1</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">p2</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="COMM">/**
+<span class='line'>163</span> * Recursively deletes files in configs.exports.cacheDir. When the last file is deleted, writes output to response.
+<span class='line'>164</span> * @param files list of files to delete
+<span class='line'>165</span> * @param response HTTP response object
+<span class='line'>166</span> * @param hasErr Whether or not an error in deletion has already occurred
+<span class='line'>167</span> * @see configs.exports.cacheDir
+<span class='line'>168</span> * @see mUtils.exports.clearCache
+<span class='line'>169</span> * @private
+<span class='line'>170</span> * @memberOf mUtils
+<span class='line'>171</span> */</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cacheClearHelper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">files</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">hasErr</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">file</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">path.join</span><span class="PUNC">(</span><span class="NAME">configs.cacheDir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">files</span><span class="PUNC">[</span><span class="NAME">files.length</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">	</span><span class="NAME">fs.unlink</span><span class="PUNC">(</span><span class="NAME">file</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">		</span><span class="NAME">files.pop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">hasErr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">files.length</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">			</span><span class="NAME">response.writeHead</span><span class="PUNC">(</span><span class="NUMB">302</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">"Content-Type"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"text/html"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"Location"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">configs.cacheBuilderUrl</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">hasErr</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">				</span><span class="NAME">response.write</span><span class="PUNC">(</span><span class="STRN">"Files may not have been deleted"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">				</span><span class="NAME">response.write</span><span class="PUNC">(</span><span class="STRN">"All files deleted"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">			</span><span class="NAME">response.end</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>185</span> 		</span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">			</span><span class="NAME">cacheClearHelper</span><span class="PUNC">(</span><span class="NAME">files</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">hasErr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="COMM">/**
+<span class='line'>191</span> * Deletes all apps in configs.exports.cacheDir. 
+<span class='line'>192</span> * @param response HTTP response used for output
+<span class='line'>193</span> * @see configs.exports.cacheDir
+<span class='line'>194</span> * @see mUtils.cacheClearHelper
+<span class='line'>195</span> * @memberOf mUtils
+<span class='line'>196</span> */</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="NAME">exports.clearCache</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">	</span><span class="NAME">fs.readdir</span><span class="PUNC">(</span><span class="NAME">configs.cacheDir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">files</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">			</span><span class="NAME">response.writeHead</span><span class="PUNC">(</span><span class="NUMB">500</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">"Content-Type"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"text/html"</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">			</span><span class="NAME">response.write</span><span class="PUNC">(</span><span class="STRN">"Error reading Dir"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">			</span><span class="NAME">response.end</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">		</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Clearing Cache"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">		</span><span class="NAME">cacheClearHelper</span><span class="PUNC">(</span><span class="NAME">files</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>207</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="COMM">/**
+<span class='line'>209</span> * Wrapper to make outputting JSON to a response easier.
+<span class='line'>210</span> * @param js JSON to write
+<span class='line'>211</span> * @param response HTTP response object
+<span class='line'>212</span> * @memberOf mUtils
+<span class='line'>213</span> */</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="NAME">exports.writeJSON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">js</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">	</span><span class="NAME">response.writeHead</span><span class="PUNC">(</span><span class="NUMB">200</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">"Content-Type"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"text/json"</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">	</span><span class="NAME">response.write</span><span class="PUNC">(</span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">js</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">	</span><span class="NAME">response.end</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="COMM">//String functions</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="COMM">/**
+<span class='line'>221</span> * Removes leading and trailing slashes.
+<span class='line'>222</span> * @param str String to clean
+<span class='line'>223</span> * @memberOf mUtils
+<span class='line'>224</span> */</span><span class="WHIT">
+<span class='line'>225</span> </span><span class="NAME">exports.cleanStr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">beginIdx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.indexOf</span><span class="PUNC">(</span><span class="STRN">"/"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">endIdx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.lastIndexOf</span><span class="PUNC">(</span><span class="STRN">"/"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">	</span><span class="NAME">beginIdx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NAME">beginIdx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">	</span><span class="NAME">endIdx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">endIdx</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">str.length</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">endIdx</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">	</span><span class="NAME">str</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.substring</span><span class="PUNC">(</span><span class="NAME">beginIdx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">endIdx</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">beginIdx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">str</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>233</span> </span><span class="COMM">/**
+<span class='line'>234</span> * Removes whitespace from a string.
+<span class='line'>235</span> * @param str String to clean
+<span class='line'>236</span> * @memberOf mUtils
+<span class='line'>237</span> */</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="NAME">exports.trim</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>239</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT">	</span><span class="NAME">str</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.replace</span><span class="PUNC">(</span><span class="REGX">/^\s\s*/</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>240</span> </span><span class="WHIT">		</span><span class="NAME">ws</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="REGX">/\s/</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>241</span> </span><span class="WHIT">		</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.length</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>242</span> </span><span class="WHIT">	</span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ws.test</span><span class="PUNC">(</span><span class="NAME">str.charAt</span><span class="PUNC">(</span><span class="PUNC">--</span><span class="NAME">i</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>243</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">str.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>244</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="COMM">/**
+<span class='line'>246</span> * Escapes unsafe HTML characters in text. Replaces &&lt;>"' with their equivalents.
+<span class='line'>247</span> * @param unsafe string to clean
+<span class='line'>248</span> * @memberOf mUtils
+<span class='line'>249</span> */</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="NAME">exports.escapeHtml</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">unsafe</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">unsafe</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">      </span><span class="PUNC">.</span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/&/g</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"&amp;"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">      </span><span class="PUNC">.</span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/&lt;/g</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"&lt;"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">      </span><span class="PUNC">.</span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/>/g</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"&gt;"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="WHIT">      </span><span class="PUNC">.</span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/"/g</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"&quot;"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">      </span><span class="PUNC">.</span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/'/g</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"&#039;"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>258</span> </span><span class="COMM">/**
+<span class='line'>259</span> * Generates a random alphanumeric (and _ ) string of the specified length.
+<span class='line'>260</span> * @param len Length of string to generate
+<span class='line'>261</span> * @memberOf mUtils
+<span class='line'>262</span> */</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="NAME">exports.randomString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">len</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">chars</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz_"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">randomstring</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>266</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">&lt;</span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>267</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">rnum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.floor</span><span class="PUNC">(</span><span class="NAME">Math.random</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">chars.length</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">		</span><span class="NAME">randomstring</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">chars.substring</span><span class="PUNC">(</span><span class="NAME">rnum</span><span class="PUNC">,</span><span class="NAME">rnum</span><span class="PUNC">+</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>269</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">randomstring</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>271</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>272</span> </span><span class="COMM">//Filename utils</span><span class="WHIT">
+<span class='line'>273</span> </span><span class="COMM">/**
+<span class='line'>274</span> * Gets the extension of a file.
+<span class='line'>275</span> * @param filename full name of file
+<span class='line'>276</span> * @memberOf mUtils
+<span class='line'>277</span> */</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="NAME">exports.getExtension</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">filename</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">filename.substring</span><span class="PUNC">(</span><span class="NAME">filename.lastIndexOf</span><span class="PUNC">(</span><span class="STRN">"."</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="COMM">/**
+<span class='line'>282</span> * Checks whether or not a file is a manifest. Currently just looks at the extension. 
+<span class='line'>283</span> * @param filename name of file to check
+<span class='line'>284</span> * @memberOf mUtils
+<span class='line'>285</span> */</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="NAME">exports.isManifest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">filename</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>287</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">extension</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">exports.getExtension</span><span class="PUNC">(</span><span class="NAME">filename</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>288</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">extension.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">configs.appDescriptionName.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>289</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>290</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>291</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>292</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>293</span> </span><span class="COMM">/**
+<span class='line'>294</span> * Compares whether or not two paths are the same, ignoring leading and trailing slashes. 
+<span class='line'>295</span> * Case insensitive. 
+<span class='line'>296</span> * @param path1 first path to check
+<span class='line'>297</span> * @param path2 second path to check
+<span class='line'>298</span> * @memberOf mUtils
+<span class='line'>299</span> */</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="NAME">exports.pathCompare</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">path1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">path2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">	</span><span class="COMM">//drop leading and trailing slashes on both</span><span class="WHIT">
+<span class='line'>302</span> </span><span class="WHIT">	</span><span class="NAME">path1</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mUtils.cleanStr</span><span class="PUNC">(</span><span class="NAME">path1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>303</span> </span><span class="WHIT">	</span><span class="NAME">path2</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mUtils.cleanStr</span><span class="PUNC">(</span><span class="NAME">path2</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>304</span> </span><span class="WHIT">	
+<span class='line'>305</span> 	</span><span class="COMM">//both to lower case; used for case insensitive comparison</span><span class="WHIT">
+<span class='line'>306</span> </span><span class="WHIT">	</span><span class="NAME">path1</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">path1.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">	</span><span class="NAME">path2</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">path2.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>308</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">path1</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">path2</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="COMM">/**
+<span class='line'>311</span> * Checks to see if uri has a given prefix.
+<span class='line'>312</span> * @param uri Uri to check
+<span class='line'>313</span> * @param prefix Prefix for which to look
+<span class='line'>314</span> * @memberOf mUtils
+<span class='line'>315</span> */</span><span class="WHIT">
+<span class='line'>316</span> </span><span class="NAME">exports.checkPrefix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prefix</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>317</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">check</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">uri.substring</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prefix.length</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>318</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">check</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">prefix</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>319</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>322</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>323</span> </span><span class="COMM">//URI checking functions</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="COMM">/**
+<span class='line'>325</span> * Determines whether or not URI is a request for the app list.
+<span class='line'>326</span> * @param uri URI to check
+<span class='line'>327</span> * @see mUtils.exports.checkPrefix
+<span class='line'>328</span> * @see configs.exports.appListPrefix
+<span class='line'>329</span> * @memberOf mUtils
+<span class='line'>330</span> */</span><span class="WHIT">
+<span class='line'>331</span> </span><span class="NAME">exports.isAppListRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>332</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appListPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>333</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>334</span> </span><span class="COMM">/**
+<span class='line'>335</span> * Determines whether or not URI is a request for the app menu.
+<span class='line'>336</span> * @param uri URI to check
+<span class='line'>337</span> * @see mUtils.exports.checkPrefix
+<span class='line'>338</span> * @see configs.exports.appMenuPrefix
+<span class='line'>339</span> * @memberOf mUtils
+<span class='line'>340</span> */</span><span class="WHIT">
+<span class='line'>341</span> </span><span class="NAME">exports.isAppMenuRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>342</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appMenuPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="COMM">/**
+<span class='line'>345</span> * Determines whether or not URI is a request for an app description page. 
+<span class='line'>346</span> * @param uri URI to check
+<span class='line'>347</span> * @see mUtils.exports.checkPrefix
+<span class='line'>348</span> * @see configs.exports.appDescriptionPrefix
+<span class='line'>349</span> * @memberOf mUtils
+<span class='line'>350</span> */</span><span class="WHIT">
+<span class='line'>351</span> </span><span class="NAME">exports.isAppDescriptionRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appDescriptionPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="COMM">/**
+<span class='line'>355</span> * Determines whether or not URI is a request for an app icon. Only returns true if
+<span class='line'>356</span> * the uri is for a valid icon filetype. 
+<span class='line'>357</span> * @param uri URI to check
+<span class='line'>358</span> * @see mUtils.exports.checkPrefix
+<span class='line'>359</span> * @see configs.exports.iconPrefix
+<span class='line'>360</span> * @see configs.exports.iconExtensions
+<span class='line'>361</span> * @see mUtils.exports.getExtension
+<span class='line'>362</span> * @memberOf mUtils
+<span class='line'>363</span> */</span><span class="WHIT">
+<span class='line'>364</span> </span><span class="NAME">exports.isAppIconRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>365</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.iconPrefix</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">configs.iconExtensions.indexOf</span><span class="PUNC">(</span><span class="NAME">exports.getExtension</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>366</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>367</span> </span><span class="COMM">/**
+<span class='line'>368</span> * Determines whether or not URI is a request to launch an app.
+<span class='line'>369</span> * @param uri URI to check.
+<span class='line'>370</span> * @see mUtils.exports.checkPrefix
+<span class='line'>371</span> * @see configs.exports.appLaunchPrefix
+<span class='line'>372</span> * @memberOf mUtils
+<span class='line'>373</span> */</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="NAME">exports.isAppLaunchRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>375</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appLaunchPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>376</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>377</span> </span><span class="COMM">/**
+<span class='line'>378</span> * Determines whether or not URI is a request to clear the cache folders.
+<span class='line'>379</span> * @param uri URI to check.
+<span class='line'>380</span> * @see mUtils.exports.checkPrefix
+<span class='line'>381</span> * @see configs.exports.cacheClearPrefix
+<span class='line'>382</span> * @memberOf mUtils
+<span class='line'>383</span> */</span><span class="WHIT">
+<span class='line'>384</span> </span><span class="NAME">exports.isCacheClearRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>385</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.cacheClearPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>386</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>387</span> </span><span class="COMM">/**
+<span class='line'>388</span> * Determines whether or not URI is a request for the app list.
+<span class='line'>389</span> * @param uri URI to check.
+<span class='line'>390</span> * @see mUtils.exports.checkPrefix
+<span class='line'>391</span> * @see configs.exports.appOutputPrefix
+<span class='line'>392</span> * @memberOf mUtils
+<span class='line'>393</span> */</span><span class="WHIT">
+<span class='line'>394</span> </span><span class="NAME">exports.isAppOutputRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>395</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appOutputPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>396</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>397</span> </span><span class="COMM">/**
+<span class='line'>398</span> * Determines whether or not URI is a request for an application's 
+<span class='line'>399</span> * status.
+<span class='line'>400</span> * @param uri URI to check
+<span class='line'>401</span> * @see mUtils.exports.checkPrefix
+<span class='line'>402</span> * @see configs.exports.appStatusPrefix
+<span class='line'>403</span> * @memberOf mUtils
+<span class='line'>404</span> */</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="NAME">exports.isAppStatusRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.appStatusPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>407</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>408</span> </span><span class="COMM">/**
+<span class='line'>409</span> * Determines whether or not URI is a request for the full set of 
+<span class='line'>410</span> * application descriptions.
+<span class='line'>411</span> * @param uri URI to check
+<span class='line'>412</span> * @see mUtils.exports.checkPrefix
+<span class='line'>413</span> * @see configs.exports.allAppDescriptionsPrefix
+<span class='line'>414</span> * @memberOf mUtils
+<span class='line'>415</span> */</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="NAME">exports.isAllAppDescriptionsRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">exports.checkPrefix</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">configs.allAppDescriptionsPrefix</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>419</span> </span><span class="COMM">/**
+<span class='line'>420</span> * Gets an application ID from a URI.
+<span class='line'>421</span> * @param uri URI to parse
+<span class='line'>422</span> * @memberOf mUtils
+<span class='line'>423</span> */</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="NAME">exports.getAppIdFromUri</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uri</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">	 </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">uri.substring</span><span class="PUNC">(</span><span class="NAME">uri.lastIndexOf</span><span class="PUNC">(</span><span class="STRN">"/"</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="COMM">/**
+<span class='line'>428</span> * Converts a filepath to an app ID.
+<span class='line'>429</span> * @param filepath Filepath to convert
+<span class='line'>430</span> * @memberOf mUtils
+<span class='line'>431</span> */</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="NAME">exports.getAppIdFromFilepath</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">filepath</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>433</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Buffer</span><span class="PUNC">(</span><span class="NAME">filepath</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toString</span><span class="PUNC">(</span><span class="STRN">"base64"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>435</span> </span><span class="COMM">/**
+<span class='line'>436</span> * Converts an app ID to a filepath. 
+<span class='line'>437</span> * @param id ID to convert
+<span class='line'>438</span> * @memberOf mUtils
+<span class='line'>439</span> */</span><span class="WHIT">
+<span class='line'>440</span> </span><span class="NAME">exports.getAppPathFromId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>441</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Buffer</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"base64"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toString</span><span class="PUNC">(</span><span class="STRN">"ascii"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>442</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>443</span> </span><span class="COMM">//app filenames</span><span class="WHIT">
+<span class='line'>444</span> </span><span class="COMM">/**
+<span class='line'>445</span> * Determines the output filename given an application run's ID. 
+<span class='line'>446</span> * @param id ID of the application run whose information is requested
+<span class='line'>447</span> * @see configs.exports.appOutputDir
+<span class='line'>448</span> * @memberOf mUtils
+<span class='line'>449</span> */</span><span class="WHIT">
+<span class='line'>450</span> </span><span class="NAME">exports.getAppOutputFilename</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>451</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">path.join</span><span class="PUNC">(</span><span class="NAME">configs.appOutputDir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">".txt"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>452</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>453</span> </span><span class="COMM">/**
+<span class='line'>454</span> * Determines the name of an application's running status file given 
+<span class='line'>455</span> * an application run's ID. 
+<span class='line'>456</span> * @param id ID of the application run whose information is requested
+<span class='line'>457</span> * @see configs.exports.appOutputDir
+<span class='line'>458</span> * @memberOf mUtils
+<span class='line'>459</span> */</span><span class="WHIT">
+<span class='line'>460</span> </span><span class="NAME">exports.getRunningFilename</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>461</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">path.join</span><span class="PUNC">(</span><span class="NAME">configs.appOutputDir</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">".running"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>462</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>463</span> </span></pre></body></html>
