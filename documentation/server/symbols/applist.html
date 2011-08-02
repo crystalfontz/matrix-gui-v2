@@ -33,11 +33,11 @@
 			
 			<div class="section">
 				<div title='Global namespace.' class='itemName namespace'>
-				<div class='method-toggler'>&nbsp;</div><span class='icon'><i><a href="../symbols/_global_.html">_global_</a></i></span></div><div class='sectionItems'></div></div>
+				<div class='method-toggler'>&nbsp;</div><span class='icon'><i><a href="../symbols/_global_.html">_global_</a></i></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='This is the core of the server portion of matrix.'><a href="../symbols/_global_.html#server">server</a></b></div></div></div>
 			
 			<div class="section">
 				<div title='App list and description list generator' class='itemName'>
-				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/applist.html">applist</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of applist'><a href="../symbols/applist.html#.exports">exports</a></b></div><div class='sectionItem classProperty'><b class='icon' title=''><a href="../symbols/applist.html#.appList">appList</a></b></div><div class='sectionItem classProperty'><b class='icon' title=''><a href="../symbols/applist.html#.appDescriptions">appDescriptions</a></b></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.getAppListPrefix">exports.getAppListPrefix</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.getAppsDir">exports.getAppsDir</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.getConfigFilename">exports.getConfigFilename</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.saveAppList">saveAppList</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.saveAppDescriptions">saveAppDescriptions</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.isInSubmenu">exports.isInSubmenu</a></b><span class='signature'>(<span>actual</span>, <span>requested</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.checkCompletion">exports.checkCompletion</a></b><span class='signature'>(<span>response</span>, <span>submenu</span>, <span>callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.processItem">exports.processItem</a></b><span class='signature'>(<span>filePath</span>, <span>response</span>, <span>submenu</span>, <span>callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.readFilesystemApps">exports.readFilesystemApps</a></b><span class='signature'>(<span>submenu</span>, <span>response</span>, <span>callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.generateAppList">exports.generateAppList</a></b><span class='signature'>(<span title="function to call with the generated app list.">callback</span>, <span>response</span>, <span>callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.appDescriptionCallback">appDescriptionCallback</a></b><span class='signature'>(<span>list</span>, <span>response</span>, <span>submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/applist.html#.exports.generateAppDescriptions">exports.generateAppDescriptions</a></b><span class='signature'>(<span>uri</span>, <span>response</span>)</span></div></div></div>
+				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/applist.html">applist</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of applist'><a href="../symbols/applist.html#.exports">exports</a></b></div><div class='sectionItem classProperty'><b class='icon private' title='Holds lists of apps.'><a href="../symbols/applist.html#.appList">appList</a></b></div><div class='sectionItem classProperty'><b class='icon private' title='Holds lists of application descriptions.'><a href="../symbols/applist.html#.appDescriptions">appDescriptions</a></b></div><div class='sectionItem classMethod'><b class='icon private' title='Stores the app list to the cache file.'><a href="../symbols/applist.html#.saveAppList">saveAppList</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon private' title='Stores the app descriptions to the cache file.'><a href="../symbols/applist.html#.saveAppDescriptions">saveAppDescriptions</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks to see if all the files are done being processed, and if so executes the callback function with the sorted app list, then saves it.'><a href="../symbols/applist.html#.exports.checkCompletion">exports.checkCompletion</a></b><span class='signature'>(<span title="HTTP response object">response</span>, <span title="The requested submenu">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Takes an item in the filesystem (file/directory) and analyzes it.'><a href="../symbols/applist.html#.exports.processItem">exports.processItem</a></b><span class='signature'>(<span title="Path to the item to analyze">filePath</span>, <span title="HTTP response object">response</span>, <span title="Current submenu being generated">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Reads and parses manifests from the filesystem.'><a href="../symbols/applist.html#.exports.readFilesystemApps">exports.readFilesystemApps</a></b><span class='signature'>(<span title="The current submenu being generated">submenu</span>, <span title="HTTP Response object">response</span>, <span title="Function to execute with the generated app list">callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Generates the list of applications for a given submenu.'><a href="../symbols/applist.html#.exports.generateAppList">exports.generateAppList</a></b><span class='signature'>(<span title="The requested submenu">submenu</span>, <span title="HTTP response object">response</span>, <span title="function to call with the generated app list.">callback</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Takes the app list and processes it to generate the list of app descriptions.'><a href="../symbols/applist.html#.appDescriptionCallback">appDescriptionCallback</a></b><span class='signature'>(<span title="generated app list for the submenu">list</span>, <span title="HTTP Response object">response</span>, <span title="Currently generated submenu">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Generates the app description set for all apps.'><a href="../symbols/applist.html#.exports.generateAppDescriptions">exports.generateAppDescriptions</a></b><span class='signature'>(<span title="Request URI.">uri</span>, <span title="HTTP response object">response</span>)</span></div></div></div>
 			
 			<div class="section">
 				<div title='Application execution and output capture' class='itemName'>
@@ -49,15 +49,15 @@
 			
 			<div class="section">
 				<div title='Static file serving' class='itemName'>
-				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/loader.html">loader</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of loader'><a href="../symbols/loader.html#.exports">exports</a></b></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/loader.html#.exports.loadFileFromRoot">exports.loadFileFromRoot</a></b><span class='signature'>(<span title="HTTP response object">Response</span>, <span>response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a file from the matrix working directory or a subdir.'><a href="../symbols/loader.html#.exports.load_static_file">exports.load_static_file</a></b><span class='signature'>(<span title="File URI to load">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads an application icon.'><a href="../symbols/loader.html#.exports.loadIcon">exports.loadIcon</a></b><span class='signature'>(<span title="URI of the icon to load">uri</span>, <span title="HTTP response object to use to send the image">response</span>)</span></div></div></div>
+				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/loader.html">loader</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of loader'><a href="../symbols/loader.html#.exports">exports</a></b></div><div class='sectionItem classMethod'><b class='icon' title='Reads a file from the root of the filesystem and sends it back through response.'><a href="../symbols/loader.html#.exports.loadFileFromRoot">exports.loadFileFromRoot</a></b><span class='signature'>(<span title="HTTP response object">response</span>, <span>response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a file from the matrix working directory or a subdir.'><a href="../symbols/loader.html#.exports.load_static_file">exports.load_static_file</a></b><span class='signature'>(<span title="File URI to load">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads an application icon.'><a href="../symbols/loader.html#.exports.loadIcon">exports.loadIcon</a></b><span class='signature'>(<span title="URI of the icon to load">uri</span>, <span title="HTTP response object to use to send the image">response</span>)</span></div></div></div>
 			
 			<div class="section">
 				<div title='Application execution and output capture' class='itemName'>
-				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/mUtils.html">mUtils</a></span></div><div class='sectionItems'><div class='sectionItem classMethod'><b class='icon' title='Chacks to see if the required matrix folders exist.'><a href="../symbols/mUtils.html#.exports.checkDirs">exports.checkDirs</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title='Parses properly formatted data according to the freedesktop.org spec into the internal JSON representation used by Matrix.'><a href="../symbols/mUtils.html#.exports.parseManifestData">exports.parseManifestData</a></b><span class='signature'>(<span title="String data to parse">data</span>, <span title="Path to manifest file">fpath</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='App Sorting helper.'><a href="../symbols/mUtils.html#.exports.compareApps">exports.compareApps</a></b><span class='signature'>(<span title="first app to check">app1</span>, <span title="second app to check">app2</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Recursively deletes files in configs.exports.cacheDir.'><a href="../symbols/mUtils.html#.cacheClearHelper">cacheClearHelper</a></b><span class='signature'>(<span title="list of files to delete">files</span>, <span title="HTTP response object">response</span>, <span title="Whether or not an error in deletion has already occurred">hasErr</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Deletes all apps in configs.exports.cacheDir.'><a href="../symbols/mUtils.html#.exports.clearCache">exports.clearCache</a></b><span class='signature'>(<span title="HTTP response used for output">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Wrapper to make outputting JSON to a response easier.'><a href="../symbols/mUtils.html#.exports.writeJSON">exports.writeJSON</a></b><span class='signature'>(<span title="JSON to write">js</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Removes leading and trailing slashes.'><a href="../symbols/mUtils.html#.exports.cleanStr">exports.cleanStr</a></b><span class='signature'>(<span title="String to clean">str</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Removes whitespace from a string.'><a href="../symbols/mUtils.html#.exports.trim">exports.trim</a></b><span class='signature'>(<span title="String to clean">str</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Escapes unsafe HTML characters in text.'><a href="../symbols/mUtils.html#.exports.escapeHtml">exports.escapeHtml</a></b><span class='signature'>(<span title="string to clean">unsafe</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Generates a random alphanumeric (and _ ) string of the specified length.'><a href="../symbols/mUtils.html#.exports.randomString">exports.randomString</a></b><span class='signature'>(<span title="Length of string to generate">len</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the extension of a file.'><a href="../symbols/mUtils.html#.exports.getExtension">exports.getExtension</a></b><span class='signature'>(<span title="full name of file">filename</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a file is a manifest.'><a href="../symbols/mUtils.html#.exports.isManifest">exports.isManifest</a></b><span class='signature'>(<span title="name of file to check">filename</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Compares whether or not two paths are the same, ignoring leading and trailing slashes.'><a href="../symbols/mUtils.html#.exports.pathCompare">exports.pathCompare</a></b><span class='signature'>(<span title="first path to check">path1</span>, <span title="second path to check">path2</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks to see if uri has a given prefix.'><a href="../symbols/mUtils.html#.exports.checkPrefix">exports.checkPrefix</a></b><span class='signature'>(<span title="Uri to check">uri</span>, <span title="Prefix for which to look">prefix</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app list.'><a href="../symbols/mUtils.html#.exports.isAppListRequest">exports.isAppListRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app menu.'><a href="../symbols/mUtils.html#.exports.isAppMenuRequest">exports.isAppMenuRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an app description page.'><a href="../symbols/mUtils.html#.exports.isAppDescriptionRequest">exports.isAppDescriptionRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an app icon.'><a href="../symbols/mUtils.html#.exports.isAppIconRequest">exports.isAppIconRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request to launch an app.'><a href="../symbols/mUtils.html#.exports.isAppLaunchRequest">exports.isAppLaunchRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request to clear the cache folders.'><a href="../symbols/mUtils.html#.exports.isCacheClearRequest">exports.isCacheClearRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app list.'><a href="../symbols/mUtils.html#.exports.isAppOutputRequest">exports.isAppOutputRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an application's status.'><a href="../symbols/mUtils.html#.exports.isAppStatusRequest">exports.isAppStatusRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the full set of application descriptions.'><a href="../symbols/mUtils.html#.exports.isAllAppDescriptionsRequest">exports.isAllAppDescriptionsRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets an application ID from a URI.'><a href="../symbols/mUtils.html#.exports.getAppIdFromUri">exports.getAppIdFromUri</a></b><span class='signature'>(<span title="URI to parse">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Converts a filepath to an app ID.'><a href="../symbols/mUtils.html#.exports.getAppIdFromFilepath">exports.getAppIdFromFilepath</a></b><span class='signature'>(<span title="Filepath to convert">filepath</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Converts an app ID to a filepath.'><a href="../symbols/mUtils.html#.exports.getAppPathFromId">exports.getAppPathFromId</a></b><span class='signature'>(<span title="ID to convert">id</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines the output filename given an application run's ID.'><a href="../symbols/mUtils.html#.exports.getAppOutputFilename">exports.getAppOutputFilename</a></b><span class='signature'>(<span title="ID of the application run whose information is requested">id</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines the name of an application's running status file given an application run's ID.'><a href="../symbols/mUtils.html#.exports.getRunningFilename">exports.getRunningFilename</a></b><span class='signature'>(<span title="ID of the application run whose information is requested">id</span>)</span></div></div></div>
+				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/mUtils.html">mUtils</a></span></div><div class='sectionItems'><div class='sectionItem classMethod'><b class='icon' title='Chacks to see if the required matrix folders exist.'><a href="../symbols/mUtils.html#.exports.checkDirs">exports.checkDirs</a></b><span class='signature'>()</span></div><div class='sectionItem classMethod'><b class='icon' title='Parses properly formatted data according to the freedesktop.org spec into the internal JSON representation used by Matrix.'><a href="../symbols/mUtils.html#.exports.parseManifestData">exports.parseManifestData</a></b><span class='signature'>(<span title="String data to parse">data</span>, <span title="Path to manifest file">fpath</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines if an application belongs in the submenu with the specified category.'><a href="../symbols/mUtils.html#.exports.isInSubmenu">exports.isInSubmenu</a></b><span class='signature'>(<span title="Application to check">app</span>, <span title="Categories (semicolon separated) of apps to accept.">submenuCats</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='App Sorting helper.'><a href="../symbols/mUtils.html#.exports.compareApps">exports.compareApps</a></b><span class='signature'>(<span title="first app to check">app1</span>, <span title="second app to check">app2</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Recursively deletes files in configs.exports.cacheDir.'><a href="../symbols/mUtils.html#.cacheClearHelper">cacheClearHelper</a></b><span class='signature'>(<span title="list of files to delete">files</span>, <span title="HTTP response object">response</span>, <span title="Whether or not an error in deletion has already occurred">hasErr</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Deletes all apps in configs.exports.cacheDir.'><a href="../symbols/mUtils.html#.exports.clearCache">exports.clearCache</a></b><span class='signature'>(<span title="HTTP response used for output">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Wrapper to make outputting JSON to a response easier.'><a href="../symbols/mUtils.html#.exports.writeJSON">exports.writeJSON</a></b><span class='signature'>(<span title="JSON to write">js</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Removes leading and trailing slashes.'><a href="../symbols/mUtils.html#.exports.cleanStr">exports.cleanStr</a></b><span class='signature'>(<span title="String to clean">str</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Removes whitespace from a string.'><a href="../symbols/mUtils.html#.exports.trim">exports.trim</a></b><span class='signature'>(<span title="String to clean">str</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Escapes unsafe HTML characters in text.'><a href="../symbols/mUtils.html#.exports.escapeHtml">exports.escapeHtml</a></b><span class='signature'>(<span title="string to clean">unsafe</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Generates a random alphanumeric (and _ ) string of the specified length.'><a href="../symbols/mUtils.html#.exports.randomString">exports.randomString</a></b><span class='signature'>(<span title="Length of string to generate">len</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the extension of a file.'><a href="../symbols/mUtils.html#.exports.getExtension">exports.getExtension</a></b><span class='signature'>(<span title="full name of file">filename</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a file is a manifest.'><a href="../symbols/mUtils.html#.exports.isManifest">exports.isManifest</a></b><span class='signature'>(<span title="name of file to check">filename</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Compares whether or not two paths are the same, ignoring leading and trailing slashes.'><a href="../symbols/mUtils.html#.exports.pathCompare">exports.pathCompare</a></b><span class='signature'>(<span title="first path to check">path1</span>, <span title="second path to check">path2</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks to see if uri has a given prefix.'><a href="../symbols/mUtils.html#.exports.checkPrefix">exports.checkPrefix</a></b><span class='signature'>(<span title="Uri to check">uri</span>, <span title="Prefix for which to look">prefix</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app list.'><a href="../symbols/mUtils.html#.exports.isAppListRequest">exports.isAppListRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app menu.'><a href="../symbols/mUtils.html#.exports.isAppMenuRequest">exports.isAppMenuRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an app description page.'><a href="../symbols/mUtils.html#.exports.isAppDescriptionRequest">exports.isAppDescriptionRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an app icon.'><a href="../symbols/mUtils.html#.exports.isAppIconRequest">exports.isAppIconRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request to launch an app.'><a href="../symbols/mUtils.html#.exports.isAppLaunchRequest">exports.isAppLaunchRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request to clear the cache folders.'><a href="../symbols/mUtils.html#.exports.isCacheClearRequest">exports.isCacheClearRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the app list.'><a href="../symbols/mUtils.html#.exports.isAppOutputRequest">exports.isAppOutputRequest</a></b><span class='signature'>(<span title="URI to check.">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for an application's status.'><a href="../symbols/mUtils.html#.exports.isAppStatusRequest">exports.isAppStatusRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines whether or not URI is a request for the full set of application descriptions.'><a href="../symbols/mUtils.html#.exports.isAllAppDescriptionsRequest">exports.isAllAppDescriptionsRequest</a></b><span class='signature'>(<span title="URI to check">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets an application ID from a URI.'><a href="../symbols/mUtils.html#.exports.getAppIdFromUri">exports.getAppIdFromUri</a></b><span class='signature'>(<span title="URI to parse">uri</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Converts a filepath to an app ID.'><a href="../symbols/mUtils.html#.exports.getAppIdFromFilepath">exports.getAppIdFromFilepath</a></b><span class='signature'>(<span title="Filepath to convert">filepath</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Converts an app ID to a filepath.'><a href="../symbols/mUtils.html#.exports.getAppPathFromId">exports.getAppPathFromId</a></b><span class='signature'>(<span title="ID to convert">id</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines the output filename given an application run's ID.'><a href="../symbols/mUtils.html#.exports.getAppOutputFilename">exports.getAppOutputFilename</a></b><span class='signature'>(<span title="ID of the application run whose information is requested">id</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Determines the name of an application's running status file given an application run's ID.'><a href="../symbols/mUtils.html#.exports.getRunningFilename">exports.getRunningFilename</a></b><span class='signature'>(<span title="ID of the application run whose information is requested">id</span>)</span></div></div></div>
 			
 			<div class="section">
 				<div title='Html page construction and manipulation' class='itemName'>
-				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/pageBuilder.html">pageBuilder</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of pageBuilder'><a href="../symbols/pageBuilder.html#.exports">exports</a></b></div><div class='sectionItem classMethod'><b class='icon private' title='Adds the TI logo, title, and main menu button to the provided page'><a href="../symbols/pageBuilder.html#.addHeader">addHeader</a></b><span class='signature'>(<span title="jQueery object">$</span>, <span title="Window object created by jsdom">window</span>, <span title="Parent element for the header div">parentElem</span>, <span title="Whether or not to show the main menu button">showHome</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Adds an application to the display'><a href="../symbols/pageBuilder.html#.addApp">addApp</a></b><span class='signature'>(<span title="jQuery Object">$</span>, <span title="Window object created by jsdom">window</span>, <span title="Parent element of this application display">parentElem</span>, <span title="JSON Application data">appInfo</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Gets the entire html of a page, including  tag attributes, from a jQuery object.'><a href="../symbols/pageBuilder.html#.getHtml">getHtml</a></b><span class='signature'>(<span title="jQuery Obbject">$</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the name of the cache file for a given submenu'><a href="../symbols/pageBuilder.html#.exports.getMenuCachePageName">exports.getMenuCachePageName</a></b><span class='signature'>(<span title="Name of the submenu">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the name of the cache file for a given application description page'><a href="../symbols/pageBuilder.html#.exports.getAppCachePageName">exports.getAppCachePageName</a></b><span class='signature'>(<span title="ID of app whose cache page to find">appId</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a cache page exists for a given submenu.'><a href="../symbols/pageBuilder.html#.exports.hasCachedMenu">exports.hasCachedMenu</a></b><span class='signature'>(<span title="Name of the submenu whose cache page to look for">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a cache page exists for a given app.'><a href="../symbols/pageBuilder.html#.exports.hasCachedAppPage">exports.hasCachedAppPage</a></b><span class='signature'>(<span title="Id of appliaction whose cache page to look for">appId</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a file, sends its contents to response, and ends it.'><a href="../symbols/pageBuilder.html#.exports.loadCachedFile">exports.loadCachedFile</a></b><span class='signature'>(<span title="File to read">file</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a cached menu file for a given submenu using loadCachedFile.'><a href="../symbols/pageBuilder.html#.exports.loadCachedMenu">exports.loadCachedMenu</a></b><span class='signature'>(<span title="Name of sumbmenu to load">submenu</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a cached app description page for a given app using loadCachedFile.'><a href="../symbols/pageBuilder.html#.exports.loadCachedAppPage">exports.loadCachedAppPage</a></b><span class='signature'>(<span title="ID of app to load">appId</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Shows the menu page for a given uri.'><a href="../symbols/pageBuilder.html#.exports.createMenuPage">exports.createMenuPage</a></b><span class='signature'>(<span title="The requested uri, containing the desired submenu">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Takes the app list, finds the apps that belong in the submenu, and constructs the menu page from them.'><a href="../symbols/pageBuilder.html#.exports.createMenuPageFromApps">exports.createMenuPageFromApps</a></b><span class='signature'>(<span title="The generated app list">apps</span>, <span title="HTTP response object">response</span>, <span title="Name of sumbmenu to load">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Stores the provided html in the cache using appId.'><a href="../symbols/pageBuilder.html#.cacheApp">cacheApp</a></b><span class='signature'>(<span title="ID of the application whose description page is given by html.">appId</span>, <span title="The HTML that makes up an application's description page.">html</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Creates an app description page given a request uri containing an application ID and an http response.'><a href="../symbols/pageBuilder.html#.exports.createAppPage">exports.createAppPage</a></b><span class='signature'>(<span title="Request URI containing an appID">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title=''><a href="../symbols/pageBuilder.html#.exports.createAppOutputPage">exports.createAppOutputPage</a></b><span class='signature'>(<span>uri</span>, <span>response</span>)</span></div></div></div>
+				<div class='method-toggler'>&nbsp;</div><span class='icon'><a href="../symbols/pageBuilder.html">pageBuilder</a></span></div><div class='sectionItems'><div class='sectionItem classProperty'><b class='icon' title='Public methods of pageBuilder'><a href="../symbols/pageBuilder.html#.exports">exports</a></b></div><div class='sectionItem classMethod'><b class='icon private' title='Adds the TI logo, title, and main menu button to the provided page'><a href="../symbols/pageBuilder.html#.addHeader">addHeader</a></b><span class='signature'>(<span title="jQuery object">$</span>, <span title="Window object created by jsdom">window</span>, <span title="Parent element for the header div">parentElem</span>, <span title="Whether or not to show the main menu button">showHome</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Adds an application to the display'><a href="../symbols/pageBuilder.html#.addApp">addApp</a></b><span class='signature'>(<span title="jQuery Object">$</span>, <span title="Window object created by jsdom">window</span>, <span title="Parent element of this application display">parentElem</span>, <span title="JSON Application data">appInfo</span>)</span></div><div class='sectionItem classMethod'><b class='icon private' title='Gets the entire html of a page, including  tag attributes, from a jQuery object.'><a href="../symbols/pageBuilder.html#.getHtml">getHtml</a></b><span class='signature'>(<span title="jQuery Obbject">$</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the name of the cache file for a given submenu'><a href="../symbols/pageBuilder.html#.exports.getMenuCachePageName">exports.getMenuCachePageName</a></b><span class='signature'>(<span title="Name of the submenu">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Gets the name of the cache file for a given application description page'><a href="../symbols/pageBuilder.html#.exports.getAppCachePageName">exports.getAppCachePageName</a></b><span class='signature'>(<span title="ID of app whose cache page to find">appId</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a cache page exists for a given submenu.'><a href="../symbols/pageBuilder.html#.exports.hasCachedMenu">exports.hasCachedMenu</a></b><span class='signature'>(<span title="Name of the submenu whose cache page to look for">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Checks whether or not a cache page exists for a given app.'><a href="../symbols/pageBuilder.html#.exports.hasCachedAppPage">exports.hasCachedAppPage</a></b><span class='signature'>(<span title="Id of appliaction whose cache page to look for">appId</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a file, sends its contents to response, and ends it.'><a href="../symbols/pageBuilder.html#.exports.loadCachedFile">exports.loadCachedFile</a></b><span class='signature'>(<span title="File to read">file</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a cached menu file for a given submenu using loadCachedFile.'><a href="../symbols/pageBuilder.html#.exports.loadCachedMenu">exports.loadCachedMenu</a></b><span class='signature'>(<span title="Name of sumbmenu to load">submenu</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Loads a cached app description page for a given app using loadCachedFile.'><a href="../symbols/pageBuilder.html#.exports.loadCachedAppPage">exports.loadCachedAppPage</a></b><span class='signature'>(<span title="ID of app to load">appId</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Shows the menu page for a given uri.'><a href="../symbols/pageBuilder.html#.exports.createMenuPage">exports.createMenuPage</a></b><span class='signature'>(<span title="The requested uri, containing the desired submenu">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Takes the app list, finds the apps that belong in the submenu, and constructs the menu page from them.'><a href="../symbols/pageBuilder.html#.exports.createMenuPageFromApps">exports.createMenuPageFromApps</a></b><span class='signature'>(<span title="The generated app list">apps</span>, <span title="HTTP response object">response</span>, <span title="Name of sumbmenu to load">submenu</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Stores the provided html in the cache using appId.'><a href="../symbols/pageBuilder.html#.cacheApp">cacheApp</a></b><span class='signature'>(<span title="ID of the application whose description page is given by html.">appId</span>, <span title="The HTML that makes up an application's description page.">html</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Creates an app description page given a request uri containing an application ID and an http response.'><a href="../symbols/pageBuilder.html#.exports.createAppPage">exports.createAppPage</a></b><span class='signature'>(<span title="Request URI containing an appID">uri</span>, <span title="HTTP response object">response</span>)</span></div><div class='sectionItem classMethod'><b class='icon' title='Takes in a uri containing an app run ID and uses it to look up that run's output.'><a href="../symbols/pageBuilder.html#.exports.createAppOutputPage">exports.createAppOutputPage</a></b><span class='signature'>(<span title="requested uri containing a run ID">uri</span>, <span title="HTTP response object">response</span>)</span></div></div></div>
 			
 		</div>
 	</div>
@@ -131,16 +131,16 @@
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.appList">appList</a></b>
-									<span class='description'></span>
+									<b class="icon private" title="Holds lists of apps."><a href="../symbols/applist.html#.appList">appList</a></b>
+									<span class='description'>Holds lists of apps.</span>
 								</div>
 							
 								<div class="sectionItem classProperty">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.appDescriptions">appDescriptions</a></b>
-									<span class='description'></span>
+									<b class="icon private" title="Holds lists of application descriptions."><a href="../symbols/applist.html#.appDescriptions">appDescriptions</a></b>
+									<span class='description'>Holds lists of application descriptions.</span>
 								</div>
 							
 							</div>
@@ -160,96 +160,64 @@
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.getAppListPrefix">exports.getAppListPrefix</a></b><span class='signature'>()</span>
-									<span class='description'></span>
+									<b class="icon private" title="Stores the app list to the cache file."><a href="../symbols/applist.html#.saveAppList">saveAppList</a></b><span class='signature'>()</span>
+									<span class='description'>Stores the app list to the cache file.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.getAppsDir">exports.getAppsDir</a></b><span class='signature'>()</span>
-									<span class='description'></span>
+									<b class="icon private" title="Stores the app descriptions to the cache file."><a href="../symbols/applist.html#.saveAppDescriptions">saveAppDescriptions</a></b><span class='signature'>()</span>
+									<span class='description'>Stores the app descriptions to the cache file.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.getConfigFilename">exports.getConfigFilename</a></b><span class='signature'>()</span>
-									<span class='description'></span>
+									<b class="icon" title="Checks to see if all the files are done being processed, and if so executes the callback function with the sorted app list, then saves it."><a href="../symbols/applist.html#.exports.checkCompletion">exports.checkCompletion</a></b><span class='signature'>(<span title="HTTP response object">response</span>, <span title="The requested submenu">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span>
+									<span class='description'>Checks to see if all the files are done being processed, and if so executes the callback function with the sorted app list, then saves it.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.saveAppList">saveAppList</a></b><span class='signature'>()</span>
-									<span class='description'></span>
+									<b class="icon" title="Takes an item in the filesystem (file/directory) and analyzes it."><a href="../symbols/applist.html#.exports.processItem">exports.processItem</a></b><span class='signature'>(<span title="Path to the item to analyze">filePath</span>, <span title="HTTP response object">response</span>, <span title="Current submenu being generated">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span>
+									<span class='description'>Takes an item in the filesystem (file/directory) and analyzes it.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.saveAppDescriptions">saveAppDescriptions</a></b><span class='signature'>()</span>
-									<span class='description'></span>
+									<b class="icon" title="Reads and parses manifests from the filesystem."><a href="../symbols/applist.html#.exports.readFilesystemApps">exports.readFilesystemApps</a></b><span class='signature'>(<span title="The current submenu being generated">submenu</span>, <span title="HTTP Response object">response</span>, <span title="Function to execute with the generated app list">callback</span>)</span>
+									<span class='description'>Reads and parses manifests from the filesystem.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.isInSubmenu">exports.isInSubmenu</a></b><span class='signature'>(<span>actual</span>, <span>requested</span>)</span>
-									<span class='description'></span>
+									<b class="icon" title="Generates the list of applications for a given submenu."><a href="../symbols/applist.html#.exports.generateAppList">exports.generateAppList</a></b><span class='signature'>(<span title="The requested submenu">submenu</span>, <span title="HTTP response object">response</span>, <span title="function to call with the generated app list.">callback</span>)</span>
+									<span class='description'>Generates the list of applications for a given submenu.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.checkCompletion">exports.checkCompletion</a></b><span class='signature'>(<span>response</span>, <span>submenu</span>, <span>callback</span>)</span>
-									<span class='description'></span>
+									<b class="icon" title="Takes the app list and processes it to generate the list of app descriptions."><a href="../symbols/applist.html#.appDescriptionCallback">appDescriptionCallback</a></b><span class='signature'>(<span title="generated app list for the submenu">list</span>, <span title="HTTP Response object">response</span>, <span title="Currently generated submenu">submenu</span>)</span>
+									<span class='description'>Takes the app list and processes it to generate the list of app descriptions.</span>
 								</div>
 							
 								<div class="sectionItem classMethod">
 								  <!--
 									<div class="module-filter">&nbsp;</div>
 									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.processItem">exports.processItem</a></b><span class='signature'>(<span>filePath</span>, <span>response</span>, <span>submenu</span>, <span>callback</span>)</span>
-									<span class='description'></span>
-								</div>
-							
-								<div class="sectionItem classMethod">
-								  <!--
-									<div class="module-filter">&nbsp;</div>
-									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.readFilesystemApps">exports.readFilesystemApps</a></b><span class='signature'>(<span>submenu</span>, <span>response</span>, <span>callback</span>)</span>
-									<span class='description'></span>
-								</div>
-							
-								<div class="sectionItem classMethod">
-								  <!--
-									<div class="module-filter">&nbsp;</div>
-									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.generateAppList">exports.generateAppList</a></b><span class='signature'>(<span title="function to call with the generated app list.">callback</span>, <span>response</span>, <span>callback</span>)</span>
-									<span class='description'></span>
-								</div>
-							
-								<div class="sectionItem classMethod">
-								  <!--
-									<div class="module-filter">&nbsp;</div>
-									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.appDescriptionCallback">appDescriptionCallback</a></b><span class='signature'>(<span>list</span>, <span>response</span>, <span>submenu</span>)</span>
-									<span class='description'></span>
-								</div>
-							
-								<div class="sectionItem classMethod">
-								  <!--
-									<div class="module-filter">&nbsp;</div>
-									-->
-									<b class="icon" title=""><a href="../symbols/applist.html#.exports.generateAppDescriptions">exports.generateAppDescriptions</a></b><span class='signature'>(<span>uri</span>, <span>response</span>)</span>
-									<span class='description'></span>
+									<b class="icon" title="Generates the app description set for all apps."><a href="../symbols/applist.html#.exports.generateAppDescriptions">exports.generateAppDescriptions</a></b><span class='signature'>(<span title="Request URI.">uri</span>, <span title="HTTP response object">response</span>)</span>
+									<span class='description'>Generates the app description set for all apps.</span>
 								</div>
 							
 							</div>
@@ -330,13 +298,14 @@
 							
 								<div class='sectionItem classProperty'>
 									<a name=".appList"> </a>
-									<div class="itemTitle signature icon">
+									<div class="itemTitle signature icon private">
 										applist.<b>appList</b>
 										
 									</div>
 
 									<div class="full-description">
-										
+										Holds lists of apps. Each submenu has its own list of apps, which are 
+stored indexed by submenu. The structure is a 2D associative array.
 										
 										
 									</div>
@@ -355,13 +324,15 @@
 							
 								<div class='sectionItem classProperty'>
 									<a name=".appDescriptions"> </a>
-									<div class="itemTitle signature icon">
+									<div class="itemTitle signature icon private">
 										applist.<b>appDescriptions</b>
 										
 									</div>
 
 									<div class="full-description">
-										
+										Holds lists of application descriptions. Each submenu has its own set 
+of app description, which is stored as an array indexed by submenu
+name. Thus, it is an associative 2D array.
 										
 										
 									</div>
@@ -391,95 +362,15 @@
 						<div class="sectionItems">
 							
 							
-								<div class='sectionItem classMethod '>
-									<a name=".exports.getAppListPrefix"> </a>
-									<div class="itemTitle icon">
-										applist.exports.getAppListPrefix<span class="signature">()</span>
-										
-									</div>
-									<div class="full-description">
-										
-										
-										
-									
-										
-										<pre class="prettyprint"></pre>
-										
-									</div>
-									
-									
-									
-									
-									
-									
-									
-									
-				
-								</div>
-							
-							
-								<div class='sectionItem classMethod '>
-									<a name=".exports.getAppsDir"> </a>
-									<div class="itemTitle icon">
-										applist.exports.getAppsDir<span class="signature">()</span>
-										
-									</div>
-									<div class="full-description">
-										
-										
-										
-									
-										
-										<pre class="prettyprint"></pre>
-										
-									</div>
-									
-									
-									
-									
-									
-									
-									
-									
-				
-								</div>
-							
-							
-								<div class='sectionItem classMethod '>
-									<a name=".exports.getConfigFilename"> </a>
-									<div class="itemTitle icon">
-										applist.exports.getConfigFilename<span class="signature">()</span>
-										
-									</div>
-									<div class="full-description">
-										
-										
-										
-									
-										
-										<pre class="prettyprint"></pre>
-										
-									</div>
-									
-									
-									
-									
-									
-									
-									
-									
-				
-								</div>
-							
-							
-								<div class='sectionItem classMethod '>
+								<div class='sectionItem classMethod  private'>
 									<a name=".saveAppList"> </a>
 									<div class="itemTitle icon">
 										applist.saveAppList<span class="signature">()</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Stores the app list to the cache file. JSON.stringify is used to convert the
+Array for storage.
 										
 										
 									
@@ -495,45 +386,41 @@
 									
 									
 									
+										<div class="heading">See:</div>
+										<table class="methodItem"><tbody>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.appList">applist.appList</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.cacheDir">configs.exports.cacheDir</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.appListCacheFile">configs.exports.appListCacheFile</a>
+												</td>
+											</tr>
+										
+										</tbody></table>
+									
 				
 								</div>
 							
 							
-								<div class='sectionItem classMethod '>
+								<div class='sectionItem classMethod  private'>
 									<a name=".saveAppDescriptions"> </a>
 									<div class="itemTitle icon">
 										applist.saveAppDescriptions<span class="signature">()</span>
 										
 									</div>
 									<div class="full-description">
-										
-										
-										
-									
-										
-										<pre class="prettyprint"></pre>
-										
-									</div>
-									
-									
-									
-									
-									
-									
-									
-									
-				
-								</div>
-							
-							
-								<div class='sectionItem classMethod '>
-									<a name=".exports.isInSubmenu"> </a>
-									<div class="itemTitle icon">
-										applist.exports.isInSubmenu<span class="signature">(<span>actual</span>, <span>requested</span>)</span>
-										
-									</div>
-									<div class="full-description">
-										
+										Stores the app descriptions to the cache file. Also uses JSON.stringify.
 										
 										
 									
@@ -543,40 +430,34 @@
 									</div>
 									
 									
-										<div class="heading">Parameters:</div>
+									
+									
+									
+									
+									
+									
+										<div class="heading">See:</div>
 										<table class="methodItem"><tbody>
 										
 											<tr>
-												<td class="methodItemType">
-												  
-												</td>
-												<td class="methodItemName">
-												  <b>actual</b>
-												</td>
 												<td class="methodItemDesc">
-											    
+													<a href="../symbols/applist.html#.appDescriptions">applist.appDescriptions</a>
 												</td>
 											</tr>
 										
 											<tr>
-												<td class="methodItemType">
-												  
-												</td>
-												<td class="methodItemName">
-												  <b>requested</b>
-												</td>
 												<td class="methodItemDesc">
-											    
+													<a href="../symbols/configs.html#.exports.appDescriptionsCacheFile">configs.exports.appDescriptionsCacheFile</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.cacheDir">configs.exports.cacheDir</a>
 												</td>
 											</tr>
 										
 										</tbody></table>
-									
-									
-									
-									
-									
-									
 									
 				
 								</div>
@@ -585,11 +466,13 @@
 								<div class='sectionItem classMethod '>
 									<a name=".exports.checkCompletion"> </a>
 									<div class="itemTitle icon">
-										applist.exports.checkCompletion<span class="signature">(<span>response</span>, <span>submenu</span>, <span>callback</span>)</span>
+										applist.exports.checkCompletion<span class="signature">(<span title="HTTP response object">response</span>, <span title="The requested submenu">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Checks to see if all the files are done being processed, and if so 
+executes the callback function with the sorted app list, then saves
+it.
 										
 										
 									
@@ -610,7 +493,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP response object
 												</td>
 											</tr>
 										
@@ -622,7 +505,7 @@
 												  <b>submenu</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    The requested submenu
 												</td>
 											</tr>
 										
@@ -634,7 +517,7 @@
 												  <b>callback</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    The function to execute with the complete app list
 												</td>
 											</tr>
 										
@@ -646,6 +529,23 @@
 									
 									
 									
+										<div class="heading">See:</div>
+										<table class="methodItem"><tbody>
+										
+											<tr>
+												<td class="methodItemDesc">
+													applist.appListStatuses
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.saveAppList">applist.saveAppList</a>
+												</td>
+											</tr>
+										
+										</tbody></table>
+									
 				
 								</div>
 							
@@ -653,11 +553,15 @@
 								<div class='sectionItem classMethod '>
 									<a name=".exports.processItem"> </a>
 									<div class="itemTitle icon">
-										applist.exports.processItem<span class="signature">(<span>filePath</span>, <span>response</span>, <span>submenu</span>, <span>callback</span>)</span>
+										applist.exports.processItem<span class="signature">(<span title="Path to the item to analyze">filePath</span>, <span title="HTTP response object">response</span>, <span title="Current submenu being generated">submenu</span>, <span title="The function to execute with the complete app list">callback</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Takes an item in the filesystem (file/directory) and analyzes it. If it is 
+a directory, its contents are read and passed to processItem. If it is a
+file, it is checked to see if it is a manifest. If it is, it is read and
+parsed into the applist. If it is not, it is ignored. 
+<a href="../symbols/applist.html#.exports.checkCompletion">applist.exports.checkCompletion</a> is run after every item.
 										
 										
 									
@@ -678,7 +582,7 @@
 												  <b>filePath</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    Path to the item to analyze
 												</td>
 											</tr>
 										
@@ -690,7 +594,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP response object
 												</td>
 											</tr>
 										
@@ -702,7 +606,7 @@
 												  <b>submenu</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    Current submenu being generated
 												</td>
 											</tr>
 										
@@ -714,7 +618,7 @@
 												  <b>callback</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    The function to execute with the complete app list
 												</td>
 											</tr>
 										
@@ -725,6 +629,41 @@
 									
 									
 									
+									
+										<div class="heading">See:</div>
+										<table class="methodItem"><tbody>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.appList">applist.appList</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.exports.checkCompletion">applist.exports.checkCompletion</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													applist.appListStatuses
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/mUtils.html#.exports.isManifest">mUtils.exports.isManifest</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/mUtils.html#.exports.parseManifestData">mUtils.exports.parseManifestData</a>
+												</td>
+											</tr>
+										
+										</tbody></table>
 									
 				
 								</div>
@@ -733,11 +672,13 @@
 								<div class='sectionItem classMethod '>
 									<a name=".exports.readFilesystemApps"> </a>
 									<div class="itemTitle icon">
-										applist.exports.readFilesystemApps<span class="signature">(<span>submenu</span>, <span>response</span>, <span>callback</span>)</span>
+										applist.exports.readFilesystemApps<span class="signature">(<span title="The current submenu being generated">submenu</span>, <span title="HTTP Response object">response</span>, <span title="Function to execute with the generated app list">callback</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Reads and parses manifests from the filesystem. It first checks to
+make sure the apps dir exists and is a directory, then scans it 
+and hands its contents off to <a href="../symbols/applist.html#.exports.processItem">applist.exports.processItem</a>.
 										
 										
 									
@@ -758,7 +699,7 @@
 												  <b>submenu</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    The current submenu being generated
 												</td>
 											</tr>
 										
@@ -770,7 +711,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP Response object
 												</td>
 											</tr>
 										
@@ -782,7 +723,7 @@
 												  <b>callback</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    Function to execute with the generated app list
 												</td>
 											</tr>
 										
@@ -794,6 +735,29 @@
 									
 									
 									
+										<div class="heading">See:</div>
+										<table class="methodItem"><tbody>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.appsFolder">configs.exports.appsFolder</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													applist.appListStatuses
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.exports.processItem">applist.exports.processItem</a>
+												</td>
+											</tr>
+										
+										</tbody></table>
+									
 				
 								</div>
 							
@@ -801,11 +765,16 @@
 								<div class='sectionItem classMethod '>
 									<a name=".exports.generateAppList"> </a>
 									<div class="itemTitle icon">
-										applist.exports.generateAppList<span class="signature">(<span title="function to call with the generated app list.">callback</span>, <span>response</span>, <span>callback</span>)</span>
+										applist.exports.generateAppList<span class="signature">(<span title="The requested submenu">submenu</span>, <span title="HTTP response object">response</span>, <span title="function to call with the generated app list.">callback</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Generates the list of applications for a given submenu. First checks 
+{ @link applist.appList } to see if the requested menu has been 
+generated, and then checks the disk cache file (located at
+<a href="../symbols/configs.html#.exports.cacheDir">configs.exports.cacheDir</a> { @link configs.exports.appListCacheFile}).
+If not, it calls { @link applist.exports.readFilesystemApps} to generate
+the list.
 										
 										
 									
@@ -823,10 +792,10 @@
 												  
 												</td>
 												<td class="methodItemName">
-												  <b>callback</b>
+												  <b>submenu</b>
 												</td>
 												<td class="methodItemDesc">
-											    function to call with the generated app list. Should be of the form function (list, response, submenu)
+											    The requested submenu
 												</td>
 											</tr>
 										
@@ -838,7 +807,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP response object
 												</td>
 											</tr>
 										
@@ -850,7 +819,8 @@
 												  <b>callback</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    function to call with the generated app list. Should 
+be of the form function (list, response, submenu)
 												</td>
 											</tr>
 										
@@ -862,6 +832,35 @@
 									
 									
 									
+										<div class="heading">See:</div>
+										<table class="methodItem"><tbody>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.appList">applist.appList</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.cacheDir">configs.exports.cacheDir</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/configs.html#.exports.appListCacheFile">configs.exports.appListCacheFile</a>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="methodItemDesc">
+													<a href="../symbols/applist.html#.exports.readFilesystemApps">applist.exports.readFilesystemApps</a>
+												</td>
+											</tr>
+										
+										</tbody></table>
+									
 				
 								</div>
 							
@@ -869,11 +868,19 @@
 								<div class='sectionItem classMethod '>
 									<a name=".appDescriptionCallback"> </a>
 									<div class="itemTitle icon">
-										applist.appDescriptionCallback<span class="signature">(<span>list</span>, <span>response</span>, <span>submenu</span>)</span>
+										applist.appDescriptionCallback<span class="signature">(<span title="generated app list for the submenu">list</span>, <span title="HTTP Response object">response</span>, <span title="Currently generated submenu">submenu</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Takes the app list and processes it to generate the list of app descriptions. 
+Each application is checked to see if it specifies a description page. If it 
+does, that description page is read, processed, and added to the set of 
+descriptions. If not, it is then checked for a comment. If it has a comment,
+that is then used as the description and put into the set. Finally, if it has
+neither a description nor a comment, it is given a description of "No description
+provided". Errors in any step will result in the appropriate error message being 
+used as the description. Note that this function is passed as a callback to 
+{ @link applist.exports.generateAppList}, hence the name.
 										
 										
 									
@@ -894,7 +901,7 @@
 												  <b>list</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    generated app list for the submenu
 												</td>
 											</tr>
 										
@@ -906,7 +913,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP Response object
 												</td>
 											</tr>
 										
@@ -918,7 +925,7 @@
 												  <b>submenu</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    Currently generated submenu
 												</td>
 											</tr>
 										
@@ -937,11 +944,20 @@
 								<div class='sectionItem classMethod '>
 									<a name=".exports.generateAppDescriptions"> </a>
 									<div class="itemTitle icon">
-										applist.exports.generateAppDescriptions<span class="signature">(<span>uri</span>, <span>response</span>)</span>
+										applist.exports.generateAppDescriptions<span class="signature">(<span title="Request URI.">uri</span>, <span title="HTTP response object">response</span>)</span>
 										
 									</div>
 									<div class="full-description">
-										
+										Generates the app description set for all apps. URI is currently ignored, 
+although in the future it could be used to generate the app descriptions
+for a submenu. It checks { @link applist.appDescriptions} to see if it 
+contains the main appdescription list, and if so immediately returns it. 
+It will then check disk cache (Located at <a href="../symbols/configs.html#.exports.cacheDir">configs.exports.cacheDir</a>/
+{@link configs.exports.appDescriptionsCacheFile). If it has the main cache,
+it will then send that and store it into <a href="../symbols/applist.html#.appDescriptions">applist.appDescriptions</a>. 
+If neither of those are the case, it will use <a href="../symbols/applist.html#.exports.generateAppList">applist.exports.generateAppList</a>
+with applist.exports.appDescriptionCallback as a callback to generate
+and then send the set of descriptions.
 										
 										
 									
@@ -962,7 +978,8 @@
 												  <b>uri</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    Request URI. Currently ignored, but may be used later for app 
+descriptions for only a specific submenu.
 												</td>
 											</tr>
 										
@@ -974,7 +991,7 @@
 												  <b>response</b>
 												</td>
 												<td class="methodItemDesc">
-											    
+											    HTTP response object
 												</td>
 											</tr>
 										
@@ -998,7 +1015,7 @@
 <!-- ============================== footer ================================= -->
 				<div class="fineprint" style="clear:both">
 					
-					Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Aug 01 2011 14:59:24 GMT-0500 (CDT)
+					Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 02 2011 15:01:28 GMT-0500 (CDT)
 				</div>
 				
 			</div>
