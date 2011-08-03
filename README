@@ -1,0 +1,66 @@
+//******************************************************************************
+//+--------------------------------------------------------------------------+**
+//|                            ****                                          |**
+//|                            ****                                          |**
+//|                            ******o***                                    |**
+//|                      ********_///_****                                   |**
+//|                      ***** /_//_/ ****                                   |**
+//|                       ** ** (__/ ****                                    |**
+//|                           *********                                      |**
+//|                            ****                                          |**
+//|                            ***                                           |**
+//|                                                                          |**
+//|                        Matrix GUI v2                                     |**
+//| OVERVIEW                                                                 |**
+//|	Matrix GUI v2 is a replacement for the original Matrix GUI that      |**
+//| shipped with the TI SDK. Whereas the previous version was written in C   |**
+//| and built on Qt, Matrix GUI v2 is written almost entirely in javascript. |**
+//| It also offers several improvements over its predecessor:                |**
+//| 	1) Remote Access. Matrix Gui v2 may be remotely accessed from any    |**
+//|        computer on the same network as the board on which it is running. |**
+//|        When remotely accessed, Matrix GUI may be used to launch apps,    |**
+//|        view their descriptions, and stream text output back to the       |**
+//|        remote user.                                                      |**
+//|     2) Simplicity of adding apps. Adding an app to Matrix GUI v2 is as   |**
+//|        simple as dragging and dropping a file into a directory. Matrix   |**
+//|        GUI v2 scans the apps directory and dynamically builds app lists, |**
+//|        eliminating the need for human maintained lists.                  |**
+//|     3) Portability. Matrix GUI v2 is written in Javascript and built on  |**
+//|        nodejs. Thus, it will run on any platform that supports nodejs    |**
+//|        without needing to be modified or compiled. Its client portion    |**
+//|        will run in nearly any modern browser supporting HTML5 and        |**
+//|        Javascript.                                                       |**
+//|                                                                          |**
+//| ARCHITECTURE                                                             |**
+//| 	Matrix GUI v2 is designed around a client-server model more commonly |**
+//| associated with a web site. This is what allows remote access from web   |**
+//| browsers using the same code that it uses when it is running locally.    |**
+//|                                                                          |**
+//| SERVER                                                                   |**
+//|	The server portion of matrix is made up of server.js and the files   |**
+//| in the lib/ folder in matrix root. It is responsible for:                |**
+//|	1) Parsing manifest files. Manifest files are based on the desktop   |**
+//|        entry standard maintained by freedesktop.org. The spec may be     |**
+//|        http://standards.freedesktop.org/desktop-entry-spec/latest/       |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+//|                                                                          |**
+
+
+
