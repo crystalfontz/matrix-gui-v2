@@ -152,5 +152,174 @@ CLIENT RESPONSIBILITIES
 user input. Unlike the server, which is designed to be a singleton, many 
 instances of the client may exist. The client requests the app list from the
 server when it is loaded, processes it and shows the icons to the user (icons
-which it requests from the server) and waits for user interaction. If the user
-clicks a 
+which it requests from the server) and waits for user interaction. Clicking a 
+submenu will generate its contents and display them, while clicking an 
+application shows its description page. When an app is run, the client issues 
+the proper requests to the server to start it and to get its output. When the 
+app is done, the main menu may be reloaded. Note that the client also supports
+swiping through output and menu pages.
+
+CLIENT FLOWCHART
+           Client                              Server                          
+             Load                      
+               |                                                               
+               v                                                               
+         Initial Requests                                                
+               |-----------GET-------------->/applist/                     
+               |-----------GET-------------->/appdescriptions/    
+               |                                                 
+               v                                                 
+ +------>Create Menu                                             
+ |             |-----------GET-------------->/icons/${ICON_NAMES}
+ |             |                                
+ |             v                                
+ |        Wait for input                        
+ |             |                                
+ |       +-----+--------+                       
+ |       |              |                       
+ |       v              |                       
+ +--Submenu clicked     |                       
+ |                      |                       
+ |            +---------+                        
+ |            |                                  
+ |            |
+ |            v                                                                 
+ |       App Clicked         
+ |            |                
+ |            v                 
+ |   Show description page      
+ |            |                 
+ |            v                 
+ |      Wait for input          
+ |            |                 
+ |       +----+---------------+  
+ |       |                    |   
+ +-Menu button clicked        |                                 
+ |                            |                                   
+ |                            |                                   
+ |            +---------------+                                   
+ |            |                                                  
+ |            v                                                  
+ |   Run Button Clicked                                     
+ |            |                                                  
+ |            v                                                  
+++        Launch App--------GET------------->/launch/${APP_ID}
+|             |                                                  
+|             v                                                  
+| +--->Check App Status-----GET------------->/appstatus/${RUN_ID}
+| |           |                                                  
+| |     +-----+---------------+                          
+| |     |                     |                               
+| |     v                     v                            
+| | App is running       App is complete                  
+| |     |                     |                                  
+| |     v                     |                                   
+| | Show output so far        |                                
+| |     |                     v                                   
+| +-----+                Show output                             
+|                             |                                   
+|                             v                                   
+|                       Wait for input                         
+|                             |                                   
+|                             V                                   
+|                      Menu Button Clicked                   
+|                             |                                   
++-----------------------------+                                  
+                                                                 
+DATA STRUCTURES 
+
+ JSON
+
+  APPLICATIONS
+    Applications within Matrix are represented as JSON. JSON is a
+human readable, key-value based method of representing objects. For
+more information about JSON, see json.org. Below is the Matrix 
+internal representation of applications: 
+{
+    Application : {
+        appName: Command to run to execute the app
+        title:  Display title for the application
+        categories: Semicolon separated list of categories to which
+                      the application belongs
+        lock: Only one instance of an application with a given lock is
+                      permitted to run at the same time
+        appDescription: Location of an html file that describes the app
+        sortPriority: Priority used when choosing the order in which to
+                      display applications. Lower numbers are earlier, and 
+                      then subsorted alphabetically. 
+        comment: This will be used as a description if appDescription is not
+                      set
+        iconName: Path to the application's icon
+    }
+}
+Of these, only iconName, title are guaranteed to be set for any given 
+application.The rest may or may not be set depending on what was specified 
+in the application's .desktop file. If appName is not set it means the 
+application will only show a description/description page. 
+
+  SUBMENUS
+    Submenus are represented internally in a very similar manner to
+applications:
+{
+    Application : {
+        appName: "Submenu" (Same for all submenus)
+        title: Display title for the submenu
+        categories: Matrix allows (unlimited) nesting of submenus, so a 
+                    submenu may have categories to which it belongs. These are
+                    the same as they were described in the Application
+                    description. 
+        iconName: Path to the submenu's icon
+        contents: Which categories this submenu targets. They are semicolon
+                  separated lists of categories. If an application belongs to 
+                  any specified category it will be shown in the submenu
+    }
+} 
+appName, iconName, contents, and title will be set when dealing with a submenu;
+only categories is an optional field. 
+
+ .DESKTOP
+    As mentioned, application manifests are based off of the freedesktop.org 
+spec. Below are the details of how its keys and values are interpreted by 
+Matrix: 
+
+ ______________________________________________________________________________
+|    Field      | Values      | Description/Interpretation              | Req'd|
+|---------------|-------------|-----------------------------------------|------|
+| Type          | Application | The item is an application              |  Y   |
+|               | Link        | The item is ignored                     |      |
+|               | Directory   | The item is a submenu                   |      |
+|---------------|-------------|-----------------------------------------|------|
+| Name          | Any String  | The title of the application            |  Y   |
+|---------------|-------------|-----------------------------------------|------|
+| Icon          | Filepath    | Path to the application's icon          |  Y   |
+|---------------|-------------|-----------------------------------------|------|
+| Exec          | Any command | Command to execute                      |  N   |
+|---------------|-------------|-----------------------------------------|------|
+| Categories    | String      | Semicolon separates list of categories  |  N   |
+|               |             | which the app belongs. Apps without a   |      |
+|               |             | category will show up in the root menu. |      |
+|---------------|-------------|-----------------------------------------|------|
+| X-MATRIX-     | String      | Categories that should be displayed     |  Y   |
+|CategoryTarget |             | when this submenu is being shown. If    |      |
+|               |             | Type is not Directory, it will be       |      |
+|               |             | ignored and thus is not required.       |      |
+|---------------|-------------|-----------------------------------------|------|
+| X-MATRIX-     | Filepath    | Path to the location of the app's HTML  |  N   |
+| Description   |             | description page.                       |      |
+|---------------|-------------|-----------------------------------------|------|
+| X-MATRIX-     | Number      | Affects the sort order of the app.      |  N   |
+|DisplayPriority|             | Lower numbers will appear earlier in    |      |
+|               |             | the list. Equivalent nubmers will be    |      |
+|               |             | sorted alphabetically.                  |      |
+|---------------|-------------|-----------------------------------------|------|
+
+   Note that the Exed field specifies multiple field codes. However, only %i 
+and %k are used by Matrix. The others are removed and ignored. %i will be 
+expanded to "--icon /path/to/icon" and %k will be replaced with the path to the
+.desktop file. 
+
+
+
+
+
+
