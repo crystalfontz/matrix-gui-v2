@@ -149,32 +149,36 @@ var isInSubmenu = function(app, submenuCats){
 * an application's ID. Each run of each app recieves a new, 20-char random
 * alphanumeric id. 
 */
-var updateAppStatus = function (id){
+var updateAppStatus = function (id, hasOutput){
 	var path = "/appstatus/" + id;
 	$.getJSON(path, function(data){
-		$("#apps").empty();
-		var container = document.createElement("div");
-		$(container).addClass("outputDiv");
-		$(container).attr("id", "outputDiv");
-		var p = document.createElement("pre");
-		if(data.output != ""){
-			$(p).html(data.output);
-		}else{
-			$(p).html("Application started, waiting for output.");
-		}
-		$(container).append(p);
-		$("#apps").append(container);
-		var bookend = document.createElement("div");
-		$(bookend).attr("id", "bookend");
-		$("#apps").append(bookend);
-		var tgt = $(bookend);
-		$('html,body').animate({scrollTop: tgt.offset().top}, 500);
-		addOutputSwipe();
-		$("#mainMenuBtn").css("display", "none");
-		if(data.running != false){
-			setTimeout('updateAppStatus("'+id+'");', 500)
-		}else{
-			$("#mainMenuBtn").css("display", "block");
+		if(hasOutput){
+			$("#apps").empty();
+			var container = document.createElement("div");
+			$(container).addClass("outputDiv");
+			$(container).attr("id", "outputDiv");
+			var p = document.createElement("pre");
+			if(data.output != ""){
+				$(p).html(data.output);
+			}else{
+				$(p).html("Application started, waiting for output.");
+			}
+			$(container).append(p);
+			$("#apps").append(container);
+			var bookend = document.createElement("div");
+			$(bookend).attr("id", "bookend");
+			$("#apps").append(bookend);
+			var tgt = $(bookend);
+			$('html,body').animate({scrollTop: tgt.offset().top}, 500);
+			addOutputSwipe();
+			$("#mainMenuBtn").css("display", "none");
+			if(data.running != false){
+				setTimeout(function(){updateAppStatus(id, hasOutput);}, 500);
+			}else{
+				$("#mainMenuBtn").css("display", "block");
+			}
+		}else if(data.running == false){
+			buildMenu("");
 		}
 	});
 }
@@ -184,9 +188,14 @@ var updateAppStatus = function (id){
 */
 var launchApp = function(app){
 	$.getJSON("/launch/" + app.path64, function(data, status){
+		console.log(app);
 		if(!data.hasOwnProperty("failure")){
 			$("#mainMenuBtn").css("display", "none");
-			setTimeout('updateAppStatus("'+data.id+'");', 500);
+			var hasOutput = true;
+			if(app.hasOwnProperty("terminal") &&  app.terminal == false){
+				hasOutput = false;
+			}
+			setTimeout(function(){updateAppStatus(data.id, hasOutput);}, 500);
 		}else{
 		$("#runDiv").text(data.failure);
 		}

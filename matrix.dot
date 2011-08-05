@@ -1,0 +1,63 @@
+digraph matrixv2{
+
+	//client steps
+	load[label="Client Load", shape=box];
+	init[label="Initial Requests", shape=box];
+	create[label="Create Menu", shape=box];
+	wait1[label="Wait for input", shape=box];
+	submenu[label="Submenu Clicked", shape=box];
+	app[label="App Clicked", shape=box];
+	desc[label="Show Description page", shape=box];
+	wait2[label="Wait for input", shape=box];
+	menu[label="Menu Button Clicked", shape=box];
+	run[label="Run Button Clicked", shape=box];
+	launch[label="Launch App", shape=box];
+	check[label="Check App Status", shape=box];
+	running[label="App is running", shape=box];
+	complete[label="App is complete", shape=box];
+	sofar[label="Display output so far", shape=box];
+	display[label="Display output", shape=box];
+	wait3[label="Wait for input", shape=box];
+	menu2[label="Menu Button Clicked", shape=box];
+
+	//server requests
+	applist[label="/applist/", shape=plaintext, fontcolor=red];
+	appdesc[label="/appdescriptions/", shape=plaintext, fontcolor=red];
+	applaunch[label="/launch/", shape=plaintext, fontcolor=red];
+	appstatus[label="/appstatus/", shape=plaintext, fontcolor=red];
+
+	load -> init;
+	init -> applist [style=dotted, color=red];
+	applist -> init [style=dotted, color=blue];
+	init -> appdesc [style=dotted, color=red];
+	appdesc -> init [style=dotted, color=blue];
+	init -> create;
+	create -> wait1;
+	wait1 -> submenu;
+	wait1 -> app;
+	submenu -> create;
+	app -> desc;
+	desc ->wait2;
+	wait2 -> menu;
+	menu -> create;
+	wait2 -> run;
+	run -> launch;
+	launch -> applaunch [style=dotted, color=red];
+	applaunch -> launch [style=dotted, color=blue];
+	launch -> check;
+	check -> appstatus [style=dotted, color=red];
+	appstatus -> check [style=dotted, color=blue];
+	check -> running;
+	check -> complete;
+	running -> sofar;
+	sofar -> check;
+	complete -> display;
+	display -> wait3;
+	wait3 -> menu2;
+	menu2 -> create;
+
+	{rank=same; init applist appdesc}
+	{rank=same; launch applaunch}
+	{rank=same; check appstatus}
+
+}
