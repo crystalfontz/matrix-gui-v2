@@ -172,13 +172,16 @@ var updateAppStatus = function (id, hasOutput){
 			$('html,body').animate({scrollTop: tgt.offset().top}, 500);
 			addOutputSwipe();
 			$("#mainMenuBtn").css("display", "none");
-			if(data.running != false){
-				setTimeout(function(){updateAppStatus(id, hasOutput);}, 500);
-			}else{
+		}
+			
+		if(data.running == false){
+			if(hasOutput){
 				$("#mainMenuBtn").css("display", "block");
+			}else{
+				buildMenu("");
 			}
-		}else if(data.running == false){
-			buildMenu("");
+		}else{
+			setTimeout(function(){updateAppStatus(id, hasOutput);}, 500);
 		}
 	});
 }
