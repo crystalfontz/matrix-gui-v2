@@ -59,6 +59,7 @@ var server = http.createServer(function(request, response) {
 		loader.loadIcon(uri, response);
 	}else if(mUtils.isCacheClearRequest(uri)){
 		mUtils.clearCache(response);
+		applist.clear();
 	}else if(mUtils.isAppLaunchRequest(uri)){
 		apps.launchApp(uri, response);
 	}else if (mUtils.isAppOutputRequest(uri)){
