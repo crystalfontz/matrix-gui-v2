@@ -606,7 +606,7 @@ var setupCss = function(){
 	if($(window).height() < 400 || $(window).width() < 400){
 		var cssrule = "<style type='text/css'>";
 		cssrule += ".app_icon{ width: 64px !important; height:62px !important}";
-		cssrule += ".appContainer{ width: 115px !important; height: 106px !important}";
+		cssrule += ".appContainer{ width: 25% !important; height: 30% !important}"
 		cssrule += ".appTitle{font-size: 12px !important;}";
 		cssrule += "</style>";
 		$(cssrule).appendTo("head");

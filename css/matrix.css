@@ -28,29 +28,34 @@ a img{
 	padding-top: 20px;
 	position: fixed;
 	width: 100%;
+	height: 10%;
 	background-color: #000000;
 }
 .mainMenuBtn{
 	float: right;
-	width: 32px;
-	height: 32px;
-	padding-right: 15px;
+	width: 48px;
+	height: 48px;
+	padding-right: 10px;
+	padding-top: 10px;
 }
 .menuContainer{
-	clear: both;
-	padding-top: 50px;
+	padding-top: 8%;
 	width: 100%;
+	height: 100%;
+	background-color: #000000;
 }
 .tex{
 	float:left;
-	width: 32px;
-	height: 32px;
+	width: 48px;
+	height: 48px;
+	padding-left: 10px;
+	padding-top: 10px;
 }
 .title{
 	font-size: 24px;
-	width: auto !important;
-	clear: none;
-	padding-left: 20px;
+	padding-top: 10px;
+	width: 80%;
+	text-align: center;
 	float: left;
 }
 .base{
@@ -60,9 +65,8 @@ a img{
 	padding-top: 20px;
 }
 .appContainer{
-	width: 155px;
-	height: 138px;
-	padding-top: 5px !important;
+	width: 25%;
+	height: 30%;
 }
 .app_icon{
 	width: 96px;
@@ -83,7 +87,6 @@ a img{
 .runDiv{
 	width:100%;
 	text-align: center;
-	padding-top: 10px;
 }
 .outputDiv{
 	clear: both;
@@ -132,7 +135,7 @@ a img{
 	font-weight: bolder;
 }
 .runImg{
-	width: 96px;
-	height: 96px;
+	width: 64px;
+	height: 64px;
 }
 
