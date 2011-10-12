@@ -569,6 +569,12 @@ var addArrows = function(){
 * @see addMenuSwipe 
 */
 var buildMenu = function(submenu){
+                console.log("\n\nbuildMenu submenu: " + submenu);
+	if(jQuery.trim(submenu).length != 0)
+		if($(".hiddenVar").text().length == 0)
+			$(".hiddenVar").text(submenu);
+		else if( $(".outputDiv").length == 0)
+			$(".hiddenVar").text(submenu+" "+$(".hiddenVar").text());
 	$("#apps").empty();
 	nPages = 0;
 	showingPage = 0;
@@ -663,9 +669,23 @@ var initMenu = function(){
                         	var menu = getUrlParam("menu");
 				buildMenu(menu);
 			        $("#mainMenuBtn").click(function(){
-                			buildMenu("");
-                			$("#mainMenuBtn").css("display", "none");
-        			});
+                                        console.log("\n\ninitMenu\n ");
+					var array = $(".hiddenVar").text().split(" ");
+					if($(".outputDiv").length == 0)
+					{
+						array.splice(0,1);
+					}
+
+					if(array.length == 0)
+					{
+						$(".hiddenVar").text("");
+						buildMenu("");
+					}
+					else
+						buildMenu(array[0]);
+					if(array[0].length == 0)
+						$("#mainMenuBtn").css("display", "none");
+					});
         			$("#txlogo").click(buildCache);
         			disableSelect("navHeader");
 			}else{

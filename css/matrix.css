@@ -139,3 +139,7 @@ a img{
 	height: 64px;
 }
 
+.hiddenVar
+{
+	display: none;
+}
