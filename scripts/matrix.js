@@ -358,7 +358,6 @@ var addRunBtn = function(app){
 * @see addOutputSwipe
 */
 var addDescriptionExtras = function(app){
-	addRunBtn(app);
 	var bookend = document.createElement("div");
 	$(bookend).attr("id", "bookend");
 	$("#apps").append(bookend);
@@ -377,11 +376,13 @@ var showAppDescription = function(app){
 	var cacheIndex = "app_" + app.path64;
 	$("#apps").empty();
 	if(cache.hasOwnProperty(cacheIndex)){
+		addRunBtn(app);
 		$("#apps").append(cache[cacheIndex]);
 		addDescriptionExtras(app);
 	}else{
 		$.ajax("/app/" + app.path64,{ 
 		"success" : function(data){
+				addRunBtn(app);
 				var cleaned = '<div class="outputDiv" id="outputDiv">';
 				cleaned += cleanAppPage(data);
 				cleaned += '</div>';
