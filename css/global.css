@@ -94,11 +94,13 @@ input::-moz-focus-inner { border: 0; cursor:default; }
 	margin:0;
 }
 
-.icons_cell a img
+.icons_cell a img, .icons_cell img
 {
 	padding:0;
 	margin:0;
 }
+
+
 
 .icons_cell p
 {

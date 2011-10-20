@@ -55,35 +55,39 @@ $enable_exit_link = true;
 
 <script>
 
-	var t=setTimeout("update()",1000);
+	
+
+
+
+
+
+YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-move', function (Y) 
+{
+	var  timer = null;
+    function complete2(id, o, args) 
+	{
+		document.getElementById("container").innerHTML = o.responseText;
+		if(o.responseText.match("Script complete") != null)
+		{	
+			timer.cancel();
+		}
+    }
+
+	Y.on('io:complete', complete2, Y, ['lorem', 'ipsum']);
 
 	function update()
 	{
-				<?php
-			
-				$Url = "filereader.php?filename=$random_string";
-					echo "$('#container').load('$Url');";
-				?>
-				
-	
-				if($('#container').html().match("Script complete") != null)
-					{	
-						clearTimeout(t);
-					}
-					else
-						t=setTimeout("update()",2000);
+		<?php echo "var uri = \"filereader.php?filename=$random_string\";"; ?>
+		//This is a fix for IE 8. IE 8 likes to cache Ajax results therefore you need to change the link
+		//to something different each time so that IE 8 doesn't cache the results
+		uri += "&rand="+(Math.random()*2356)+(Math.random()*4321)+(Math.random()*3961);
+		Y.io(uri);
 	}
 
+	timer = Y.later(4000, null,update, [], true);
+	
+	update();
 
-
-<?php
-//Load EVM's CSS if being ran locally on the EVM
-if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'] )
-{?>
-
-
- YUI().use('anim','node-base','node-event-delegate', 'transition', 'event-move', function (Y) 
-	{
 	var MIN_SWIPE = 10;
 
 	   var anim = new Y.Anim({
@@ -93,6 +97,7 @@ if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'] )
 	
 
 		});
+
 
 		Y.one("#container").delegate("gesturemovestart", function(e) 
 		{
@@ -137,7 +142,6 @@ if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'] )
 	});
 
 
-<?php } ?>
 
 
 	</script>

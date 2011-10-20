@@ -19,11 +19,6 @@ if (file_exists($cachefile)) {
 else
 	ob_start();
 
-?>
- 
-
-<?php
-
 $handle = fopen("json.txt", "rb");
 $contents = fread($handle,filesize("json.txt"));
 fclose($handle);
@@ -86,7 +81,8 @@ width:<?php echo $cell_width; ?>%;
 		
 				if($i<count($var[$submenu]["apps"])) 
 				{
-			
+					$disable_link = false;
+
 					if(strtolower($var[$submenu]["apps"][$i]["Type"])=="directory")
 					{
 						$category = $var[$submenu]["apps"][$i]["Category"];
@@ -95,7 +91,7 @@ width:<?php echo $cell_width; ?>%;
 						if(count($var[$category]["apps"]) == 0)
 						{
 							$img_src = "images/coming-icon.png";
-							$link = "#";
+							$disable_link = true;
 						}
 				
 					}
@@ -130,8 +126,11 @@ width:<?php echo $cell_width; ?>%;
 						else	
 							$link =  "app_description.php?submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 					}
+					if($disable_link == false)
 						echo "<a href = '#' id = '$link'><img src= '$img_src' ></a>";
-					//echo "<div class='img_container' onclick=\"javascript:window.location='$link'\" ><img src= '$img_src'><div></div></div>";
+					else
+						echo "<img src= '$img_src'>";
+
 					echo "<p>$app_title</p>";
 					$i++;
 				}
@@ -147,14 +146,6 @@ width:<?php echo $cell_width; ?>%;
 		
 	 echo "</table>";
 
-
-	?>
-
-	
-</div>
-
-
-<?php
 
 // open the cache file "cache/home.html" for writing
 $fp = fopen($cachefile, 'w');
