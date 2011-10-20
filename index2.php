@@ -90,8 +90,7 @@ width:<?php echo $cell_width; ?>%;
 
 						if(count($var[$category]["apps"]) == 0)
 						{
-							$img_src = "images/coming-icon.png";
-							$disable_link = true;
+							$link = "coming_soon.php?submenu=$category";
 						}
 				
 					}
@@ -128,12 +127,8 @@ width:<?php echo $cell_width; ?>%;
 							$link =  "app_description.php?submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 					}
 
-					
-
-					if($disable_link == false)
 						echo "<a href = '#' id = '$link'><img src= '$img_src' ></a>";
-					else
-						echo "<img src= '$img_src'>";
+
 
 					echo "<p>$app_title</p>";
 					$i++;
