@@ -120,12 +120,16 @@ width:<?php echo $cell_width; ?>%;
 
 						if($var[$submenu]["apps"][$i]["Description_Link"]==-1)
 						{
-							$script_link = urlencode($var[$submenu]["apps"]["Exec"]);
+								
+							$script_link = urlencode($var[$submenu]["apps"][$i]["Exec"]);
 							$link =  "run_script.php?script=$script_link$url";
 						}
 						else	
 							$link =  "app_description.php?submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 					}
+
+					
+
 					if($disable_link == false)
 						echo "<a href = '#' id = '$link'><img src= '$img_src' ></a>";
 					else
