@@ -147,14 +147,14 @@ if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'] )
 				isSwipeDown = (swipeEnd - swipeStart ) > MIN_SWIPE;
 				isSwipeUp = (swipeStart - swipeEnd  ) > MIN_SWIPE;
 
-			if (isSwipeDown) {
+			if (isSwipeUp) {
 			   var start = Y.one('#descrip_text').get('scrollTop');
 				e.preventDefault(); 
 				anim.set('to', { scroll: [start, start + (swipeEnd - swipeStart)] });
 				anim.run();
 			}
 
-			if(isSwipeUp)
+			if(isSwipeDown)
 			{
 				var start = Y.one('#descrip_text').get('scrollTop');
 				e.preventDefault(); 

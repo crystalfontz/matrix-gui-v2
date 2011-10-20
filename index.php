@@ -104,7 +104,7 @@ function handleClick2 (e) {
 
 
    
-    var MIN_SWIPE = 20;
+    var MIN_SWIPE = 90;
 
    
 
@@ -125,14 +125,14 @@ function handleClick2 (e) {
                     isSwipeLeft = (swipeStart - swipeEnd) > MIN_SWIPE;
 			isSwipeRight = (swipeEnd - swipeStart ) > MIN_SWIPE;
 
-                if (isSwipeLeft) {
+                if (isSwipeRight) {
 			
 			//alert($('.previous_arrow').attr('id'));
 			//Y.one(".previous_arrow").simulate('click');
 			Y.one(".previous_arrow").simulate('click');
                     
                 }
-		else if(isSwipeRight)
+		else if(isSwipeLeft)
 		{
 			Y.one(".next_arrow").simulate('click');
 		}

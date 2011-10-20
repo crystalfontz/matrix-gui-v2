@@ -29,7 +29,7 @@ $skipped = 0;
 $page_number = 1;
 
 $icon_per_col = 4;
-$icon_per_row = 2;
+$icon_per_row = 3;
 
 $total = $icon_per_col * $icon_per_row;
 $current_page = $_GET["page"];

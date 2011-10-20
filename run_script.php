@@ -117,14 +117,14 @@ YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-mo
 				isSwipeDown = (swipeEnd - swipeStart ) > MIN_SWIPE;
 				isSwipeUp = (swipeStart - swipeEnd  ) > MIN_SWIPE;
 
-			if (isSwipeDown) {
+			if (isSwipeUp) {
 			   var start = Y.one('#container').get('scrollTop');
 				e.preventDefault(); 
 				anim.set('to', { scroll: [start, start + (swipeEnd - swipeStart)] });
 				anim.run();
 			}
 
-			if(isSwipeUp)
+			if(isSwipeDown)
 			{
 				var start = Y.one('#container').get('scrollTop');
 				e.preventDefault(); 
