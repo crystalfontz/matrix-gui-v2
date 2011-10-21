@@ -66,7 +66,9 @@ YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-mo
 	var  timer = null;
     function complete2(id, o, args) 
 	{
+		
 		document.getElementById("container").innerHTML = o.responseText;
+		document.getElementById("container").scrollTop = document.getElementById("container").scrollHeight; 
 		if(o.responseText.match("Script complete") != null)
 		{	
 			$('.exit_link').show();
