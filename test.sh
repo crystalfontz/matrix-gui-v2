@@ -29,7 +29,7 @@ done
 
 echo "Filename:"$filename
 echo "Output:"$outputfilename
-$filename > $outputfilename
+$filename > $outputfilename 2>&1
 
 echo "Script complete" >> $outputfilename
 
