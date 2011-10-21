@@ -29,7 +29,7 @@
 					//Only display the back icon if your currently not in the main menu
 					if(isset($enable_exit_link) == true && $enable_exit_link == true)
 					{
-						echo "<a  href = '#' id = 'index2.php?page=0' ><img id = 'exit_button_img' src= 'images/multi-icon.png'></a>";
+						echo "<a  class = 'exit_link' href = '#' id = 'index2.php?page=0' ><img id = 'exit_button_img' src= 'images/multi-icon.png'></a>";
 					}
 				?>
 
