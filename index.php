@@ -76,82 +76,36 @@ YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 
     // NOTE: This transaction does not use a configuration object.
     var request = Y.io(uri);
 
-
-
-function handleClick (e) {
+	function handleClick (e) {
 	
-	e.preventDefault();
-	e.stopPropagation();
-	 var parent = e.target.get('parentNode');
+		e.preventDefault();
+		e.stopPropagation();
+		 var parent = e.target.get('parentNode');
 	
-	if(e.target.get("tagName")=="IMG" && parent.get("tagName") != "A")
-	{
-		return;
+		if(e.target.get("tagName")=="IMG" && parent.get("tagName") != "A")
+		{
+			return;
+		}
+
+		if(parent.get("tagName") == "TD")
+			var request = Y.io("/"+ e.target.get('id'));
+		 else
+			var request = Y.io("/"+parent.get('id'));
+
 	}
 
-	if(parent.get("tagName") == "TD")
-		var request = Y.io("/"+ e.target.get('id'));
-	 else
-		var request = Y.io("/"+parent.get('id'));
-
-}
+	function disabledrag (e) {
+		e.preventDefault();
+	}
 
 
-function disabledrag (e) {
-	e.preventDefault();
-}
+	Y.one('#complete_container').delegate('click', handleClick, 'a,img');
+	Y.one('#complete_container').delegate('mousedown',disabledrag, 'img');
 
+	function handleClick2 (e) {
+		e.preventDefault();
+	}
 
-
-Y.one('#complete_container').delegate('click', handleClick, 'a,img');
-Y.one('#complete_container').delegate('mousedown',disabledrag, 'img');
-
-function handleClick2 (e) {
-	e.preventDefault();
-}
-//Y.one('#complete_container').delegate('mousedown',handleClick2, 'img');
-
-
-   
-    var MIN_SWIPE = 90;
-
-   
-
-    Y.one("#complete_container").delegate("gesturemovestart", function(e) {
-	
-   var item = e.currentTarget;
-        // Prevent Text Selection in IE
-       item.once("selectstart", function(e) {
-            e.preventDefault();
-        });
-
-         item.setData("swipeStart", e.pageX);
-
-            item.once("gesturemoveend", function(e) {
-		
-                var swipeStart = item.getData("swipeStart"),
-                    swipeEnd = e.pageX,
-                    isSwipeLeft = (swipeStart - swipeEnd) > MIN_SWIPE;
-			isSwipeRight = (swipeEnd - swipeStart ) > MIN_SWIPE;
-
-                if (isSwipeRight) {
-			
-			//alert($('.previous_arrow').attr('id'));
-			//Y.one(".previous_arrow").simulate('click');
-			Y.one(".previous_arrow").simulate('click');
-                    
-                }
-		else if(isSwipeLeft)
-		{
-			Y.one(".next_arrow").simulate('click');
-		}
-		
-
-            });
-
-    }, "div", {
-        preventDefault:true
-    });
 });
 
 

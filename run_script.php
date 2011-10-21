@@ -89,61 +89,7 @@ YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-mo
 	
 	update();
 
-	var MIN_SWIPE = 10;
-
-	   var anim = new Y.Anim({
-		    node: '#container',
-	 	duration: .3,
-	   	easing: Y.Easing.elasticNone
-	
-
-		});
-
-
-		Y.one("#container").delegate("gesturemovestart", function(e) 
-		{
-	
-		    var item = e.currentTarget;
-		    // Prevent Text Selection in IE
-		    item.once("selectstart", function(e) {
-		        e.preventDefault();
-		    });
-		
-			item.setData("swipeStart", e.pageY);
-
-			item.once("gesturemoveend", function(e) {
-	
-			var swipeStart = item.getData("swipeStart"),
-				swipeEnd = e.pageY,
-				isSwipeDown = (swipeEnd - swipeStart ) > MIN_SWIPE;
-				isSwipeUp = (swipeStart - swipeEnd  ) > MIN_SWIPE;
-
-			if (isSwipeUp) {
-			   var start = Y.one('#container').get('scrollTop');
-				e.preventDefault(); 
-				anim.set('to', { scroll: [start, start + (swipeEnd - swipeStart)] });
-				anim.run();
-			}
-
-			if(isSwipeDown)
-			{
-				var start = Y.one('#container').get('scrollTop');
-				e.preventDefault(); 
-				anim.set('to', { scroll: [start, start - (swipeStart - swipeEnd)] });
-				anim.run();
-			}
-		
-
-			});
-		   
-
-		}, "div", {
-		    preventDefault:true
-		});
-	});
-
-
-
+});
 
 	</script>
 	<?php }else{?>
