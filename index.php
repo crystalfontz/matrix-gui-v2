@@ -44,6 +44,9 @@
 
 <script>
 
+
+
+
 //YAHOO.util.Config.applyConfig("bootstrap",false);
 
 YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 'transition', 'event-move', function (Y) {
@@ -94,8 +97,14 @@ function handleClick (e) {
 }
 
 
+function disabledrag (e) {
+	e.preventDefault();
+}
+
+
 
 Y.one('#complete_container').delegate('click', handleClick, 'a,img');
+Y.one('#complete_container').delegate('mousedown',disabledrag, 'img');
 
 function handleClick2 (e) {
 	e.preventDefault();
