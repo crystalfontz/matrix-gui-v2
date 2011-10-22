@@ -56,6 +56,7 @@ $enable_exit_link = true;
 <script>
 
 	$('.exit_link').hide();
+	$('.back_link').hide();
 
 
 
@@ -72,6 +73,7 @@ YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-mo
 		if(o.responseText.match("Script complete") != null)
 		{	
 			$('.exit_link').show();
+			$('.back_link').show();
 			timer.cancel();
 		}
     }

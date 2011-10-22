@@ -45,15 +45,16 @@
 <script>
 
 
-
+var link_history = ["index2.php"];
 
 //YAHOO.util.Config.applyConfig("bootstrap",false);
 
 YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 'transition', 'event-move', function (Y) {
 //$('#complete_container').load("/index2.php");
 
-
     var uri = "/index2.php";
+
+
 
     // Define a function to handle the response data.
     function complete(id, o, args) {
@@ -61,6 +62,8 @@ YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 
 	//Y.one('#complete_container').set("innerHTML",o.responseText);
 	
 	$("#complete_container").html(o.responseText);
+	$(".back_link").attr("id",link_history[link_history.length-2]);
+
         //var data = o.responseText; // Response data.
         var args = args[1]; // 'ipsum'.
 
@@ -80,17 +83,19 @@ YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 
 	
 		e.preventDefault();
 		e.stopPropagation();
-		 var parent = e.target.get('parentNode');
-	
-		if(e.target.get("tagName")=="IMG" && parent.get("tagName") != "A")
+		
+		if(e.currentTarget.get("className")=="back_link")
 		{
-			return;
+			link_history.pop();
 		}
+		else if(e.currentTarget.get("className")=="exit_link")
+		{
+			link_history = ["index2.php"];
+		}
+		else
+			link_history.push(e.currentTarget.get('id'));
 
-		if(parent.get("tagName") == "TD")
-			var request = Y.io("/"+ e.target.get('id'));
-		 else
-			var request = Y.io("/"+parent.get('id'));
+		Y.io("/"+e.currentTarget.get('id'));
 
 	}
 
@@ -99,7 +104,7 @@ YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 
 	}
 
 
-	Y.one('#complete_container').delegate('click', handleClick, 'a,img');
+	Y.one('#complete_container').delegate('click', handleClick, 'a');
 	Y.one('#complete_container').delegate('mousedown',disabledrag, 'img');
 
 	function handleClick2 (e) {

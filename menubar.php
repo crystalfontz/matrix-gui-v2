@@ -16,11 +16,22 @@
 				?>
 
 			</td>
-			<td width = "70%" align = "center" id = "banner" >
+			<td width = "60%" align = "center" id = "banner" >
 				<?php  
 					echo "<img id = 'logo_img' src= 'images/tex.png'>";
 				?>
 				Matrix Application Launcher v2
+
+			</td>
+			<td  width = "10%" align = "center" >
+
+				<?php
+					//Only display the back icon if your currently not in the main menu
+					if(isset($enable_exit_link) == true && $enable_exit_link == true)
+					{
+						echo "<a  class = 'back_link' href = '#' id = '' ><img id = 'back_button_img' src= 'images/back-arrow-icon.png'></a>";
+					}
+				?>
 
 			</td>
 			<td  width = "10%" align = "center" >
