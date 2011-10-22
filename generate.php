@@ -135,6 +135,5 @@ $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 fwrite($ourFileHandle,json_encode($application));
 fclose($ourFileHandle);
 
-
 ?>
 

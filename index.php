@@ -1,16 +1,16 @@
 <html>
 <head>
-
-<?php $random2 = rand(); echo "<link rel='stylesheet' type='text/css' href='css/global.css?test=$random2'>";?>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <script>
 
 <?php
 
-if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'])
+if($_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost")
 	echo "var client_is_host = true;";
 else
 	echo "var client_is_host = false;";
+
 //Save output to temp so it doesn't output it to the HTML
 $temp = system('fbset > /dev/null');
 $has_graphics = system('echo $?');
@@ -20,39 +20,18 @@ if($has_graphics == 0)
 else
 	echo "var has_graphics = false;";
 
-?>
-
-</script>
-
-<?php
-	//Load EVM's CSS if being ran locally on the EVM
-	if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'] )
-	{
-		$random = rand();
-		echo "<link rel='stylesheet' type='text/css' href='css/am37x-evm.css?rand=$random'>";
-	
-	}
-
 	if(!file_exists("cache"))
 	{
 		mkdir("cache",6666);		
 	}
 ?>
 
-
-
-
- 
+</script>
 
 <link rel="stylesheet" type="text/css" href="css/fonts-min.css">
 <script type="text/javascript" src="/javascript/jquery-latest.js"></script>   
 
-
-
-
-
-
-
+<link rel='stylesheet' type='text/css' href='css/global.css'>
 
 </head>
 
@@ -63,6 +42,12 @@ else
 
 <script>
 
+
+var css_link = "css/am37x-evm.css?";
+css_link += "rand="+(Math.random()*2356);
+
+if(client_is_host==true)
+	$("head").append($("<link rel='stylesheet' href='"+css_link+"' type='text/css' media='screen'>"));
 
 
 var link_history = ["index2.php?page=0"];
@@ -85,6 +70,7 @@ $("#complete_container").delegate("img", "mousedown", function(e)
 
 $("#complete_container").delegate("a", "click", function(e)
 {
+		
 		e.preventDefault();
 		e.stopPropagation();
 		var className = $(this).attr('class');

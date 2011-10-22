@@ -4,7 +4,7 @@
 
 $cachefile = "cache".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 
-/*
+
 if (file_exists($cachefile)) {
 
 
@@ -19,7 +19,7 @@ if (file_exists($cachefile)) {
 
 }
 else
-	ob_start();*/ //Disable Caching on Description Page
+	ob_start();
 
 
 $handle = fopen("json.txt", "rb");
@@ -97,9 +97,8 @@ $enable_exit_link = true;
 		
 	}
 
-	//echo "<div id =\"no_display\">You can't run this application since your target system is not connected to a display device.</div>";
-	//echo "<div id = \"running_remotely\">You are running Matrix remotely and this application can only be seen on the display device connected to the target system. After clicking run, look at the display device to see and/or interact with the application</div>"
-
+	echo "<div id =\"no_display\">You can't run the GUI application $title. The system has detected that your embedded system is not connected to a display device.</div>";
+	echo "<div id = \"running_remotely\">You are currently running Matrix remotely and $title is a GUI based application. <br> After clicking run, look at the display device connected to the embedded system to see and/or interact with the application</div>";
 	echo "<div id = \"run_application\">";
 	echo "<div style= \"text-align:center;\">";
 	echo "<a href = '$link$url'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
@@ -118,36 +117,41 @@ $enable_exit_link = true;
 <script>
 
 	<?php 
-		/*if($program_type=="gui")
+		if($program_type=="gui")
 			echo "var isgraphicalApp = true;";
 		else
-			echo "var isgraphicalApp = false;";*/
-?>
-	/*if(isgraphicalApp == true && has_graphics == false)
+			echo "var isgraphicalApp = false;";
+	?>
+
+	if(isgraphicalApp == true)
 	{
-		$("#no_display").show();
-		$("#running_remotely").hide();
-		$("#run_application").hide();
-	}
-	else if(isgraphicalApp == true && has_graphics == true && client_is_host == false)
-	{
-		$("#no_display").hide();
-		$("#running_remotely").show();
-		$("#run_application").hide();
+		if(has_graphics == false)
+		{
+			$("#no_display").show();
+			$("#running_remotely").hide();
+			$("#run_application").hide();
+		}
+		else if(client_is_host == false)
+		{
+			$("#no_display").hide();
+			$("#running_remotely").show();
+			$("#run_application").show();
+		}
 	}
 	else
 	{
 		$("#no_display").hide();
 		$("#running_remotely").hide();
 		$("#run_application").show();
-	}*/
+	}
+
 	
 
 
 </script>
 <?php
 //Disable Caching on Description Page
-/*
+
 // open the cache file "cache/home.html" for writing
 $fp = fopen($cachefile, 'w');
 // save the contents of output buffer to the file
@@ -155,5 +159,5 @@ fwrite($fp, ob_get_contents());
 // close the file
 fclose($fp);
 // Send the output to the browser
-ob_end_flush();*/
+ob_end_flush();
 ?>

@@ -78,7 +78,7 @@ width:<?php echo $cell_width; ?>%;
 				$img_src = $var[$submenu]["apps"][$i]["Icon"];
 				$app_title = $var[$submenu]["apps"][$i]["Name"];
 				echo "<td class = 'icons_cell' align = 'center'   class = \"cf\">";
-		
+				$class = "";
 				if($i<count($var[$submenu]["apps"])) 
 				{
 					$disable_link = false;
@@ -117,17 +117,23 @@ width:<?php echo $cell_width; ?>%;
 							
 						}
 
+						//This check to see if the application doesn't have a description page. If it doesn't then directly launch the application"
 						if($var[$submenu]["apps"][$i]["Description_Link"]==-1)
 						{
 								
 							$script_link = urlencode($var[$submenu]["apps"][$i]["Exec"]);
-							$link =  "run_script.php?script=$script_link$url";
+							$link =  "run_script.php?script=$script_link$url&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
+							
+							//Determine if the application is GUI based. If it is then add a class to the link so the javascript code can 
+							//manipulate the link if it needs to
+							if($var[$submenu]["apps"][$i]["ProgramType"]=="gui")
+								$class = "class = 'is_gui_app'";
 						}
 						else	
 							$link =  "app_description.php?submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 					}
-
-						echo "<a href = '$link'><img src= '$img_src' ></a>";
+						
+						echo "<a href = '$link' $class><img src= '$img_src' ></a>";
 
 
 					echo "<p>$app_title</p>";
@@ -146,6 +152,25 @@ width:<?php echo $cell_width; ?>%;
 	 echo "</table>";
 
 
+?>
+
+<script>
+
+//Don't launch GUI based application directly if the application is being launched remotely
+//Or if the target doesn't have an attached graphic device
+if(client_is_host == false || has_graphics == false)
+{
+	$('.is_gui_app').each(function(index) {
+		var link = $(this).attr("href");
+		var new_link = link.substr(link.indexOf("&submenu="));
+		new_link = "app_description.php?" + new_link;
+		$(this).attr("href",new_link);
+	});
+}
+
+</script>
+
+<?php
 // open the cache file "cache/home.html" for writing
 $fp = fopen($cachefile, 'w');
 // save the contents of output buffer to the file
