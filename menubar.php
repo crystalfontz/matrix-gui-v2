@@ -11,7 +11,7 @@
 							
 						}
 						$link = "index2.php?".$submenustring."page=".$previous_page;
-						echo "<a href = '#' class = ' previous_arrow' id = '$link'><img id = 'previous_arrow_img' src= 'images/left-arrow-icon.png'></a>";
+						echo "<a href = '$link' class = 'previous_arrow' ><img id = 'previous_arrow_img' src= 'images/left-arrow-icon.png'></a>";
 					}
 				?>
 
@@ -29,7 +29,7 @@
 					//Only display the back icon if your currently not in the main menu
 					if(isset($enable_exit_link) == true && $enable_exit_link == true)
 					{
-						echo "<a  class = 'back_link' href = '#' id = '' ><img id = 'back_button_img' src= 'images/back-arrow-icon.png'></a>";
+						echo "<a  class = 'back_link' href = '#'  ><img id = 'back_button_img' src= 'images/back-arrow-icon.png'></a>";
 					}
 				?>
 
@@ -40,7 +40,7 @@
 					//Only display the back icon if your currently not in the main menu
 					if(isset($enable_exit_link) == true && $enable_exit_link == true)
 					{
-						echo "<a  class = 'exit_link' href = '#' id = 'index2.php?page=0' ><img id = 'exit_button_img' src= 'images/multi-icon.png'></a>";
+						echo "<a  class = 'exit_link' href = 'index2.php?page=0'  ><img id = 'exit_button_img' src= 'images/multi-icon.png'></a>";
 					}
 				?>
 
@@ -57,7 +57,7 @@
 							
 						}
 						$link = "index2.php?".$submenustring."page=".$next_page;
-						echo "<a href = '#' id = '$link' class = 'next_arrow' ><img id = 'next_arrow_img' src= 'images/right-arrow-icon.png'></a>";
+						echo "<a href = '$link'  class = 'next_arrow' ><img id = 'next_arrow_img' src= 'images/right-arrow-icon.png'></a>";
 
 					}
 				?>

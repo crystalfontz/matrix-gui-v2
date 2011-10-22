@@ -3,6 +3,26 @@
 
 <?php $random2 = rand(); echo "<link rel='stylesheet' type='text/css' href='css/global.css?test=$random2'>";?>
 
+<script>
+
+<?php
+
+if($_SERVER['SERVER_ADDR']==$_SERVER['REMOTE_ADDR'])
+	echo "var client_is_host = true;";
+else
+	echo "var client_is_host = false;";
+//Save output to temp so it doesn't output it to the HTML
+$temp = system('fbset > /dev/null');
+$has_graphics = system('echo $?');
+
+if($has_graphics == 0)
+	echo "var has_graphics = true;";
+else
+	echo "var has_graphics = false;";
+
+?>
+
+</script>
 
 <?php
 	//Load EVM's CSS if being ran locally on the EVM
@@ -45,75 +65,55 @@
 <script>
 
 
-var link_history = ["index2.php"];
 
-//YAHOO.util.Config.applyConfig("bootstrap",false);
+var link_history = ["index2.php?page=0"];
+var uri = "/index2.php?page=0";
 
-YUI().use('io', 'node-event-simulate','node','node-base','node-event-delegate', 'transition', 'event-move', function (Y) {
-//$('#complete_container').load("/index2.php");
+var previous_clicked = "index2.php?page=0";
 
-    var uri = "/index2.php";
-
-
-
-    // Define a function to handle the response data.
-    function complete(id, o, args) {
-        var id = id; // Transaction ID.
-	//Y.one('#complete_container').set("innerHTML",o.responseText);
-	
-	$("#complete_container").html(o.responseText);
-	$(".back_link").attr("id",link_history[link_history.length-2]);
-
-        //var data = o.responseText; // Response data.
-        var args = args[1]; // 'ipsum'.
-
-    };
-
-    // Subscribe to event "io:complete", and pass an array
-    // as an argument to the event handler "complete", since
-    // "complete" is global.   At this point in the transaction
-    // lifecycle, success or failure is not yet known.
-    Y.on('io:complete', complete, Y, ['lorem', 'ipsum']);
-
-    // Make an HTTP request to 'get.php'.
-    // NOTE: This transaction does not use a configuration object.
-    var request = Y.io(uri);
-
-	function handleClick (e) {
-	
-		e.preventDefault();
-		e.stopPropagation();
-		
-		if(e.currentTarget.get("className")=="back_link")
-		{
-			link_history.pop();
-		}
-		else if(e.currentTarget.get("className")=="exit_link")
-		{
-			link_history = ["index2.php"];
-		}
-		else
-			link_history.push(e.currentTarget.get('id'));
-
-		Y.io("/"+e.currentTarget.get('id'));
-
-	}
-
-	function disabledrag (e) {
-		e.preventDefault();
-	}
-
-
-	Y.one('#complete_container').delegate('click', handleClick, 'a');
-	Y.one('#complete_container').delegate('mousedown',disabledrag, 'img');
-
-	function handleClick2 (e) {
-		e.preventDefault();
-	}
-
+$.get("/index2.php?page=0", function(data) 
+{
+			$('#complete_container').html(data);
+			$(".back_link").attr("id",link_history[link_history.length-2]);
 });
 
 
+$("#complete_container").delegate("img", "mousedown", function(e)
+{
+       e.preventDefault();
+});
+
+
+$("#complete_container").delegate("a", "click", function(e)
+{
+		e.preventDefault();
+		e.stopPropagation();
+		var className = $(this).attr('class');
+		var link =  $(this).attr('href');
+		if(link==previous_clicked)
+		{
+			alert("This should never happen. Currently trying to go to the same page twice in a row");
+			return;
+		}
+		
+		if(className=="back_link")
+		{
+			link_history.pop();
+		}
+		else if(className=="exit_link")
+		{
+			link_history = ["index2.php?page=0"];
+		}
+		else
+			link_history.push(link);
+
+		$.get("/"+link, function(data) 
+		{
+			$('#complete_container').html(data);
+			$(".back_link").attr("href",link_history[link_history.length-2]);
+		});
+		previous_clicked = link;
+});
 
 </script>
 

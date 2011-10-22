@@ -63,6 +63,8 @@ $enable_exit_link = true;
 	
 	$descr = $found_app["Description_Link"];
 	$description = "No Description";
+	$program_type = $found_app["ProgramType"];
+
 	if($found_app["Description_Link"]!=-1)
 	{
 		$handle = fopen($found_app["Description_Link"], "rb");
@@ -95,21 +97,54 @@ $enable_exit_link = true;
 		
 	}
 
-	
+	//echo "<div id =\"no_display\">You can't run this application since your target system is not connected to a display device.</div>";
+	//echo "<div id = \"running_remotely\">You are running Matrix remotely and this application can only be seen on the display device connected to the target system. After clicking run, look at the display device to see and/or interact with the application</div>"
+
+	echo "<div id = \"run_application\">";
 	echo "<div style= \"text-align:center;\">";
-	echo "<a href = '#' id = '$link$url'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
+	echo "<a href = '$link$url'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
 	echo "</div>";
 
 	
 	echo "<div id = 'descrip_title' style= \"color:blue;\">$title</div>";
 	echo "<div  id = 'descrip_text'>$description</div>";
-	
+	echo "</div>";
 
 	
 
 ?> 
 
 
+<script>
+
+	<?php 
+		/*if($program_type=="gui")
+			echo "var isgraphicalApp = true;";
+		else
+			echo "var isgraphicalApp = false;";*/
+?>
+	/*if(isgraphicalApp == true && has_graphics == false)
+	{
+		$("#no_display").show();
+		$("#running_remotely").hide();
+		$("#run_application").hide();
+	}
+	else if(isgraphicalApp == true && has_graphics == true && client_is_host == false)
+	{
+		$("#no_display").hide();
+		$("#running_remotely").show();
+		$("#run_application").hide();
+	}
+	else
+	{
+		$("#no_display").hide();
+		$("#running_remotely").hide();
+		$("#run_application").show();
+	}*/
+	
+
+
+</script>
 <?php
 //Disable Caching on Description Page
 /*

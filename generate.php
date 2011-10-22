@@ -81,6 +81,8 @@ for($x = 0;$x<count($contents)&&strlen($contents[$x])>0;$x++)
 			$top["Type"] = "application";
 
 			$top["Exec"] = get_contents("Exec",$dotdesktop);
+
+			$top["ProgramType"] = get_contents("ProgramType",$dotdesktop);
 			
 			$description_link = get_contents("X-MATRIX-Description",$dotdesktop);
 

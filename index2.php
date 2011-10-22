@@ -127,7 +127,7 @@ width:<?php echo $cell_width; ?>%;
 							$link =  "app_description.php?submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 					}
 
-						echo "<a href = '#' id = '$link'><img src= '$img_src' ></a>";
+						echo "<a href = '$link'><img src= '$img_src' ></a>";
 
 
 					echo "<p>$app_title</p>";

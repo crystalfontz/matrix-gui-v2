@@ -55,45 +55,40 @@ $enable_exit_link = true;
 
 <script>
 
+	<?php echo "var uri_link = \"filereader.php?filename=$random_string\";"; ?>
 	$('.exit_link').hide();
 	$('.back_link').hide();
+	
 
-
-
-
-
-YUI().use('io','anim','node-base','node-event-delegate', 'transition', 'event-move', function (Y) 
-{
-	var  timer = null;
-    function complete2(id, o, args) 
-	{
-		
-		document.getElementById("container").innerHTML = o.responseText;
-		document.getElementById("container").scrollTop = document.getElementById("container").scrollHeight; 
-		if(o.responseText.match("Script complete") != null)
-		{	
-			$('.exit_link').show();
-			$('.back_link').show();
-			timer.cancel();
-		}
-    }
-
-	Y.on('io:complete', complete2, Y, ['lorem', 'ipsum']);
-
+	
 	function update()
 	{
-		<?php echo "var uri = \"filereader.php?filename=$random_string\";"; ?>
+		
 		//This is a fix for IE 8. IE 8 likes to cache Ajax results therefore you need to change the link
 		//to something different each time so that IE 8 doesn't cache the results
-		uri += "&rand="+(Math.random()*2356)+(Math.random()*4321)+(Math.random()*3961);
-		Y.io(uri);
+		var uri = uri_link+"&rand="+(Math.random()*2356)+(Math.random()*4321)+(Math.random()*3961);
+		
+		$.get(uri, function(data) 
+		{
+			$('#container').html(data);
+			$('#container').scrollTop(document.getElementById("container").scrollHeight);
+			
+			
+			if(data.match("Script complete") != null)
+			{
+				$('.exit_link').show();
+				$('.back_link').show();
+			}
+			else
+				setTimeout("update()",4000);
+
+		});
+
+		
 	}
 
-	timer = Y.later(4000, null,update, [], true);
-	
-	update();
+	setTimeout("update()",500);
 
-});
 
 	</script>
 	<?php }else{?>
