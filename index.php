@@ -45,8 +45,7 @@ else
  
 
 <link rel="stylesheet" type="text/css" href="css/fonts-min.css">
-<script type="text/javascript" src="/javascript/combo1.js"></script>
-<script src="/javascript/jquery-latest.js"></script>   
+<script type="text/javascript" src="/javascript/jquery-latest.js"></script>   
 
 
 
@@ -90,11 +89,15 @@ $("#complete_container").delegate("a", "click", function(e)
 		e.stopPropagation();
 		var className = $(this).attr('class');
 		var link =  $(this).attr('href');
+		
+		//Sometimes if a request is taking a long time you might try clicking a link more then once thinking that
+		//your click request was not accepted. This causes multiple request for the same page to be sent which in turn
+		//sometimes results in every link you click causing 2+ request to go through. This code checks to make sure
+		//your requesting a new pageand not the same page twice
 		if(link==previous_clicked)
-		{
-			alert("This should never happen. Currently trying to go to the same page twice in a row");
-			return;
-		}
+			return false;
+		
+		previous_clicked = link;
 		
 		if(className=="back_link")
 		{
@@ -112,7 +115,7 @@ $("#complete_container").delegate("a", "click", function(e)
 			$('#complete_container').html(data);
 			$(".back_link").attr("href",link_history[link_history.length-2]);
 		});
-		previous_clicked = link;
+		
 });
 
 </script>
