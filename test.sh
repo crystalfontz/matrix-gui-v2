@@ -49,6 +49,6 @@ do
 
 done
 
-sleep 10
+sleep 20
 rm $outputfilename
 

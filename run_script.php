@@ -55,7 +55,7 @@ $enable_exit_link = true;
 
 <script>
 
-	<?php echo "var uri_link = \"filereader.php?filename=$random_string\";"; ?>
+	<?php echo "var uri_link = \"$random_string\";"; ?>
 	$('.exit_link').hide();
 	$('.back_link').hide();
 	
@@ -66,10 +66,11 @@ $enable_exit_link = true;
 		
 		//This is a fix for IE 8. IE 8 likes to cache Ajax results therefore you need to change the link
 		//to something different each time so that IE 8 doesn't cache the results
-		var uri = uri_link+"&rand="+(Math.random()*2356)+(Math.random()*4321)+(Math.random()*3961);
+		var uri = uri_link+".txt?rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
 		
 		$.get(uri, function(data) 
 		{
+			data = data.replace(/\n/g, '<br>');
 			$('#container').html(data);
 			$('#container').scrollTop(document.getElementById("container").scrollHeight);
 			
@@ -80,7 +81,7 @@ $enable_exit_link = true;
 				$('.back_link').show();
 			}
 			else
-				setTimeout("update()",4000);
+				setTimeout("update()",3000);
 
 		});
 
