@@ -51,11 +51,11 @@ if(client_is_host==true)
 
 
 var link_history = ["index2.php?page=0"];
-var uri = "/index2.php?page=0";
+var uri = "index2.php?page=0";
 
 var previous_clicked = "index2.php?page=0";
 
-$.get("/index2.php?page=0", function(data) 
+$.get("index2.php?page=0", function(data) 
 {
 			$('#complete_container').html(data);
 			$(".back_link").attr("id",link_history[link_history.length-2]);
@@ -96,7 +96,7 @@ $("#complete_container").delegate("a", "click", function(e)
 		else
 			link_history.push(link);
 
-		$.get("/"+link, function(data) 
+		$.get(link, function(data) 
 		{
 			$('#complete_container').html(data);
 			$(".back_link").attr("href",link_history[link_history.length-2]);
