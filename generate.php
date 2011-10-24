@@ -4,13 +4,15 @@
 function get_contents($category,$filestring)
 {
 	
-	$pos = 	strpos($filestring,$category."=");
+	$pos = 	stripos($filestring,$category."=");
 	
 
 	if($pos != false)
 	{
 		$pos += strlen($category."=");
 		$newlinepos = stripos($filestring,"\n",$pos);
+		if($newlinepos == -1)
+			$newlinepos = stripos($filestring,"\r",$pos);
 		$returnedstring = substr($filestring,$pos,$newlinepos-$pos);
 		return $returnedstring;
 	} 
@@ -23,7 +25,7 @@ system("find  -name '*.desktop' -print > catdesktop.txt");
 $handle = fopen("catdesktop.txt", "rb");
 $contents = fread($handle,filesize("catdesktop.txt"));
 fclose($handle);
-
+unlink('catdesktop.txt');
 $contents = explode("\n",$contents);
 
 for($x = 0;$x<count($contents)&&strlen($contents[$x])>0;$x++)
@@ -89,9 +91,8 @@ for($x = 0;$x<count($contents)&&strlen($contents[$x])>0;$x++)
 			//-1 will be set if there is no link to the description page/no description field
 			$top["Description_Link"] = $description_link;
 
-			
+		
 			$top["Lock"] = get_contents("X-MATRIX-LOCK",$dotdesktop);
-
 			if($category == -1)
 			{
 				$application["top"]["apps"][] = $top;	
@@ -134,6 +135,7 @@ $ourFileName = "json.txt";
 $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 fwrite($ourFileHandle,json_encode($application));
 fclose($ourFileHandle);
+
 
 ?>
 
