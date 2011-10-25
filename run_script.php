@@ -3,35 +3,70 @@
 $i = 0;
 $lock_string = "";
 $currently_locked = false;
-while (list($key, $value) = each($_GET)) {
-	
-	if($i==0)
-	{
-		$scriptname = $value;
-	}
-	else
+
+
+$handle = fopen("json.txt", "rb");
+$contents = fread($handle,filesize("json.txt"));
+fclose($handle);
+
+
+$var = json_decode($contents,true);
+
+
+if(isset($_GET["submenu"]))
+	$submenu = $_GET["submenu"];
+else
+	$submenu = "top";
+
+
+for($i = 0;$i<count($var[$submenu]["apps"]);$i++)
+{
+	if($var[$submenu]["apps"][$i]["Name"]==$_GET["app"])
 	{	
-		$lock_string .= $value." ";
-		if(file_exists  ($value)==true)
+		
+		$found_app = $var[$submenu]["apps"][$i];
+		break;
+		
+		
+	}
+
+}
+
+$lock_list = $found_app["Lock"];
+
+//Verify that there is a lock specified for this application
+if($lock_list != -1)
+{
+	$lock_list_array = explode($lock_list," ");
+	//Check if the lock list only has one lock. If so add to the array
+	//Since index 0 will be empty
+
+	if(count($lock_list_array) == 1)
+		$lock_list_array[0] = $lock_list;
+
+	for($x = 0;$x<count($lock_list_array);$x++)
+	{
+		if(file_exists  ($lock_list_array[$x])==true)
 		{
-			echo "LOCK FILE EXIST";
 			$currently_locked = true;
 			break;
 		}
-		
-	
+
 	}
-	$i++;
-   
 }
 
+if($currently_locked==false)
+{
+	$script_link = $found_app["Exec"];
 
-$random_string = strval(rand());
-$random_string .= strval(rand());
+	$random_string = strval(rand());
+	$random_string .= strval(rand());
 
-$script_command = "./test.sh \"".$scriptname. "\" ".$random_string.".txt ".$lock_string;
+	$script_command = "./test.sh \"".$script_link. "\" ".$random_string.".txt ".$lock_list;
 
-$last_line = system($script_command." > /dev/null 2>/dev/null & ", $retval);
+	$last_line = system($script_command." > /dev/null 2>/dev/null & ", $retval);
+}
+
 $enable_exit_link = true;
 
 ?>
@@ -59,7 +94,7 @@ $enable_exit_link = true;
 	$('.exit_link').hide();
 	$('.back_link').hide();
 	
-
+	var fail_count = 0;
 	
 	function update()
 	{
@@ -70,19 +105,43 @@ $enable_exit_link = true;
 		
 		$.get(uri, function(data) 
 		{
+			fail_count = 0;
 			data = data.replace(/\n/g, '<br>');
-			$('#container').html(data);
-			$('#container').scrollTop(document.getElementById("container").scrollHeight);
-			
-			
+			<?php if($found_app["ProgramType"]!="gui"){ ?>
+				$('#container').html(data);
+				$('#container').scrollTop(document.getElementById("container").scrollHeight);		
+			<?php } ?>
+
 			if(data.match("Script complete") != null)
 			{
 				$('.exit_link').show();
 				$('.back_link').show();
+				<?php if($found_app["ProgramType"]=="gui"){ ?>
+					$('.back_link').click();		
+				<?php } ?>
 			}
 			else
 				setTimeout("update()",3000);
 
+		})
+		.error(function() 
+		{ 
+			//Sometimes the output file isn't written fast enough to be able to be
+			//read back in to check the status. This function will attempt to read the
+			//file 3 times with an increase delay for each attempt. If it still hasn't 
+			//Been able to read the file then it displays an error and allows the user to
+			//get back out to the main menu
+			fail_count++;
+			if(fail_count==3)
+			{
+				$('#container').html("Failed to read output file");
+				$('.exit_link').show();
+				$('.back_link').show();
+			}
+			else
+			{
+				setTimeout("update()",fail_count*1500);
+			}
 		});
 
 		

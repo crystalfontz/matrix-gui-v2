@@ -97,32 +97,10 @@ width:<?php echo $cell_width; ?>%;
 					elseif(strtolower($var[$submenu]["apps"][$i]["Type"])=="application")
 					{
 	
-						
-						//$script_link = urlencode($var["top"]["apps"][$i]["Exec"]);
-
-						$lock_list = $var[$submenu]["apps"][$i]["Lock"];
-
-						//$link =  "run_script.php?script=".$script_link;
-
-						$url = "";
-						if($lock_list != -1)
-						{
-							
-							$lock_list = explode(" ",$lock_list);
-							for($loop = 0;$loop<count($lock_list);$loop++)
-							{
-								$url .= "&lock".$loop."=".htmlentities($lock_list[$loop]);
-							}
-							
-							
-						}
-
 						//This check to see if the application doesn't have a description page. If it doesn't then directly launch the application"
 						if($var[$submenu]["apps"][$i]["Description_Link"]==-1)
-						{
-								
-							$script_link = urlencode($var[$submenu]["apps"][$i]["Exec"]);
-							$link =  "run_script.php?script=$script_link$url&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
+						{	
+							$link =  "run_script.php?&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 							
 							//Determine if the application is GUI based. If it is then add a class to the link so the javascript code can 
 							//manipulate the link if it needs to

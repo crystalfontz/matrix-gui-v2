@@ -76,32 +76,16 @@ $enable_exit_link = true;
 	}
 
 	
-	$script_link = urlencode($found_app["Exec"]);
+	$app_title = $found_app["Name"];
 
-	$lock_list = $found_app["Lock"];
+	$link =  "run_script.php?&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 
-	$link =  "run_script.php?script=".$script_link;
-	
-	//lock file list isnt working
-
-	$url = "";
-	if($lock_list != -1)
-	{
-		
-		$lock_list = explode(" ",$lock_list);
-		for($loop = 0;$loop<count($lock_list);$loop++)
-		{
-			$url .= "&lock".$loop."=".htmlentities($lock_list[$loop]);
-		}
-		
-		
-	}
 
 	echo "<div id =\"no_display\">You can't run the GUI application $title. The system has detected that your embedded system is not connected to a display device.</div>";
 	echo "<div id = \"running_remotely\">You are currently running Matrix remotely and $title is a GUI based application. <br> After clicking run, look at the display device connected to the embedded system to see and/or interact with the application</div>";
 	echo "<div id = \"run_application\">";
 	echo "<div style= \"text-align:center;\">";
-	echo "<a href = '$link$url'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
+	echo "<a href = '$link'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
 	echo "</div>";
 
 	
