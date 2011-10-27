@@ -35,8 +35,7 @@ for($i = 0;$i<count($var[$submenu]["apps"]);$i++)
 $lock_list = $found_app["Lock"];
 
 //Verify that there is a lock specified for this application
-//Not sure why for this the value could be -1 int or -1 the string
-if($lock_list != -1 && $lock_list != "-1")
+if($lock_list != -1 )
 {
 	$lock_list_array = explode($lock_list," ");
 	//Check if the lock list only has one lock. If so add to the array
@@ -55,6 +54,8 @@ if($lock_list != -1 && $lock_list != "-1")
 
 	}
 }
+else
+	$lock_list = "";
 
 if($currently_locked==false)
 {
