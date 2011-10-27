@@ -84,19 +84,19 @@ $enable_exit_link = true;
 
 	$link =  "run_script.php?&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
 
-
-	echo "<div id =\"no_display\"><h1 style = 'color:red;'>Sorry</h1>You can't run the GUI application $title. The system has detected that your embedded system is not connected to a display device.</div>";
-	echo "<div id = \"running_remotely\"><h1 style = 'color:yellow;'>Warning</h1>You are currently running Matrix remotely and $title is a GUI based application. <br> After clicking run, look at the display device connected to the embedded system to see and/or interact with the application</div>";
-	echo "<div id = \"run_application\">";
-	echo "<div style= \"text-align:center;\">";
-	echo "<a href = '$link'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
-	echo "</div>";
-
+	echo "<div id = 'descrip_text'";
+		echo "<div id =\"no_display\"><h1 style = 'color:red;'>Sorry</h1>You can't run the GUI application $title. The system has detected that your embedded system is not connected to a display device.</div>";
+		echo "<div id = \"running_remotely\"><h1 style = 'color:yellow;'>Warning</h1>You are currently running Matrix remotely and $title is a GUI based application. <br> After clicking run, look at the display device connected to the embedded system to see and/or interact with the application</div>";
 	
-	echo "<div id = 'descrip_title' style= \"color:blue;\"><h1>$title</h1></div><br>";
-	echo "<div  id = 'descrip_text'>$description</div>";
-	echo "</div>";
+		echo "<div id = \"run_application\" style= \"text-align:center;\">";
+			echo "<a href = '$link'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
+		echo "</div>";
 
+
+		echo "<div id = 'descrip_title' style= \"color:blue;\"><h1>$title</h1></div><br>";
+		echo "<div>$description</div>";
+	
+	echo "</div>";
 	
 
 ?> 
