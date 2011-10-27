@@ -2,6 +2,11 @@
 
 
 $cachefile = "cache".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+//Adding a random string to the end of the $_GET Query String to
+//prevent IE from caching the Ajax request. The below line removes the random portion
+//of the query so we can cache the page properly in php
+if(stripos($cachefile, "&rand=")==true)
+	$cachefile = substr($cachefile,0,stripos($cachefile, "&rand="));
 
 if (file_exists($cachefile)) {
 
@@ -149,6 +154,7 @@ if(client_is_host == false || has_graphics == false)
 </script>
 
 <?php
+
 // open the cache file "cache/home.html" for writing
 $fp = fopen($cachefile, 'w');
 // save the contents of output buffer to the file

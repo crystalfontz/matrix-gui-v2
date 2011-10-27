@@ -43,7 +43,7 @@ else
 <script>
 
 
-var css_link = "css/am37x-evm.css?";
+var css_link = "css/target_system.css?";
 css_link += "rand="+(Math.random()*2356);
 
 if(client_is_host==true)
@@ -96,6 +96,9 @@ $("#complete_container").delegate("a", "click", function(e)
 		else
 			link_history.push(link);
 
+		//Adds a random string to the end of the $_GET Query String for page accessed.
+		//This prevents IE from caching the Ajax request.
+		link = link + "&rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
 		$.get(link, function(data) 
 		{
 			$('#complete_container').html(data);

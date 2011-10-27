@@ -46,7 +46,7 @@ if($lock_list != -1)
 
 	for($x = 0;$x<count($lock_list_array);$x++)
 	{
-		if(file_exists  ($lock_list_array[$x])==true)
+		if(file_exists  ("lock/".$lock_list_array[$x])==true)
 		{
 			$currently_locked = true;
 			break;
@@ -101,18 +101,23 @@ $enable_exit_link = true;
 		
 		//This is a fix for IE 8. IE 8 likes to cache Ajax results therefore you need to change the link
 		//to something different each time so that IE 8 doesn't cache the results
-		var uri = uri_link+".txt?rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
+		var uri = "tmp/"+uri_link+".txt?rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
 		
 		$.get(uri, function(data) 
 		{
 			fail_count = 0;
+			data = jQuery.trim(data);
 			data = data.replace(/\n/g, '<br>');
+			var script_complete = data.indexOf("_?!!MATRIX_SCRIPT_COMPLETED!!?_");
+			if(script_complete != -1)
+				data = data.replace("_?!!MATRIX_SCRIPT_COMPLETED!!?_", "Script Complete");
+
 			<?php if($found_app["ProgramType"]!="gui"){ ?>
 				$('#container').html(data);
 				$('#container').scrollTop(document.getElementById("container").scrollHeight);		
 			<?php } ?>
 
-			if(data.match("Script complete") != null)
+			if(script_complete != -1)
 			{
 				$('.exit_link').show();
 				$('.back_link').show();

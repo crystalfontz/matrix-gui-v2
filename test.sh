@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mkdir -p tmp
+mkdir -p lock
 
 i=0
 
@@ -20,7 +22,7 @@ do
 
   if [ $i -gt 1 ]
   then
-    touch $item
+    touch "lock/"$item
 
    fi
  i=`expr $i + 1`
@@ -29,9 +31,10 @@ done
 
 echo "Filename:"$filename
 echo "Output:"$outputfilename
-$filename > $outputfilename 2>&1
+$filename > "tmp/"$outputfilename 2>&1
 
-echo "Script complete" >> $outputfilename
+#Using a more unique string to detect if the script is completed
+echo "_?!!MATRIX_SCRIPT_COMPLETED!!?_" >> "tmp/"$outputfilename
 
 
 
@@ -42,7 +45,7 @@ do
 
   if [ $i -gt 1 ]
   then
-    rm -f $item
+    rm -f "lock/"$item
 
    fi
  i=`expr $i + 1`
@@ -50,5 +53,5 @@ do
 done
 
 sleep 20
-rm $outputfilename
+rm "tmp/"$outputfilename
 
