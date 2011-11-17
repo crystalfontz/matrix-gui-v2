@@ -33,8 +33,11 @@ $var = json_decode($contents,true);
 $skipped = 0;
 $page_number = 1;
 
-$icon_per_col = 4;
-$icon_per_row = 3;
+//Load Matrix configuration file
+$ini_array = parse_ini_file("matrix_config.ini");
+
+$icon_per_col = $ini_array["icons_per_col"];
+$icon_per_row = $ini_array["icons_per_row"];
 
 $total = $icon_per_col * $icon_per_row;
 $current_page = $_GET["page"];

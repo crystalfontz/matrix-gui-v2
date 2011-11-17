@@ -28,7 +28,7 @@ $enable_exit_link = 1;
 	include "menubar.php"; 
 
 
-	echo "<div style = 'text-align:center;'>";
+	echo "<div id = 'coming_soon' style = 'text-align:center;'>";
 	$menu_name = ucwords($_GET["submenu"]);
 	echo "<h1>The applications in $menu_name will be coming soon</h1>";
 	echo "<img src= 'images/coming-icon.png'>";	

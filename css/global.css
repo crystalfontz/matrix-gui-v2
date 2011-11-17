@@ -132,3 +132,13 @@ input::-moz-focus-inner { border: 0; cursor:default; }
 	height:50px;
 }
 
+.hide_link
+{
+ visibility:hidden;
+}
+
+#container
+{
+	font-family: "Courier New", Courier, monospace;
+
+}

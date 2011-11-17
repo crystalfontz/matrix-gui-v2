@@ -6,19 +6,13 @@
 
 <?php
 
-if($_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost")
+
+$client_is_host = $_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost";
+if($client_is_host == true)
 	echo "var client_is_host = true;";
 else
 	echo "var client_is_host = false;";
 
-//Save output to temp so it doesn't output it to the HTML
-$temp = system('fbset > /dev/null');
-$has_graphics = system('echo $?');
-
-if($has_graphics == 0)
-	echo "var has_graphics = true;";
-else
-	echo "var has_graphics = false;";
 
 	if(!file_exists("cache"))
 	{
@@ -26,12 +20,35 @@ else
 	}
 ?>
 
+if(client_is_host==false)
+{
+	var r=confirm("Does your target system have an attached display device?\nClick Ok and Remote Matrix will assume that a proper display device is attached to your target system.\nClick Cancel and Remote Matrix will assume that you do not have a display device attached to your target system.");
+	if (r==true)
+		var has_graphics = true;
+	else
+		var has_graphics = false;
+}
+
+
 </script>
 
+
 <link rel="stylesheet" type="text/css" href="css/fonts-min.css">
+
+
 <script type="text/javascript" src="/javascript/jquery-latest.js"></script>   
 
 <link rel='stylesheet' type='text/css' href='css/global.css'>
+<?php
+	if($client_is_host == true)
+	{
+		//Load Matrix configuration file
+		$ini_array = parse_ini_file("matrix_config.ini");
+
+		$target_css = $ini_array["target_css"]."?".rand();
+		echo "<link rel='stylesheet' type='text/css' href='css/$target_css'>";
+	}
+?>
 
 </head>
 
@@ -41,13 +58,6 @@ else
 </div>
 
 <script>
-
-
-var css_link = "css/target_system.css?";
-css_link += "rand="+(Math.random()*2356);
-
-if(client_is_host==true)
-	$("head").append($("<link rel='stylesheet' href='"+css_link+"' type='text/css' media='screen'>"));
 
 
 var link_history = ["index2.php?page=0"];
