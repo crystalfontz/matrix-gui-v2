@@ -30,7 +30,7 @@ $enable_exit_link = 1;
 
 	echo "<div id = 'coming_soon' style = 'text-align:center;'>";
 	$menu_name = ucwords($_GET["submenu"]);
-	echo "<h1>The applications in $menu_name will be coming soon</h1>";
+	echo "<h2>The applications in $menu_name will be coming soon</h2>";
 	echo "<img src= 'images/coming-icon.png'>";	
 	echo "</div>";
 

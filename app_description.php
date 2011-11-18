@@ -91,9 +91,6 @@ $enable_exit_link = true;
 		echo "<div id = \"run_application\" style= \"text-align:center;\">";
 			echo "<a href = '$link'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
 		echo "</div>";
-
-
-		echo "<div id = 'descrip_title' style= \"color:blue;\"><h1>$title</h1></div><br>";
 		echo "<div>$description</div>";
 	
 	echo "</div>";
