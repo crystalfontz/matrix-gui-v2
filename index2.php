@@ -40,7 +40,7 @@ $icon_per_col = $ini_array["icons_per_col"];
 $icon_per_row = $ini_array["icons_per_row"];
 
 $total = $icon_per_col * $icon_per_row;
-$current_page = $_GET["page"];
+$current_page = isset($_GET["page"]) == true ? $_GET["page"] : 0;
 $i = $_GET["page"] * $total;
 $previous_page = $current_page - 1;
 $next_page = $current_page + 1;
@@ -60,6 +60,32 @@ $enable_previous_link = $i != 0;
 
 //Only enable exit link if your currently not in the main menu
 $enable_exit_link = $submenu != "top";
+
+
+
+foreach ($var as $k => $v) 
+{
+ 
+	for($j = 0;$j<count($v["apps"]);$j++)
+	{	
+		
+		$current_entry = $v["apps"][$j];
+
+		if($current_entry["Type"]=="directory" && $current_entry["Category"] == $submenu)
+		{	
+			
+			$found_entry = true;
+			$submenu_entry = $current_entry;
+			break;
+		}
+
+	}
+
+	if($found_entry == true)
+		break;
+}
+
+$menu_title = ($submenu == "top") ? "Matrix App Launcher v2 p".($current_page+1) : $submenu_entry["Name"]." Submenu p".($current_page+1);
 ?>
 
 <style type="text/css">
@@ -74,6 +100,7 @@ width:<?php echo $cell_width; ?>%;
 
 </style>
 	<?php include "menubar.php"; ?>
+
 
 	<table id = "iconlist" > <?php
 		for($s = 0;$s<$icon_per_row;$s++)

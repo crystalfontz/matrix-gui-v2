@@ -39,15 +39,7 @@ else
 	$submenu = "top";
 
 $enable_exit_link = true;
-?>
 
-
-
-
-	<?php include "menubar.php"; ?>
-
-<?php
-	
 	for($i = 0;$i<count($var[$submenu]["apps"]);$i++)
 	{
 		if($var[$submenu]["apps"][$i]["Name"]==$_GET["app"])
@@ -60,6 +52,17 @@ $enable_exit_link = true;
 		}
 	
 	}
+
+	$menu_title = $found_app["Name"];
+?>
+
+
+
+
+	<?php include "menubar.php"; ?>
+
+<?php
+	
 
 	$title = $found_app["Name"];
 	

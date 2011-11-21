@@ -1,29 +1,41 @@
 	<table width = "100%" style = "margin-bottom:10px;">
 		<tr>
-			<td width = "20%" align = "left" >
+			<td  align = "left" >
 				<?php 
+					$submenustring = "";
+					if(isset($_GET["submenu"])==true)
+					{
+						$submenustring = "submenu=".$_GET["submenu"]."&";
+							
+					}
+					$link = "index2.php?".$submenustring."page=".$previous_page;
+
 					if(isset($enable_previous_link) == true && $enable_previous_link == true && isset($previous_page) == true)
 					{
-						$submenustring = "";
-						if(isset($_GET["submenu"])==true)
-						{
-							$submenustring = "submenu=".$_GET["submenu"]."&";
-							
-						}
-						$link = "index2.php?".$submenustring."page=".$previous_page;
+						
 						echo "<a href = '$link' class = 'previous_arrow' ><img id = 'previous_arrow_img' src= 'images/left-arrow-icon.png'></a>";
 					}
+					else
+						echo "<a href = '$link' class = 'previous_arrow hide_link' ><img id = 'previous_arrow_img' src= 'images/left-arrow-icon.png'></a>";
+
+					
+					//Added these two html elements so that each side will be even
+					echo "<a  class = 'hide_link' href = '#'  ><img id = 'exit_button_img' src= 'images/multi-icon.png'></a>";
+					echo "<a href = '#'  class = 'hide_link' ><img id = 'next_arrow_img' src= 'images/right-arrow-icon.png'></a>";
+
+
 				?>
 
 			</td>
-			<td width = "55%" align = "center" id = "banner" >
+			<td  align = "center" id = "banner" >
 				<?php  
 					echo "<img id = 'logo_img' src= 'images/tex.png'>";
+					echo $menu_title;
 				?>
-				Matrix App Launcher v2
+				
 
 			</td>
-			<td  width = "20%" align = "right" >
+			<td  align = "right" >
 
 				<?php
 					//Only display the back icon if your currently not in the main menu

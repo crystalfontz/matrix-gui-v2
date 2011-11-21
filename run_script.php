@@ -71,6 +71,7 @@ if($currently_locked==false)
 
 $enable_exit_link = true;
 
+$menu_title = $found_app["Name"];
 ?>
 
 
@@ -93,8 +94,12 @@ $enable_exit_link = true;
 <script>
 
 	<?php echo "var uri_link = \"$random_string\";"; ?>
-	$('.exit_link').hide();
-	$('.back_link').hide();
+	$('.exit_link').css("visibility", "hidden");
+	$('.back_link').css("visibility", "hidden");
+
+
+
+
 	
 	var fail_count = 0;
 	
@@ -110,6 +115,7 @@ $enable_exit_link = true;
 			fail_count = 0;
 			data = jQuery.trim(data);
 			data = data.replace(/\n/g, '<br>');
+			data = data.replace(/\s/g, '&nbsp;');
 			var script_complete = data.indexOf("_?!!MATRIX_SCRIPT_COMPLETED!!?_");
 			if(script_complete != -1)
 				data = data.replace("_?!!MATRIX_SCRIPT_COMPLETED!!?_", "Script Complete");
@@ -121,8 +127,8 @@ $enable_exit_link = true;
 
 			if(script_complete != -1)
 			{
-				$('.exit_link').show();
-				$('.back_link').show();
+				$('.exit_link').css("visibility", "visible");
+				$('.back_link').css("visibility", "visible");
 				<?php if($found_app["ProgramType"]=="gui"){ ?>
 					$('.back_link').click();		
 				<?php } ?>
@@ -142,8 +148,8 @@ $enable_exit_link = true;
 			if(fail_count==3)
 			{
 				$('#container').html("Failed to read output file");
-				$('.exit_link').show();
-				$('.back_link').show();
+				$('.exit_link').css("visibility", "visible");
+				$('.back_link').css("visibility", "visible");
 			}
 			else
 			{

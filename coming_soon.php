@@ -22,14 +22,45 @@ else
 	ob_start();
 
 
+$handle = fopen("json.txt", "rb");
+$contents = fread($handle,filesize("json.txt"));
+fclose($handle);
+
+$var = json_decode($contents,true);
+
 
 $enable_exit_link = 1;
+$submenu = $_GET["submenu"];
+foreach ($var as $k => $v) 
+{
+ 
+	for($j = 0;$j<count($v["apps"]);$j++)
+	{	
+		
+		$current_entry = $v["apps"][$j];
+
+		if($current_entry["Type"]=="directory" && $current_entry["Category"] == $submenu)
+		{	
+			
+			$found_entry = true;
+			$submenu_entry = $current_entry;
+			break;
+		}
+
+	}
+
+	if($found_entry == true)
+		break;
+}
+
+$menu_title = "Coming Soon";
+
 
 	include "menubar.php"; 
 
 
 	echo "<div id = 'coming_soon' style = 'text-align:center;'>";
-	$menu_name = ucwords($_GET["submenu"]);
+	$menu_name = $submenu_entry["Name"];
 	echo "<h2>The applications in $menu_name will be coming soon</h2>";
 	echo "<img src= 'images/coming-icon.png'>";	
 	echo "</div>";
