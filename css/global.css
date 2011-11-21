@@ -4,40 +4,15 @@ background-color:black;
 color:white;
 margin:0;
 padding:0;
+height:100%;
 }
 
 body
 {
 margin:0;
 padding:0;
+height:100%;
 }
-
-/* For modern browsers */
-.cf:before,
-.cf:after {
-    content:"";
-    display:table;
-}
-
-.cf:after {
-    clear:both;
-}
-
-/* For IE 6/7 (trigger hasLayout) */
-.cf {
-    zoom:1;
-}
-
-
-}
-
-
-   
-.unselectable {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-}
- 
 
 #nextpage
 {
@@ -137,6 +112,10 @@ input::-moz-focus-inner { border: 0; cursor:default; }
  visibility:hidden;
 }
 
+#complete_container
+{
+height:inherit;
+}
 #container
 {
 	font-family: "Courier New", Courier, monospace;
