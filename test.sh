@@ -67,7 +67,7 @@ $filename > "tmp/"$outputfilename 2>&1
 #Using a more unique string to detect if the script is completed
 echo "_?!!MATRIX_SCRIPT_COMPLETED!!?_" >> "tmp/"$outputfilename
 
-
+refresh_screen &
 
 i=0
 
