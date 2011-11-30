@@ -147,8 +147,10 @@ $menu_title = $found_app["Name"];
 		{
 			fail_count = 0;
 			data = jQuery.trim(data);
-			data = data.replace(/\n/g, '<br>');
-			data = data.replace(/\s/g, '&nbsp;');
+			data = data.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+   			data = data.replace(/\n/g, '<br>');                     
+   			data = data.replace(/\s/g, '&nbsp;');
+   
 			var script_complete = data.indexOf("_?!!MATRIX_SCRIPT_COMPLETED!!?_");
 			if(script_complete != -1)
 				data = data.replace("_?!!MATRIX_SCRIPT_COMPLETED!!?_", "Script Complete");
