@@ -5,33 +5,30 @@
 
 #iconlist
 {
-font-size:14px;
+	font-size:14px;
 }
 
 #banner
 {
-font-size:20px;
+	font-size:20px;
 
 }
 
 #iconlist
 {
-height:85%;
+	height:85%;
 }
-
 
 #banner img
 {
- margin-right:10px;
+	margin-right:10px;
 }
 
 #next_arrow_img, #previous_arrow_img,#run_img , #back_button_img,#exit_button_img,#logo_img
 {
 	width:40px;
 	height:40px;
-
 }
-
 
 .icons_cell img
 {
@@ -39,22 +36,18 @@ height:85%;
 	height:96px;
 }
 
-
 #descrip_text,#descrip_title
 {
-font-size:15px;
+	font-size:15px;
 }
 
 #descrip_text,#container
 {
-height:417px;
-overflow:auto;
-
+	height:417px;
+	overflow:auto;
 }
 
 #coming_soon
 {
-font-size:16px;
+	font-size:16px;
 }
-
-

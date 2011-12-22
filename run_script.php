@@ -33,53 +33,39 @@
  *
 */
 
+require("helper_functions.php");
+
 $i = 0;
 $lock_string = "";
 $currently_locked = false;
 
+$var = read_desktop_file();
 
-$handle = fopen("json.txt", "rb");
-$contents = fread($handle,filesize("json.txt"));
-fclose($handle);
-
-
-$var = json_decode($contents,true);
+$submenu = isset($_GET["submenu"]) == true ? $_GET["submenu"] : "main_menu" ;
 
 
-if(isset($_GET["submenu"]))
-	$submenu = $_GET["submenu"];
-else
-	$submenu = "top";
-
-
-for($i = 0;$i<count($var[$submenu]["apps"]);$i++)
-{
-	if($var[$submenu]["apps"][$i]["Name"]==$_GET["app"])
-	{	
-		
-		$found_app = $var[$submenu]["apps"][$i];
-		break;
-		
-		
-	}
-
-}
+$found_app = get_application($var,$submenu,$_GET["app"]);
 
 $lock_list = $found_app["Lock"];
 
 //Verify that there is a lock specified for this application
 if($lock_list != -1 )
 {
+	//Convert the string into an array. 
+
+	//This might be backwards*********CHECKOUT********
 	$lock_list_array = explode($lock_list," ");
+
 	//Check if the lock list only has one lock. If so add to the array
 	//Since index 0 will be empty
 
 	if(count($lock_list_array) == 1)
 		$lock_list_array[0] = $lock_list;
 
+	//Check to see if any of the locks exist.
 	for($x = 0;$x<count($lock_list_array);$x++)
 	{
-		if(file_exists  ("lock/".$lock_list_array[$x])==true)
+		if(file_exists ("lock/".$lock_list_array[$x])==true)
 		{
 			$currently_locked = true;
 			break;
@@ -97,110 +83,100 @@ if($currently_locked==false)
 	$random_string = strval(rand());
 	$random_string .= strval(rand());
 
-	$script_command = "./test.sh \"".$script_link. "\" ".$random_string.".txt ".$lock_list;
+	$script_command = "./execute_command.sh \"".$script_link. "\" ".$random_string.".txt ".$lock_list;
 
 	$last_line = system($script_command." > /dev/null 2>/dev/null & ", $retval);
 }
 
-$enable_exit_link = true;
-
 $menu_title = $found_app["Name"];
 ?>
 
+<?php include "menubar.php"; ?>
 
+<?php if($currently_locked==false){ ?>
 
-
-	<?php include "menubar.php"; ?>
-	<?php if($currently_locked==false){ ?>
-
-
-
-
-		<div id="container"></div>
-  
-
-  
-
-	
-
+<div id="container"></div>
 
 <script>
-
 	<?php echo "var uri_link = \"$random_string\";"; ?>
-	$('.exit_link').css("visibility", "hidden");
-	$('.back_link').css("visibility", "hidden");
 
-
-
-
-	
 	var fail_count = 0;
-	
+
 	function update()
 	{
-		
-		//This is a fix for IE 8. IE 8 likes to cache Ajax results therefore you need to change the link
-		//to something different each time so that IE 8 doesn't cache the results
+	
+		//This is a fix for IE browsers. IE likes to cache Ajax results. Therefore, adding a random string will prevent the browser from caching the Ajax request. 
 		var uri = "tmp/"+uri_link+".txt?rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
-		
+	
 		$.get(uri, function(data) 
 		{
 			fail_count = 0;
 			data = jQuery.trim(data);
-			data = data.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-   			data = data.replace(/\n/g, '<br>');                     
-   			data = data.replace(/\s/g, '&nbsp;');
    
+			//The execute_command script adds the text "_?!!MATRIX_SCRIPT_COMPLETED!!?_" to the end of the file to mark that the command is done executing
 			var script_complete = data.indexOf("_?!!MATRIX_SCRIPT_COMPLETED!!?_");
 			if(script_complete != -1)
+			{
+				//Just replace the end of file text to Script Complete which 
 				data = data.replace("_?!!MATRIX_SCRIPT_COMPLETED!!?_", "Script Complete");
+			}
 
-			<?php if($found_app["ProgramType"]!="gui"){ ?>
-				$('#container').html(data);
+			<?php 
+				//GUI applications shouldn't have any output that needs to be displayed. Therefore, don't include the code that will update the HTML container
+				//with the program's output. This prevents some flickering problems that occur in some GUI applications even if the HTML container is being passed no information.
+				if($found_app["ProgramType"]!="gui"){ ?>
+				$('#container').html("<pre>"+data+"</pre>");
 				$('#container').scrollTop(document.getElementById("container").scrollHeight);		
 			<?php } ?>
 
 			if(script_complete != -1)
 			{
-				$('.exit_link').css("visibility", "visible");
-				$('.back_link').css("visibility", "visible");
+				//Display the exit and back button.
+				$('#main_menu_link').removeClass("hide_link");
+				$('#back_link').removeClass("hide_link");
+
 				<?php if($found_app["ProgramType"]=="gui"){ ?>
-					$('.back_link').click();		
+					$('#back_link').click();		
 				<?php } ?>
 			}
 			else
-				setTimeout("update()",3000);
+				setTimeout("update()",1000);
 
 		})
+		//If a file cant be read or some other error related to trying to retrieve this file then JQuery executes the error function.
+		//This sometimes occurs when the browser tries to read the output file before output file is even created. 
 		.error(function() 
 		{ 
-			//Sometimes the output file isn't written fast enough to be able to be
-			//read back in to check the status. This function will attempt to read the
-			//file 3 times with an increase delay for each attempt. If it still hasn't 
-			//Been able to read the file then it displays an error and allows the user to
-			//get back out to the main menu
+			//This function will attempt to read the file 3 times with an increase delay for each attempt. If the file still hasn't 
+			//been able to be read then an error is displayed and the Exit and Back Link is enabled.
+
 			fail_count++;
 			if(fail_count==3)
 			{
 				$('#container').html("Failed to read output file");
-				$('.exit_link').css("visibility", "visible");
-				$('.back_link').css("visibility", "visible");
+				$('#main_menu_link').removeClass("hide_link");
+				$('#back_link').removeClass("hide_link");
 			}
 			else
 			{
+				//Every time it fails wait a signifcantly longer amount of time
 				setTimeout("update()",fail_count*1500);
 			}
 		});
 
-		
+	
 	}
-
+	
+	//Wait 500ms before trying to read the application output
 	setTimeout("update()",500);
+</script>
+<?php }else{?>
 
+This program can't run since a program is already running that contains a lock that this program is trying to use
+<script>
+	//Display the back and exit button since the application couldn't run
+	$('#main_menu_link').removeClass("hide_link");
+	$('#back_link').removeClass("hide_link");
+</script>
 
-	</script>
-	<?php }else{?>
-		This program can't run since a program is already running that contains a lock that this program is trying to use
-	<?php } ?>
-
-
+<?php } ?>

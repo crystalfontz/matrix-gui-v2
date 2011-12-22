@@ -42,7 +42,6 @@
 
 <?php
 
-
 $client_is_host = $_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost";
 if($client_is_host == true)
 	echo "var client_is_host = true;";
@@ -56,14 +55,6 @@ else
 	}
 ?>
 
-if(client_is_host==false)
-{
-	var r=confirm("Does your target system have an attached display device?\nClick Ok and Remote Matrix will assume that a proper display device is attached to your target system.\nClick Cancel and Remote Matrix will assume that you do not have a display device attached to your target system.");
-	if (r==true)
-		var has_graphics = true;
-	else
-		var has_graphics = false;
-}
 
 
 </script>
@@ -94,18 +85,37 @@ if(client_is_host==false)
 </div>
 
 <script>
+var has_graphics = true;
+var link_history = ["submenu.php?submenu=main_menu&page=0"];
+var uri = "submenu.php?submenu=main_menu&page=0";
+var previous_clicked = uri;
 
-
-var link_history = ["index2.php?page=0"];
-var uri = "index2.php?page=0";
-
-var previous_clicked = "index2.php?page=0";
-
-$.get("index2.php?page=0", function(data) 
+$(document).ready(function()
 {
-			$('#complete_container').html(data);
-			$(".back_link").attr("id",link_history[link_history.length-2]);
+
+
+	if(client_is_host==false)
+	{
+		var r=confirm("Does your target system have an attached display device?\nClick Ok and Remote Matrix will assume that a proper display device is attached to your target system.\nClick Cancel and Remote Matrix will assume that you do not have a display device attached to your target system.");
+		if (r==true)
+			has_graphics = true;
+		else
+			has_graphics = false;
+	}
+
+	$.get(uri, function(data) 
+	{
+				$('#complete_container').html(data);
+				$("#back_link").attr("href",link_history[link_history.length-2]);
+	});
+
+
 });
+
+
+
+
+
 
 
 $("#complete_container").delegate("img", "mousedown", function(e)
@@ -113,44 +123,42 @@ $("#complete_container").delegate("img", "mousedown", function(e)
        e.preventDefault();
 });
 
-
 $("#complete_container").delegate("a", "click", function(e)
 {
-		
-		e.preventDefault();
-		e.stopPropagation();
-		var className = $(this).attr('class');
-		var link =  $(this).attr('href');
-		
-		//Sometimes if a request is taking a long time you might try clicking a link more then once thinking that
-		//your click request was not accepted. This causes multiple request for the same page to be sent which in turn
-		//sometimes results in every link you click causing 2+ request to go through. This code checks to make sure
-		//your requesting a new pageand not the same page twice
-		if(link==previous_clicked)
-			return false;
-		
-		previous_clicked = link;
-		
-		if(className=="back_link")
-		{
-			link_history.pop();
-		}
-		else if(className=="exit_link")
-		{
-			link_history = ["index2.php?page=0"];
-		}
-		else
-			link_history.push(link);
+	e.preventDefault();
+	e.stopPropagation();
+	var className = $(this).attr('class');
+	var idName = $(this).attr('id');
+	var link =  $(this).attr('href');
 
-		//Adds a random string to the end of the $_GET Query String for page accessed.
-		//This prevents IE from caching the Ajax request.
-		link = link + "&rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
-		$.get(link, function(data) 
-		{
-			$('#complete_container').html(data);
-			$(".back_link").attr("href",link_history[link_history.length-2]);
-		});
-		
+	//Sometimes if a request is taking a long time you might try clicking a link more then once thinking that
+	//your click request was not accepted. This causes multiple request for the same page to be sent which in turn
+	//sometimes results in every link you click causing 2+ request to go through. This code checks to make sure
+	//your requesting a new pageand not the same page twice
+	if(link==previous_clicked)
+		return false;
+
+	previous_clicked = link;
+
+	if(idName=="back_link")
+	{
+		link_history.pop();
+	}
+	else if(idName=="main_menu_link")
+	{
+		link_history = ["submenu.php?submenu=main_menu&page=0"];
+	}
+	else
+		link_history.push(link);
+
+	//Adds a random string to the end of the $_GET Query String for page accessed.
+	//This prevents IE from caching the Ajax request.
+	link = link + "&rand="+Math.round((Math.random()*2356))+Math.round((Math.random()*4321))+Math.round((Math.random()*3961));
+	$.get(link, function(data) 
+	{
+		$('#complete_container').html(data);
+		$("#back_link").attr("href",link_history[link_history.length-2]);
+	});		
 });
 
 </script>

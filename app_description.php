@@ -34,65 +34,20 @@
  *
 */
 
+require("helper_functions.php");
 
+start_caching();
 
-$cachefile = "cache".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-//Adding a random string to the end of the $_GET Query String to
-//prevent IE from caching the Ajax request. The below line removes the random portion
-//of the query so we can cache the page properly in php
-if(stripos($cachefile, "&rand=")==true)
-	$cachefile = substr($cachefile,0,stripos($cachefile, "&rand="));
+$var = read_desktop_file();
 
-if (file_exists($cachefile)) {
+//Some parts of the code doesn't set the submenu variable when the user is at the Main Menu which is relected in the "top" variable
+$submenu = isset($_GET["submenu"]) == true ? $_GET["submenu"] : "main_menu" ;
 
+$found_app =  get_application($var,$submenu,$_GET["app"]);
 
-	// the page has been cached from an earlier request
-
-	// output the contents of the cache file
-
-	include($cachefile); 
-
-	// exit the script, so that the rest isnt executed
-	exit;
-
-}
-else
-	ob_start();
-
-
-$handle = fopen("json.txt", "rb");
-$contents = fread($handle,filesize("json.txt"));
-fclose($handle);
-
-
-$var = json_decode($contents,true);
-
-if(isset($_GET["submenu"]))
-	$submenu = $_GET["submenu"];
-else
-	$submenu = "top";
-
-$enable_exit_link = true;
-
-	for($i = 0;$i<count($var[$submenu]["apps"]);$i++)
-	{
-		if($var[$submenu]["apps"][$i]["Name"]==$_GET["app"])
-		{	
-			
-			$found_app = $var[$submenu]["apps"][$i];
-			break;
-			
-			
-		}
-	
-	}
-
-	$menu_title = $found_app["Name"];
+$menu_title = $found_app["Name"];
+$enable_main_menu_link = true;
 ?>
-
-
-
-
 	<?php include "menubar.php"; ?>
 
 <?php
@@ -100,9 +55,6 @@ $enable_exit_link = true;
 
 	$title = $found_app["Name"];
 	
-	
-	
-	$descr = $found_app["Description_Link"];
 	$description = "No Description";
 	$program_type = $found_app["ProgramType"];
 
@@ -110,34 +62,35 @@ $enable_exit_link = true;
 	{
 		$handle = fopen($found_app["Description_Link"], "rb");
 		$description = fread($handle,filesize($found_app["Description_Link"]));
-		if(strlen($description)==0)
-			$description = "Invalid link for description page";
 		fclose($handle);
 
+		if(strlen($description)==0)
+			$description = "Invalid link for description page";
 	}
 
-	
 	$app_title = $found_app["Name"];
 
 	$link =  "run_script.php?&submenu=".urlencode($submenu)."&app=".urlencode($app_title);
-
-	echo "<div id = 'descrip_text'>";
-		echo "<div id =\"no_display\" style = 'display:none;' ><h1 style = 'color:red;'>Sorry</h1>You can't run the GUI application $title. The system has detected that your embedded system is not connected to a display device.</div>";
-		echo "<div id = \"running_remotely\"  style = 'display:none;' ><h1 style = 'color:yellow;'>Warning</h1>You are currently running Matrix remotely and $title is a GUI based application. <br> After clicking run, look at the display device connected to the embedded system to see and/or interact with the application</div>";
-	
-		echo "<div id = \"run_application\" style= \"text-align:center;\">";
-			echo "<a href = '$link'><img id = 'run_img' src= 'images/run-icon.png'></a>";	
-		echo "</div>";
-		echo "<div>$description</div>";
-	
-	echo "</div>";
-	
-
-?> 
-
+?>
+	<div id = "descrip_text">
+		<div id ="no_display" style = "display:none;">
+			<h1 style = "color:red;">Sorry</h1>
+			You can't run the GUI application <?php echo $title; ?>. The system has detected that your embedded system is not connected to a display device.
+		</div>
+		<div id = "running_remotely"  style = "display:none;">
+			<h1 style = "color:yellow;">Warning</h1>
+				You are currently running Matrix remotely and <?php echo $title; ?> is a GUI based application. <br>
+				After clicking run, look at the display device connected to the embedded system to see and/or interact with the application
+		</div>
+		<div id = "run_application" style= "text-align:center;">
+			<a href = "<?php echo $link;?>"><img id = "run_img" src= "images/run-icon.png"></a>
+		</div>
+		<div>
+			<?php echo $description; ?>
+		</div>
+	</div>
 
 <script>
-
 	<?php 
 		if($program_type=="gui")
 			echo "var isgraphicalApp = true;";
@@ -158,19 +111,5 @@ $enable_exit_link = true;
 			$("#running_remotely").show();
 		}
 	}
-
-
-
 </script>
-<?php
-//Disable Caching on Description Page
-
-// open the cache file "cache/home.html" for writing
-$fp = fopen($cachefile, 'w');
-// save the contents of output buffer to the file
-fwrite($fp, ob_get_contents());
-// close the file
-fclose($fp);
-// Send the output to the browser
-ob_end_flush();
-?>
+<?php end_caching(); ?>
