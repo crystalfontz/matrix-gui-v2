@@ -33,6 +33,18 @@
  *
 */
 ?>
+
+<?php
+	# Check if json.txt file needs to be generated
+	if(!file_exists("json.txt"))
+	{
+		//Generate the json.txt file
+		system("php generate.php");
+		//Remove the cache since it is based on the previous json.txt file
+		system("rm -rf cache/*");
+	}
+?>
+
 <html>
 <head>
 <title>Matrix Application Launcher</title>
