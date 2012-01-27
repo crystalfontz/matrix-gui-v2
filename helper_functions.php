@@ -68,11 +68,19 @@ function get_submenu($dot_desktop_array,$submenu_name)
 
 function read_desktop_file()
 {
-	$handle = fopen("json.txt", "rb");
-	$contents = fread($handle,filesize("json.txt"));
-	fclose($handle);
+	if(file_exists("json.txt") == true)
+	{
+		$handle = fopen("json.txt", "rb");
+		$contents = fread($handle,filesize("json.txt"));
+		fclose($handle);
 
-	return json_decode($contents,true);
+		if(strlen($contents)==0)
+			return null;
+		else
+			return json_decode($contents,true);
+	}
+	else
+		return null;
 }
 
 ?>

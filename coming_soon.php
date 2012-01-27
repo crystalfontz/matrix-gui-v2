@@ -42,7 +42,15 @@ $enable_main_menu_link = true;
 
 $submenu = $_GET["submenu"];
 
-$submenu_entry = get_submenu(read_desktop_file(),$submenu);
+$var = read_desktop_file();
+
+if($var==null)
+{
+	echo "Json.txt file is empty or doesn't exist.";
+	return;
+}
+
+$submenu_entry = get_submenu($var,$submenu);
 
 $menu_title = "Coming Soon";
 

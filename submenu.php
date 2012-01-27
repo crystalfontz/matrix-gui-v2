@@ -39,6 +39,12 @@ start_caching();
 
 $var = read_desktop_file();
 
+if($var==null)
+{
+	echo "Json.txt file is empty or doesn't exist.";
+	return;
+}
+
 //Load Matrix configuration file
 $ini_array = parse_ini_file("matrix_config.ini");
 

@@ -55,6 +55,13 @@ $handle = fopen("catdesktop.txt", "rb");
 $contents = fread($handle,filesize("catdesktop.txt"));
 fclose($handle);
 unlink('catdesktop.txt');
+
+if(strlen($contents)==0)
+{
+	echo "No .desktop files found";
+	return;
+}
+
 $contents = explode("\n",$contents);
 
 for($x = 0;$x<count($contents)&&strlen($contents[$x])>0;$x++)

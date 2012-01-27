@@ -40,6 +40,12 @@ start_caching();
 
 $var = read_desktop_file();
 
+if($var==null)
+{
+	echo "Json.txt file is empty or doesn't exist.";
+	return;
+}
+
 //Some parts of the code doesn't set the submenu variable when the user is at the Main Menu which is relected in the "top" variable
 $submenu = isset($_GET["submenu"]) == true ? $_GET["submenu"] : "main_menu" ;
 

@@ -41,6 +41,12 @@ $currently_locked = false;
 
 $var = read_desktop_file();
 
+if($var==null)
+{
+	echo "Json.txt file is empty or doesn't exist.";
+	return;
+}
+
 $submenu = isset($_GET["submenu"]) == true ? $_GET["submenu"] : "main_menu" ;
 
 
