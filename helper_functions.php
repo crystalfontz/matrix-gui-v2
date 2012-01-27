@@ -68,16 +68,13 @@ function get_submenu($dot_desktop_array,$submenu_name)
 
 function read_desktop_file()
 {
-	if(file_exists("json.txt") == true)
+	if(file_exists("json.txt") == true && filesize("json.txt") != 0)
 	{
 		$handle = fopen("json.txt", "rb");
 		$contents = fread($handle,filesize("json.txt"));
 		fclose($handle);
 
-		if(strlen($contents)==0)
-			return null;
-		else
-			return json_decode($contents,true);
+		return json_decode($contents,true);
 	}
 	else
 		return null;

@@ -51,16 +51,17 @@ function get_contents($field_name,$filestring)
 }
 
 system("find  -name '*.desktop' -print > catdesktop.txt");
-$handle = fopen("catdesktop.txt", "rb");
-$contents = fread($handle,filesize("catdesktop.txt"));
-fclose($handle);
-unlink('catdesktop.txt');
 
-if(strlen($contents)==0)
+if(filesize("catdesktop.txt") == 0)
 {
 	echo "No .desktop files found";
 	return;
 }
+
+$handle = fopen("catdesktop.txt", "rb");
+$contents = fread($handle,filesize("catdesktop.txt"));
+fclose($handle);
+unlink('catdesktop.txt');
 
 $contents = explode("\n",$contents);
 
