@@ -36,8 +36,6 @@
 
 require("helper_functions.php");
 
-start_caching();
-
 $enable_main_menu_link = true;
 
 $submenu = $_GET["submenu"];
@@ -63,7 +61,3 @@ include "menubar.php";
 		<h2>The applications in <?php echo $menu_name; ?> will be coming soon</h2>
 		<img src= 'images/coming-icon.png'>	
 	</div>
-
-<?php
-end_caching();
-?>

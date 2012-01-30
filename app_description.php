@@ -36,7 +36,6 @@
 
 require("helper_functions.php");
 
-start_caching();
 
 $var = read_desktop_file();
 
@@ -118,4 +117,3 @@ $enable_main_menu_link = true;
 		}
 	}
 </script>
-<?php end_caching(); ?>

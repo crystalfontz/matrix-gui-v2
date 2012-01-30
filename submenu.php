@@ -35,8 +35,6 @@
 
 require("helper_functions.php");
 
-start_caching();
-
 $var = read_desktop_file();
 
 if($var==null)
@@ -45,11 +43,8 @@ if($var==null)
 	return;
 }
 
-//Load Matrix configuration file
-$ini_array = parse_ini_file("matrix_config.ini");
-
-$icon_per_col = $ini_array["icons_per_col"];
-$icon_per_row = $ini_array["icons_per_row"];
+$icon_per_col = $_COOKIE["iconGridCol"];
+$icon_per_row = $_COOKIE["iconGridRow"];
 
 $icons_per_page = $icon_per_col * $icon_per_row;
 $current_page = isset($_GET["page"]) == true ? $_GET["page"] : 0;
@@ -160,4 +155,3 @@ if(client_is_host == false || has_graphics == false)
 	});
 }
 </script>
-<?php end_caching() ?>

@@ -43,6 +43,28 @@
 		//Remove the cache since it is based on the previous json.txt file
 		system("rm -rf cache/*");
 	}
+
+	if(!file_exists("cache"))
+	{
+		mkdir("cache",6666);		
+	}
+
+	$supportedResolutions = null;
+	
+
+	if(file_exists("supported_resolutions.txt")==true)
+	{
+		$supportedResolutions = file ("supported_resolutions.txt",FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		
+	}
+
+	if($supportedResolutions == null || count($supportedResolutions) == 0)
+	{
+		echo "supported_resolutions.txt doesn't exist or is empty";
+		exit; 
+	}
+
+	$client_is_host = $_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost";
 ?>
 
 <html>
@@ -50,51 +72,15 @@
 <title>Matrix Application Launcher</title>
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<script>
-
-<?php
-
-$client_is_host = $_SERVER['SERVER_NAME']==$_SERVER['REMOTE_ADDR']||$_SERVER['SERVER_NAME'] == "localhost";
-if($client_is_host == true)
-	echo "var client_is_host = true;";
-else
-	echo "var client_is_host = false;";
-
-
-	if(!file_exists("cache"))
-	{
-		mkdir("cache",6666);		
-	}
-?>
-
-
-
-</script>
-
-
 <link rel="stylesheet" type="text/css" href="css/fonts-min.css">
-
-
 <script type="text/javascript" src="/javascript/jquery-latest.js"></script>   
-
 <link rel='stylesheet' type='text/css' href='css/global.css'>
-<?php
-	if($client_is_host == true)
-	{
-		//Load Matrix configuration file
-		$ini_array = parse_ini_file("matrix_config.ini");
-
-		$target_css = $ini_array["target_css"]."?".rand();
-		echo "<link rel='stylesheet' type='text/css' href='css/$target_css'>";
-	}
-?>
 
 </head>
 
 
 <body class="unselectable" style = "-webkit-user-select: none;-moz-user-select: none;">
-<div id = "complete_container">
-</div>
+<div id = "complete_container"></div>
 
 <script>
 var has_graphics = true;
@@ -102,9 +88,49 @@ var link_history = ["submenu.php?submenu=main_menu&page=0"];
 var uri = "submenu.php?submenu=main_menu&page=0";
 var previous_clicked = uri;
 
+<?php
+if($client_is_host == true)
+	echo "var client_is_host = true;";
+else
+	echo "var client_is_host = false;";
+?>
+
 $(document).ready(function()
 {
 
+
+
+	var supportedResolutions=new Array(); 
+
+	<?php
+		for($x = 0;$x<count($supportedResolutions);$x++)
+		{
+			echo "supportedResolutions[".$x."]=\"".$supportedResolutions[$x]."\";";    
+		}
+	?>
+
+	var screenWidth = 0;
+	var screenHeight = 0;
+	var iconGridCol = 0;
+	var iconGridRow = 0;
+
+	for(var i=0; i<supportedResolutions.length; i++) 
+	{
+		var value = supportedResolutions[i].split('x');
+
+		screenWidth = value[0];
+		screenHeight = value[1];
+		iconGridCol = value[2];
+		iconGridRow = value[3];
+
+		if(screen.width >= screenWidth && screen.height >= screenHeight)
+			break;
+	}
+
+	document.cookie="iconGridCol="+iconGridCol;
+	document.cookie="iconGridRow="+iconGridRow;
+	
+	$('head').append('<link rel="stylesheet" type="text/css" href="/css/'+screenWidth+'x'+screenHeight+'.css" />'); 
 
 	if(client_is_host==false)
 	{
