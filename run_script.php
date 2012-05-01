@@ -89,7 +89,7 @@ if($currently_locked==false)
 	$random_string = strval(rand());
 	$random_string .= strval(rand());
 
-	$script_command = "./execute_command.sh \"".$script_link. "\" ".$random_string.".txt ".$lock_list;
+	$script_command = "./execute_command.sh \"".addslashes($script_link). "\" ".$random_string.".txt ".$lock_list;
 
 	$last_line = system($script_command." > /dev/null 2>/dev/null & ", $retval);
 }
