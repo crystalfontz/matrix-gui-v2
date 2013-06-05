@@ -33,6 +33,8 @@
  *
 */
 
+error_reporting(E_ALL);
+
 require("helper_functions.php");
 
 $i = 0;
@@ -97,10 +99,10 @@ if($currently_locked==false)
 $menu_title = $found_app["Name"];
 ?>
 
+
+
+<?php if($currently_locked==false && $found_app["ProgramType"]!="web"){ ?>
 <?php include "menubar.php"; ?>
-
-<?php if($currently_locked==false){ ?>
-
 <div id="container"></div>
 
 <script>
@@ -176,8 +178,43 @@ $menu_title = $found_app["Name"];
 	//Wait 500ms before trying to read the application output
 	setTimeout("update()",500);
 </script>
-<?php }else{?>
+<?php }if($currently_locked==false && $found_app["ProgramType"]=="web"){ ?>
+<?php include "menubar.php"; ?>
 
+<script>
+$('#main_menu_link').removeClass("hide_link");
+$('#back_link').removeClass("hide_link");
+
+$("#menubar").outerHeight(true)
+$("#menubar").outerWidth(true)
+
+function scrollbarWidth() {
+    var $inner = jQuery('<div style="width: 100%; height:200px;">test</div>'),
+        $outer = jQuery('<div style="width:200px;height:150px; position: absolute; top: 0; left: 0; visibility: hidden; overflow:hidden;"></div>').append($inner),
+        inner = $inner[0],
+        outer = $outer[0];
+
+    jQuery('body').append(outer);
+    var width1 = inner.offsetWidth;
+    $outer.css('overflow', 'scroll');
+    var width2 = outer.clientWidth;
+    $outer.remove();
+
+    return (width1 - width2);
+}
+
+
+$("#html5-frame").width($("#menubar").width()-scrollbarWidth());
+$("#html5-frame").height($(window).height() - $("#menubar").outerHeight(true)-scrollbarWidth())
+
+
+
+</script>
+<iframe id = "html5-frame" src = "<?php echo $found_app["Exec"]; ?>"scrolling = "auto" style = "padding:5px;">
+
+
+<?php }if($currently_locked==true){?>
+<?php include "menubar.php"; ?>
 This program can't run since a program is already running that contains a lock that this program is trying to use
 <script>
 	//Display the back and exit button since the application couldn't run

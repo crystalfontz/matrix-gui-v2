@@ -53,7 +53,7 @@ $enable_next_link = $next_page > 0;
 $enable_main_menu_link = isset($enable_main_menu_link) == true ? $enable_main_menu_link : false;
 ?>
 
-<table width = "100%" style = "margin-bottom:10px;">
+<table id = "menubar" width = "100%" style = "margin-bottom:10px;">
 	<tr>
 		<td  align = "left" >
 			<?php 
