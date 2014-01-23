@@ -70,7 +70,7 @@ $enable_main_menu_link = isset($enable_main_menu_link) == true ? $enable_main_me
 		</td>
 		<td  align = "center" id = "banner" >
 			<?php  
-				echo "<img id = 'logo_img' src= 'images/tex.png'>";
+				echo "<img id = 'logo_img' src= 'images/crystalfontz.png'>";
 				echo $menu_title;
 			?>
 		</td>
