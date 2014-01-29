@@ -65,7 +65,7 @@ $enable_main_menu_link = $submenu != "main_menu";
 
 $submenu_entry = get_submenu($var,$submenu);
 
-$menu_title = ($submenu == "main_menu") ? "Matrix App Launcher v2 p".($current_page+1) : $submenu_entry["Name"]." Submenu p".($current_page+1);
+$menu_title = ($submenu == "main_menu") ? "Matrix Launcher v2 p".($current_page+1) : $submenu_entry["Name"]." Submenu p".($current_page+1);
 
 $start_index = $current_page * $icons_per_page;
 $end_index = $start_index + $icons_per_page - 1;
